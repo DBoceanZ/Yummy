@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Welcome from "./components/login/Welcome.js";
-import Login from "./components/login/Login.js";
+import Login from "./components/login/login.js";
 import Register from "./components/login/Register.js";
 
 const Stack = createNativeStackNavigator();
