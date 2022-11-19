@@ -23,7 +23,7 @@ export function LightButton({ text, onPress }) {
       onPress={onPress}
       style={({ pressed }) => [
         {
-          backgroundColor: pressed ? "#9FA8DA" : "#ffffff",
+          backgroundColor: pressed ? "#9FA8DA" : "#B4be00",
         },
         styles.lightContainer,
       ]}
