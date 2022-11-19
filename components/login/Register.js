@@ -15,10 +15,11 @@ const handleSubmit = () => {
   console.warn("Submit Pressed");
 };
 
-const Login = () => {
+const Register = () => {
   const { height } = useWindowDimensions();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -31,7 +32,7 @@ const Login = () => {
       ></Image>
 
       <Text style={styles.text} variant="h4">
-        Login
+        Register
       </Text>
       <Stack m={4} spacing={4}>
         <BasicInput
@@ -40,9 +41,20 @@ const Login = () => {
           setValue={setUsername}
         />
         <BasicInput
-          placeHolder="password"
+          placeHolder="email"
           value={password}
           setValue={setPassword}
+        />
+        <BasicInput
+          placeHolder="Password"
+          value={password}
+          setValue={setPassword}
+          secureTextEntry={true}
+        />
+        <BasicInput
+          placeHolder="Confirm Password"
+          value={confirmPassword}
+          setValue={setConfirmPassword}
           secureTextEntry={true}
         />
         <LightButton text="submit" onPress={handleSubmit} />
@@ -53,8 +65,8 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
-    justifyContent: "center",
+    flex: 1,
+    // justifyContent: "center",
     padding: 15,
   },
   text: {
@@ -64,7 +76,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "70%",
     maxWidth: 500,
-    maxHeight: 150,
+    maxHeight: 100,
   },
 });
-export default Login;
+export default Register;
