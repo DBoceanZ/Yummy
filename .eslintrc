@@ -1,0 +1,30 @@
+{
+  "env": {
+    "es2021": true,
+    "commonjs": true,
+    "react-native/react-native": true
+  },
+  "extends": [
+    "airbnb",
+    "prettier",
+    "plugin:node/recommended",
+    "plugin:react/recommended",
+    "prettier/react"
+  ],
+  "plugins": ["prettier", "react", "react-native"],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "func-names": "off",
+    "no-process-exit": "off",
+    "object-shorthand": "off",
+    "class-methods-use-this": "off",
+    "import/extensions": "off",
+    "no-restricted-imports": "off",
+    "no-restricted-modules": "off"
+  }
+}
