@@ -19,13 +19,13 @@ const NavigationStack = () => {
       screenOptions={{
         headerTitleAlign: "center",
         headerStyle: {
-          backgroundColor: "#1e232c",
+          backgroundColor: "#ffae1f",
         },
         headerTitleStyle: {
           fontWeight: "bold",
-          color: "#B4be00",
+          color: "#222222",
         },
-        headerTintColor: "#B4be00",
+        headerTintColor: "#222222",
       }}
     >
       <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
@@ -49,7 +49,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#B4be00",
+    backgroundColor: "#ffae1f",
   },
   screenHeader: {},
 });
