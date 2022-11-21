@@ -26,6 +26,7 @@ export default function Login({ navigation }) {
     console.warn("Registration Pressed");
   };
   const handleGuestLogin = () => {
+    navigation.navigate("Home");
     console.warn("Guest Login requested");
   };
   return (

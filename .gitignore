@@ -54,7 +54,6 @@ buck-out/
 .expo/
 web-build/
 dist/
-
 # pem
 yummy.pem
 
