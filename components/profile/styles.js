@@ -32,7 +32,13 @@ const styles = StyleSheet.create({
   },
   counterItem: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  counterDivider: {
+    color: 'lightgrey',
+    alignSelf: 'center',
+    fontSize: 30,
+    fontWeight: '100'
   },
   counter: {
     color: 'black',

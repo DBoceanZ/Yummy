@@ -2,17 +2,37 @@ import React, { useState } from 'react';
 import styles from './styles';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { LightButton } from '../lib/buttons/CustomButton';
+import * as ImagePicker from 'expo-image-picker';
 
-const Profile = ({ user = 'ExampleUser'}) => {
+const EditProfileHeader = () => {
   // TEMP
-  const [image, setImage] = useState('http://tinyurl.com/68dvbhaw')
+  const [image, setImage] = useState('http://tinyurl.com/68dvbhaw');
+  const [displayName, setDisplayName] = useState('ExampleUser');
+  const chooseImage = async () => {
+    let result;
+    try {
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    setImage(result.assets[0].uri);
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{uri: image}}></Image>
+        <TouchableOpacity onPress={() => chooseImage()} style={styles.imageTouchable}>
+          <Image style={styles.image} source={{uri: image}}></Image>
+        </TouchableOpacity>
       </View>
-      <Text style={styles.displayName}>{user}</Text>
+      <TouchableOpacity>
+        <Text style={styles.displayName}>{displayName}</Text>
+      </TouchableOpacity>
       <View style={styles.countersContainer}>
         <View style={styles.counterItem}>
           <Text style={styles.counter}>0</Text>
@@ -30,10 +50,10 @@ const Profile = ({ user = 'ExampleUser'}) => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <LightButton text='Follow'/>
+        <LightButton text='Follow' />
       </View>
     </View>
   )
 };
 
-export default Profile;
+export default EditProfileHeader;
