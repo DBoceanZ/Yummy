@@ -11,15 +11,16 @@ import { BasicInput } from "../lib/inputs/CustomInput.js";
 import { LightButton } from "../lib/buttons/CustomButton.js";
 import Logo from "../../assets/images/yummyLogo.png";
 
-const handleSubmit = () => {
-  console.warn("Submit Pressed");
-};
-
-const Register = () => {
+const Register = ({ navigation }) => {
   const { height } = useWindowDimensions();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = () => {
+    navigation.navigate("Home");
+    console.warn("Submit Pressed");
+  };
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
