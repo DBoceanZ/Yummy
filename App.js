@@ -4,8 +4,9 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Welcome from "./components/login/Welcome.js";
-import Login from "./components/login/Login.js";
+import Login from "./components/login/login.js";
 import Register from "./components/login/Register.js";
+import FollowingList from "./components/follows/FollowingList.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ const NavigationStack = () => {
       <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
       <Stack.Screen name="Login" component={Login}></Stack.Screen>
       <Stack.Screen name="Register" component={Register}></Stack.Screen>
+      {/* <Stack.Screen name="Following" component={FollowingList}></Stack.Screen> */}
     </Stack.Navigator>
   );
 };
