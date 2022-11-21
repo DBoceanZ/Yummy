@@ -21,9 +21,7 @@ const Login = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        // TODO: here is the Home nav link
-        // navigation.navigate("Home");
-        alert("Pls add home link :)");
+        navigation.navigate("Home");
       }
     });
     return unsubscribe;
