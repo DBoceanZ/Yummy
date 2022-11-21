@@ -32,7 +32,11 @@ const NavigationStack = () => {
       <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
       <Stack.Screen name="Login" component={Login}></Stack.Screen>
       <Stack.Screen name="Register" component={Register}></Stack.Screen>
-      <Stack.Screen name="Home" component={Home}></Stack.Screen>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Home"
+        component={Home}
+      ></Stack.Screen>
       {/* <Stack.Screen name="TestNav" component={TestNav}></Stack.Screen> */}
     </Stack.Navigator>
   );
