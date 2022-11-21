@@ -16,9 +16,9 @@ import { LightButton } from "../lib/buttons/CustomButton.js";
 import testfile from "./testmedia/testvideo.mp4";
 import testfile1 from "./testmedia/testvideo1.mp4";
 import testfile2 from "./testmedia/testvideo2.mp4";
-import testfile3 from "./testmedia/testvideo3.mp4";
-import testfile4 from "./testmedia/testvideo4.mp4";
-import testfile5 from "./testmedia/testvideo5.mp4";
+import testfile3 from "./testmedia/testvideo.mp4";
+import testfile4 from "./testmedia/testvideo1.mp4";
+import testfile5 from "./testmedia/testvideo2.mp4";
 import { Stack, IconButton } from "@react-native-material/core";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -77,7 +77,7 @@ export default function Home() {
         }
       >
         {files.map((src, index) => (
-          <>
+          <View key={index}>
             <TouchableOpacity
               onPress={() => {
                 status.isPlaying
@@ -103,7 +103,6 @@ export default function Home() {
                 color="white"
               />
               <Text style={styles.heartText}>0</Text>
-              {/* <View style={styles.buttons}></View> */}
               <FontAwesome
                 style={styles.comment}
                 name="commenting-o"
@@ -119,7 +118,7 @@ export default function Home() {
               />
               <Text style={styles.shareText}>0</Text>
             </TouchableOpacity>
-          </>
+          </View>
         ))}
       </ScrollView>
     </View>
@@ -150,7 +149,6 @@ const styles = StyleSheet.create({
   },
   heartText: {
     margin: 5,
-    fontSize: "16px",
     fontWeight: "bold",
     position: "absolute",
     bottom: 310,
@@ -165,7 +163,6 @@ const styles = StyleSheet.create({
   },
   commentText: {
     margin: 5,
-    fontSize: "16px",
     fontWeight: "bold",
     position: "absolute",
     bottom: 240,
@@ -180,7 +177,6 @@ const styles = StyleSheet.create({
   },
   shareText: {
     margin: 5,
-    fontSize: "16px",
     fontWeight: "bold",
     position: "absolute",
     bottom: 170,
