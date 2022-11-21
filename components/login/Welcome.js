@@ -20,7 +20,6 @@ export default function Login({ navigation }) {
 
   const handleLoginPress = () => {
     navigation.navigate("Login");
-    console.warn("Login Pressed");
   };
   const handleRegistration = () => {
     navigation.navigate("Register");
