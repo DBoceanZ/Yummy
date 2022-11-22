@@ -1,6 +1,7 @@
 import * as React from "react";
 import axios from "axios";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
+
 import {
   View,
   StyleSheet,
@@ -30,7 +31,7 @@ const wait = (timeout) => {
 };
 
 export default function Home() {
-  const video = React.useRef(null);
+  const videoref = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const [focusedIndex, setFocusedIndex] = React.useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -65,9 +66,12 @@ export default function Home() {
     setRefreshing(false);
   }, []);
 
+  console.log(status.isPlaying === false);
   return (
     <View style={styles.container}>
       <ScrollView
+        showsVerticalScrollIndicator={false}
+        disableIntervalMomentum={false}
         onScroll={handleScroll}
         snapToInterval={windowHeight}
         decelerationRate="fast"
@@ -79,23 +83,31 @@ export default function Home() {
         {files.map((src, index) => (
           <View key={index}>
             <TouchableOpacity
-              onPress={() => {
+              onPress={() =>
                 status.isPlaying
-                  ? video.current.pauseAsync()
-                  : video.current.playAsync();
-              }}
+                  ? videoref.current.pauseAsync()
+                  : videoref.current.playAsync()
+              }
             >
               <Video
                 key={index}
                 shouldPlay={focusedIndex === index}
                 resizeMode="cover"
-                ref={video}
+                ref={focusedIndex === index ? videoref : null}
                 style={styles.video}
                 source={src}
                 useNativeControls={false}
                 isLooping
                 onPlaybackStatusUpdate={(status) => setStatus(() => status)}
               />
+              {status.isPlaying === false ? (
+                <Foundation
+                  style={styles.playBut}
+                  name="play"
+                  size={88}
+                  color="white"
+                />
+              ) : null}
               <AntDesign
                 style={styles.heart}
                 name="heart"
@@ -182,5 +194,21 @@ const styles = StyleSheet.create({
     bottom: 170,
     right: 20,
     color: "white",
+  },
+  playBut: {
+    margin: 50,
+    bottom: 350,
+    right: 110,
+    position: "absolute",
+    opacity: 0.4,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
   },
 });
