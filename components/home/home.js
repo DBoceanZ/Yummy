@@ -1,6 +1,7 @@
 import * as React from "react";
 import axios from "axios";
 import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
+import { useState } from "react";
 
 import {
   View,
@@ -9,8 +10,9 @@ import {
   Dimensions,
   Text,
   ScrollView,
-  TouchableOpacity,
+  Pressable,
   RefreshControl,
+  Animated,
 } from "react-native";
 import { Video, AVPlaybackStatus } from "expo-av";
 import { LightButton } from "../lib/buttons/CustomButton.js";
@@ -37,6 +39,23 @@ export default function Home() {
   const [refreshing, setRefreshing] = React.useState(false);
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
+  const opacity = useState(new Animated.Value(0))[0];
+
+  function fadeIn() {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }
+
+  function fadeOut() {
+    Animated.timing(opacity, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }
 
   const handleScroll = React.useCallback(
     ({
@@ -82,11 +101,11 @@ export default function Home() {
       >
         {files.map((src, index) => (
           <View key={index}>
-            <TouchableOpacity
+            <Pressable
               onPress={() =>
                 status.isPlaying
-                  ? videoref.current.pauseAsync()
-                  : videoref.current.playAsync()
+                  ? (fadeIn(), videoref.current.pauseAsync())
+                  : (fadeOut(), videoref.current.playAsync())
               }
             >
               <Video
@@ -100,14 +119,20 @@ export default function Home() {
                 isLooping
                 onPlaybackStatusUpdate={(status) => setStatus(() => status)}
               />
-              {status.isPlaying === false ? (
+              <Animated.View
+                style={[
+                  {
+                    opacity,
+                  },
+                ]}
+              >
                 <Foundation
                   style={styles.playBut}
                   name="play"
                   size={88}
                   color="white"
                 />
-              ) : null}
+              </Animated.View>
               <AntDesign
                 style={styles.heart}
                 name="heart"
@@ -129,7 +154,7 @@ export default function Home() {
                 color="white"
               />
               <Text style={styles.shareText}>0</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         ))}
       </ScrollView>
@@ -210,5 +235,10 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
 
     elevation: 4,
+  },
+  playButContainer: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
   },
 });
