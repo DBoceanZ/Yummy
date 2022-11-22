@@ -5,7 +5,15 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "1cc7628c-e88c-4608-a58d-95b649a892d3"
+      }
+    },
+    "android": {
+      "package": "com.colebienek.yummy"
+    }
   },
   "name": "yummy"
 }
