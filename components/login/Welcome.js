@@ -20,13 +20,13 @@ export default function Login({ navigation }) {
 
   const handleLoginPress = () => {
     navigation.navigate("Login");
-    console.warn("Login Pressed");
   };
   const handleRegistration = () => {
     navigation.navigate("Register");
     console.warn("Registration Pressed");
   };
   const handleGuestLogin = () => {
+    navigation.navigate("Home");
     console.warn("Guest Login requested");
   };
   return (

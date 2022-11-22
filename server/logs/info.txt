@@ -1,0 +1,2 @@
+server logs go in an access.log file in this logs folder
+logs are are in .gitignore, go view your own traffic
