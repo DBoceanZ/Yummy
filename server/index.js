@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const fs = require('fs');
 const { formatDistanceToNow } = require('date-fns');
 require('dotenv').config();
+const videoRouter = require('./routes/video');
 const pool = require('./database');
 
 // basic server
@@ -41,9 +42,10 @@ app.get('/test', (req, res) => {
     .then(resp => console.log(formatDistanceToNow(resp.rows[0].now)))
 })
 // routers go here
+app.use('/video', videoRouter)
 /*
  *
- *
+*
  *
  *
  *
