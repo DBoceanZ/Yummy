@@ -11,7 +11,6 @@ import Profile from "./components/profile/Profile.js";
 import Register from "./components/login/Register.js";
 import TestNav from "./components/login/testNav.js";
 import Home from "./components/home/home.js";
-import FollowingList from "./components/follows/FollowingList.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,8 +31,13 @@ const NavigationStack = () => {
     >
       {/* <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
       <Stack.Screen name="Login" component={Login}></Stack.Screen>
-      <Stack.Screen name="Register" component={Register}></Stack.Screen> */}
-      <Stack.Screen name="Following" component={FollowingList}></Stack.Screen>
+      <Stack.Screen name="Register" component={Register}></Stack.Screen>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Home"
+        component={Home}
+      ></Stack.Screen>
+      {/* <Stack.Screen name="TestNav" component={TestNav}></Stack.Screen> */}
     </Stack.Navigator>
   );
 };
