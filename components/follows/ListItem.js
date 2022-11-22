@@ -1,18 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { LightButton } from '../lib/buttons/CustomButton';
 
-export default function ListItem({ username }) {
+export default function ListItem({ user, buttonName }) {
+
+  const handlePress = () => {
+    console.log('pressed')
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.imgContainer}>
         <Image style={styles.img}></Image>
       </View>
       <View>
-        <Text style={styles.text}>{username}</Text>
+        <Text style={styles.text}>{user.username}</Text>
       </View>
       <View style={styles.btnContainer}>
-        <LightButton text='Unfollow' />
+        <LightButton text={buttonName} />
       </View>
     </View >
   );
