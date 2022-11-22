@@ -3,6 +3,7 @@ const path = require('path');
 const router = require('./routes');
 const morgan = require('morgan');
 const fs = require('fs');
+const { formatDistanceToNow } = require('date-fns');
 require('dotenv').config();
 const pool = require('./database');
 
@@ -24,7 +25,7 @@ app.use(myLogger);
 
 
 app.post('/test', (req, res) => {
-  pool.query("INSERT INTO users (username, email, bio, profile_photo_url, auth_key) VALUES ($1, $2, $3, $4, $5)", [req.body.username, req.body.email, req.body.bio, req.body.profile_photo_url, req.body.auth_key])
+  pool.query("INSERT INTO users (username, email, bio, profile_photo_url, auth_key) VALUES ($1, $2, $3, $4, $5);", [req.body.username, req.body.email, req.body.bio, req.body.profile_photo_url, req.body.auth_key])
     .then((dbResponse) => {
       console.log(dbResponse);
       res.sendStatus(201);
@@ -34,6 +35,11 @@ app.post('/test', (req, res) => {
       res.sendStatus(500);
     })
 });
+
+app.get('/test', (req, res) => {
+  pool.query("SELECT now();")
+    .then(resp => console.log(formatDistanceToNow(resp.rows[0].now)))
+})
 // routers go here
 /*
  *
