@@ -13,11 +13,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     borderRadius: 50,
     overflow: 'hidden',
-    marginBottom: 15
   },
   image: {
     width: 100,
     height: 100,
+    borderRadius: 50,
+    marginBottom: 15
   },
   displayName: {
     textAlign: 'center',

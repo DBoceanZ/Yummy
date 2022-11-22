@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import styles from './styles';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { LightButton } from '../lib/buttons/CustomButton';
 
 const Profile = ({ user = 'ExampleUser'}) => {
-  // TEMP
-  const [image, setImage] = useState('http://tinyurl.com/68dvbhaw')
+  const [image, setImage] = useState('http://tinyurl.com/68dvbhaw'); // TEMP
 
   return (
     <View style={styles.container}>
