@@ -6,19 +6,39 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { Stack, Text } from "@react-native-material/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BasicInput } from "../lib/inputs/CustomInput.js";
 import { LightButton } from "../lib/buttons/CustomButton.js";
 import Logo from "../../assets/images/yummyLogo.png";
+import { auth } from "../../config/firebase.js";
 
-const handleSubmit = () => {
-  console.warn("Submit Pressed");
-};
-
-const Login = () => {
+const Login = ({ navigation }) => {
   const { height } = useWindowDimensions();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.navigate("Home");
+      }
+    });
+    return unsubscribe;
+  }, []);
+  const handleSubmit = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("logged in with:", user.email);
+      })
+      .catch((err) => {
+        alert("Error! Redirecting to Registration");
+        navigation.navigate("Register");
+      });
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -35,15 +55,17 @@ const Login = () => {
       </Text>
       <Stack m={4} spacing={4}>
         <BasicInput
-          placeHolder="Username"
-          value={username}
-          setValue={setUsername}
+          placeHolder="email"
+          value={email}
+          setValue={setEmail}
+          onChangeText={(text) => setEmail(text)}
         />
         <BasicInput
           placeHolder="password"
           value={password}
           setValue={setPassword}
           secureTextEntry={true}
+          onChangeText={(text) => setPassword(text)}
         />
         <LightButton text="submit" onPress={handleSubmit} />
       </Stack>

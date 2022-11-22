@@ -21,7 +21,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
-
+firebaseConfig.js
 # Android/IntelliJ
 #
 build/
@@ -54,7 +54,6 @@ buck-out/
 .expo/
 web-build/
 dist/
-
 # pem
 yummy.pem
 
