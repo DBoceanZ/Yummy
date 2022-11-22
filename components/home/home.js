@@ -12,6 +12,7 @@ import {
   RefreshControl,
 } from "react-native";
 import { Video, AVPlaybackStatus } from "expo-av";
+import Comments from './Comments';
 import { LightButton } from "../lib/buttons/CustomButton.js";
 import testfile from "./testmedia/testvideo.mp4";
 import testfile1 from "./testmedia/testvideo1.mp4";
@@ -32,6 +33,7 @@ const wait = (timeout) => {
 export default function Home() {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
+  const [displayComments, setDisplayComments] = React.useState(false);
   const [focusedIndex, setFocusedIndex] = React.useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
   const windowWidth = Dimensions.get("window").width;
@@ -67,6 +69,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
+      <Comments displayComments={displayComments} />
       <ScrollView
         onScroll={handleScroll}
         snapToInterval={windowHeight}
@@ -102,12 +105,15 @@ export default function Home() {
                 size={38}
                 color="white"
               />
-              <Text style={styles.heartText}>0</Text>
+              <Text style={styles.heartstatusText}>0</Text>
               <FontAwesome
                 style={styles.comment}
-                name="commenting-o"
+                name="commenting-o"status
                 size={38}
                 color="white"
+                onPress={() => {
+                  setDisplayComments(true);
+                }}
               />
               <Text style={styles.commentText}>0</Text>
               <FontAwesome
