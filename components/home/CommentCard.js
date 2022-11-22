@@ -1,11 +1,12 @@
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
+import { formatDistanceToNow } from 'date-fns';
 
 const styles = StyleSheet.create({
   container: {
     padding: 8,
     height: 150,
-    backgroundColor: '#B4be00',
+    backgroundColor: '#fff700',
     marginBottom: 10,
     borderRadius: 6,
     width: '96%',
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flexDirection:  'row',
     justifyContent: 'space-between',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   commenterStyles: {
     color: 'black',
@@ -38,7 +39,8 @@ export default function CommentCard({ comment }) {
           {comment.commenter_name}
         </Text>
         <Text style={styles.dateStyles}>
-          {comment.created_at}
+          {formatDistanceToNow(comment.created_at)}
+          &nbsp;ago
         </Text>
       </View>
       <Text style={styles.commentStyles}>{comment.comment}</Text>

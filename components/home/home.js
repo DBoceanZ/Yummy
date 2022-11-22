@@ -69,7 +69,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Comments displayComments={displayComments} />
+      <Comments displayComments={displayComments} setDisplayComments={setDisplayComments} />
       <ScrollView
         onScroll={handleScroll}
         snapToInterval={windowHeight}
