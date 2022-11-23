@@ -20,7 +20,7 @@ const handleSubmit = () => {
 };
 
 const Register = ({ navigation }) => {
-  const { loading, setLoading } = useGlobalContext();
+  const { loading, setLoading, userData, setUserData } = useGlobalContext();
   const { height } = useWindowDimensions();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -55,8 +55,14 @@ const Register = ({ navigation }) => {
   const createNewUser = async (user) => {
     console.log("create new user route");
     console.log("user", currentUser);
+    setUserData({
+      ...userData,
+      userName: username,
+      UID: currentUser.firebaseId,
+    });
     setLoading(false);
     clearData();
+    alert(`Welcome ${username}!`);
     navigation.navigate("BottomNav");
     //will set globalUsername on DB pull
     // await axios.post("/user", user);
