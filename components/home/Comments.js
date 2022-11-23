@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function Comments({ comments, displayComments, setDisplayComments }) {
+export default function Comments({ comments, setComments, displayComments, setDisplayComments }) {
   const [ newComment, setNewComment ] = React.useState('');
   // const comments = [
   //   {
@@ -108,7 +108,7 @@ export default function Comments({ comments, displayComments, setDisplayComments
             onPress={() => {
               axios.post('http://18.212.89.94:3000/video/comments', {
                 'video_id': 1,
-                'user_id': 1,
+                'commenter_id': 1,
                 comment: newComment
               },
               {
@@ -116,6 +116,18 @@ export default function Comments({ comments, displayComments, setDisplayComments
                   'Content-Type': 'application/json',
                 }
               })
+                .then((response) => {
+                  if (response.status === 201) {
+                    setNewComment('');
+                    return axios.get("http://18.212.89.94:3000/video/comments?video_id=1");
+                  }
+                })
+                .then((response) => {
+                  setComments(response.data);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             }}
           >
             <MaterialCommunityIcons name="message-plus-outline" size={36} color="#fff700" />
