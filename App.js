@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import "expo-dev-client";
 import { AuthProvider } from "./context/authContext.js";
+import { Context } from "./context/GlobalContext";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -144,9 +145,11 @@ export default function App() {
   return (
     <AuthProvider>
       {/* <SafeAreaView style={styles.container}> */}
-      <NavigationContainer>
-        <NavigationStack />
-      </NavigationContainer>
+      <Context>
+        <NavigationContainer>
+          <NavigationStack />
+        </NavigationContainer>
+      </Context>
       {/* </SafeAreaView> */}
     </AuthProvider>
   );

@@ -20,34 +20,35 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [globalUsername, setGlobalUsername] = useState();
 
-  const signup = (email, password, userType) => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        let currUser = user.user;
-        let response = {
-          email: currUser.email,
-          firebaseId: currUser.uid,
-          userType: userType,
-        };
-        setCurrentUser(response);
-      })
-      .catch(console.log);
+  const signup = async (email, password, userType) => {
+    try {
+      const user = await auth.createUserWithEmailAndPassword(email, password);
+      let currUser = user.user;
+      let response = {
+        email: currUser.email,
+        firebaseId: currUser.uid,
+        userType: userType,
+      };
+      setCurrentUser(response);
+      return response;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const login = (email, password) => {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        let currUser = user.user;
-        let response = {
-          email: currUser.email,
-          firebaseId: currUser.uid,
-        };
-        setCurrentUser(response);
-        console.log(response);
-      })
-      .catch(console.log);
+  const login = async (email, password) => {
+    try {
+      const user = await auth.signInWithEmailAndPassword(email, password);
+      let currUser = user.user;
+      let response = {
+        email: currUser.email,
+        firebaseId: currUser.uid,
+      };
+      setCurrentUser(response);
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const logout = () => {
