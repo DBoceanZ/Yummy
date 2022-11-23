@@ -43,6 +43,7 @@ export default function Home() {
   const [displayComments, setDisplayComments] = React.useState(false);
   const [focusedIndex, setFocusedIndex] = React.useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [comments, setComments] = React.useState([]);
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
   const opacity = useState(new Animated.Value(0))[0];
@@ -154,9 +155,17 @@ export default function Home() {
               <FontAwesome
                 style={styles.comment}
                 name="commenting"
-                size={34}
+                size={38}
                 color="white"
                 onPress={() => {
+                  axios
+                    .get("http://18.212.89.94:4000/video/comments?video_id=1")
+                    .then((response) => {
+                      console.log(response);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                   setDisplayComments(true);
                 }}
               />
