@@ -1,7 +1,7 @@
 import * as React from "react";
 import axios from "axios";
 import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   View,
@@ -45,6 +45,12 @@ export default function Home() {
   const [refreshing, setRefreshing] = React.useState(false);
   const [comments, setComments] = React.useState([]);
   const opacity = useState(new Animated.Value(0))[0];
+
+  useEffect(() => {
+    if (status.isPlaying) {
+      fadeOut();
+    }
+  }, [status.isPlaying]);
 
   function fadeIn() {
     Animated.timing(opacity, {
@@ -90,7 +96,6 @@ export default function Home() {
     setRefreshing(false);
   }, []);
 
-  // console.log(status.isPlaying === false);
   return (
     <View style={styles.container}>
       <Comments
