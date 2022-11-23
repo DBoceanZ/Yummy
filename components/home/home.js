@@ -159,7 +159,7 @@ export default function Home() {
                 color="white"
                 onPress={() => {
                   axios
-                    .get("http://18.212.89.94:4000/video/comments?video_id=1")
+                    .get("https://18.212.89.94:4000/video/comments?video_id=1")
                     .then((response) => {
                       console.log(response);
                     })
