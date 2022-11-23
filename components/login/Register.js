@@ -38,7 +38,7 @@ const Register = ({ navigation }) => {
       createNewUser(currentUser);
       console.log(currentUser);
       clearData();
-      navigation.navigate("Home");
+      navigation.navigate("BottomNav");
     }
   }, [currentUser]);
 
