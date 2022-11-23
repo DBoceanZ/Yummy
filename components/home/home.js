@@ -16,6 +16,7 @@ import {
   Image,
 } from "react-native";
 import { Video, AVPlaybackStatus } from "expo-av";
+import Comments from "./Comments";
 import { LightButton } from "../lib/buttons/CustomButton.js";
 import testfile from "./testmedia/testvideo.mp4";
 import testfile1 from "./testmedia/testvideo1.mp4";
@@ -39,6 +40,7 @@ const wait = (timeout) => {
 export default function Home() {
   const videoref = React.useRef(null);
   const [status, setStatus] = React.useState({});
+  const [displayComments, setDisplayComments] = React.useState(false);
   const [focusedIndex, setFocusedIndex] = React.useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
   const windowWidth = Dimensions.get("window").width;
@@ -92,6 +94,10 @@ export default function Home() {
   console.log(status.isPlaying === false);
   return (
     <View style={styles.container}>
+      <Comments
+        displayComments={displayComments}
+        setDisplayComments={setDisplayComments}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         disableIntervalMomentum={false}
@@ -148,14 +154,17 @@ export default function Home() {
               <FontAwesome
                 style={styles.comment}
                 name="commenting"
-                size={32}
+                size={34}
                 color="white"
+                onPress={() => {
+                  setDisplayComments(true);
+                }}
               />
               <Text style={styles.commentText}>0</Text>
               <FontAwesome
                 style={styles.share}
                 name="share"
-                size={32}
+                size={34}
                 color="white"
               />
               <Text style={styles.shareText}>0</Text>
@@ -187,37 +196,37 @@ const styles = StyleSheet.create({
   },
   heart: {
     position: "absolute",
-    bottom: 330,
+    bottom: 370,
     right: 5,
   },
   heartText: {
     fontWeight: "bold",
     position: "absolute",
-    bottom: 310,
+    bottom: 350,
     right: 17,
     color: "white",
   },
   comment: {
     position: "absolute",
-    bottom: 260,
+    bottom: 305,
     right: 5,
   },
   commentText: {
     fontWeight: "bold",
     position: "absolute",
-    bottom: 240,
+    bottom: 280,
     right: 17,
     color: "white",
   },
   share: {
     position: "absolute",
-    bottom: 190,
+    bottom: 230,
     right: 5,
   },
   shareText: {
     fontWeight: "bold",
     position: "absolute",
-    bottom: 170,
+    bottom: 210,
     right: 17,
     color: "white",
   },
@@ -241,7 +250,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   pfp: {
-    bottom: 400,
+    bottom: 430,
     right: 5,
     width: 45,
     height: 45,
