@@ -15,6 +15,8 @@ import TestNav from "./components/login/testNav.js";
 import Home from "./components/home/home.js";
 import FollowerList from "./components/follows/FollowerList.js";
 import FollowingList from "./components/follows/FollowingList.js";
+import { Entypo, AntDesign, Ionicons, Feather } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
 
