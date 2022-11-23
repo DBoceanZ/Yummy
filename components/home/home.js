@@ -152,6 +152,28 @@ export default function Home() {
                 name="heart"
                 size={32}
                 color="white"
+                onPress={() => {
+                  axios.post('http://18.212.89.94:3000/video/likes', {
+                    'video_id': 1,
+                    'user_id': 1,
+                  },
+                  {
+                    headers: {
+                      'Content-Type': 'application/json',
+                    }
+                  })
+                    .then((response) => {
+                      if (response.code === 201) {
+                        console.log('success')
+                        /*need to get like count again*/
+                      } else {
+                        console.log('failure')
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err)
+                    })
+                }}
               />
               <Text style={styles.heartText}>0</Text>
               <FontAwesome
