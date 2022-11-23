@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import "expo-dev-client";
 import { AuthProvider } from "./context/authContext.js";
+import { Context } from "./context/GlobalContext";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,10 +14,12 @@ import TestNav from "./components/login/testNav.js";
 import Home from "./components/home/home.js";
 import FollowerList from "./components/follows/FollowerList.js";
 import FollowingList from "./components/follows/FollowingList.js";
+import { useGlobalContext } from "./context/GlobalContext";
 
 const Stack = createNativeStackNavigator();
 
 const NavigationStack = () => {
+  const { loading, setLoading } = useGlobalContext();
   return (
     <Stack.Navigator
       screenOptions={{
@@ -49,9 +52,11 @@ export default function App() {
   return (
     <AuthProvider>
       <SafeAreaView style={styles.container}>
-        <NavigationContainer>
-          <NavigationStack />
-        </NavigationContainer>
+        <Context>
+          <NavigationContainer>
+            <NavigationStack />
+          </NavigationContainer>
+        </Context>
       </SafeAreaView>
     </AuthProvider>
   );
