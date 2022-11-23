@@ -10,33 +10,37 @@ import React, { useState, useEffect } from "react";
 import { BasicInput } from "../lib/inputs/CustomInput.js";
 import { LightButton } from "../lib/buttons/CustomButton.js";
 import Logo from "../../assets/images/yummyLogo.png";
-import { auth } from "../../config/firebase.js";
+import { useAuth } from "../../context/authContext.js";
 
 const Login = ({ navigation }) => {
   const { height } = useWindowDimensions();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState();
+  const { login, currentUser, globalUsername, setGlobalUsername } = useAuth();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.navigate("Home");
-      }
-    });
-    return unsubscribe;
-  }, []);
+    if (currentUser.email && currentUser.firebaseId) {
+      console.log("testing for user");
+      getUserData();
+    }
+  }, [currentUser]);
+
+  const clearData = () => {
+    setUsername("");
+    setEmail("");
+    setPassword("");
+  };
+
+  const getUserData = (user) => {
+    console.log("get user data route");
+    // grab globalUsername from DB pull
+    navigation.navigate("Home");
+  };
+
   const handleSubmit = () => {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("logged in with:", user.email);
-      })
-      .catch((err) => {
-        alert("Error! Redirecting to Registration");
-        navigation.navigate("Register");
-      });
+    login(email, password);
   };
 
   return (
