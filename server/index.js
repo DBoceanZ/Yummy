@@ -1,10 +1,12 @@
 const express = require('express');
+const https = require('https')
 const path = require('path');
-const router = require('./routes');
 const morgan = require('morgan');
 const fs = require('fs');
 const { formatDistanceToNow } = require('date-fns');
 require('dotenv').config();
+const router = require('./routes');
+const videoRouter = require('./routes/video');
 const pool = require('./database');
 
 // basic server
@@ -41,9 +43,10 @@ app.get('/test', (req, res) => {
     .then(resp => console.log(formatDistanceToNow(resp.rows[0].now)))
 })
 // routers go here
+app.use('/video', videoRouter)
 /*
  *
- *
+*
  *
  *
  *
@@ -65,9 +68,12 @@ app.get('/test', (req, res) => {
  *
 */
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
-app.listen(port, (err) => {
+https.createServer({
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+}, app).listen(port, (err) => {
   if (err) {
     console.log(err);
   } else {
