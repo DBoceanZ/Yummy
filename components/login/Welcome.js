@@ -25,7 +25,8 @@ export default function Login({ navigation }) {
     navigation.navigate("Register");
   };
   const handleGuestLogin = () => {
-    navigation.navigate("Home");
+    navigation.navigate("BottomNav");
+    console.warn("Guest Login requested");
   };
   return (
     <View style={styles.root}>

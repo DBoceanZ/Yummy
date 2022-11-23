@@ -48,6 +48,7 @@ const Register = ({ navigation }) => {
     if (currentUser.email && currentUser.firebaseId) {
       createNewUser(user);
       clearData();
+      navigation.navigate("BottomNav");
     }
   }, [currentUser]);
 

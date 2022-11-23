@@ -45,9 +45,7 @@ const Login = ({ navigation }) => {
   const getUserData = (user) => {
     console.log("get user data route");
     // grab globalUsername from DB pull
-    setLoading(false);
-    clearData();
-    navigation.navigate("Home");
+    navigation.navigate("BottomNav");
   };
 
   const handleSubmit = async () => {
