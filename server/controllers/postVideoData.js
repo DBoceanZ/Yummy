@@ -7,13 +7,25 @@ module.exports = {
       if (pass) {
         res.sendStatus(201);
       } else {
-        res.sendStatus(400)
+        res.sendStatus(400);
       }
     } catch (err) {
-      console.log(err)
-      res.sendStatus(500)
+      console.log(err);
+      res.sendStatus(500);
+    }
+  },
+  like: async (req, res) => {
+    try {
+      const pass = await insertVideoData.like(req.body);
+      if (pass) {
+        res.sendStatus(201);
+      } else {
+        res.sendStatus(400);
+      }
+    } catch (err) {
+      console.log(err);
+      res.sendStatus(500);
     }
   }
-
 }
 
