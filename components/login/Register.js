@@ -48,7 +48,7 @@ const Register = ({ navigation }) => {
     if (currentUser.email && currentUser.firebaseId) {
       createNewUser(user);
       clearData();
-      navigation.navigate("BottomNav");
+      // navigation.navigate("BottomNav");
     }
   }, [currentUser]);
 
@@ -57,7 +57,7 @@ const Register = ({ navigation }) => {
     console.log("user", currentUser);
     setLoading(false);
     clearData();
-    navigation.navigate("Home");
+    navigation.navigate("BottomNav");
     //will set globalUsername on DB pull
     // await axios.post("/user", user);
   };

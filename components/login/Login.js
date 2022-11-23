@@ -45,6 +45,7 @@ const Login = ({ navigation }) => {
   const getUserData = (user) => {
     console.log("get user data route");
     // grab globalUsername from DB pull
+    clearData();
     navigation.navigate("BottomNav");
   };
 
