@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './styles';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { LightButton } from '../lib/buttons/CustomButton';
 
 const Profile = ({ user = 'ExampleUser'}) => {
