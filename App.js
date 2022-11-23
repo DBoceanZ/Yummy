@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import "expo-dev-client";
-
+import { AuthProvider } from "./context/authContext.js";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -28,7 +28,7 @@ const NavigationStack = () => {
           fontWeight: "bold",
           color: "#B4be00",
         },
-        headerTintColor: "#B4be00",
+        headerTintColor: "#ffae1f",
       }}
     >
       <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
@@ -47,18 +47,20 @@ const NavigationStack = () => {
 
 export default function App() {
   return (
-    // <SafeAreaView style={styles.container}>
-    <NavigationContainer>
-      <NavigationStack />
-    </NavigationContainer>
-    // </SafeAreaView>
+    <AuthProvider>
+      <SafeAreaView style={styles.container}>
+        <NavigationContainer>
+          <NavigationStack />
+        </NavigationContainer>
+      </SafeAreaView>
+    </AuthProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#B4be00",
+    backgroundColor: "#ffae1f",
   },
   screenHeader: {},
 });
