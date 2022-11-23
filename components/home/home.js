@@ -98,6 +98,7 @@ export default function Home() {
       <Comments
         displayComments={displayComments}
         setDisplayComments={setDisplayComments}
+        comments={comments}
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -159,9 +160,9 @@ export default function Home() {
                 color="white"
                 onPress={() => {
                   axios
-                    .get("https://18.212.89.94:4000/video/comments?video_id=1")
+                    .get("http://18.212.89.94:3000/video/comments?video_id=1")
                     .then((response) => {
-                      console.log(response);
+                      setComments(response.data);
                     })
                     .catch((err) => {
                       console.log(err);
