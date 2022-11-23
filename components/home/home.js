@@ -44,8 +44,6 @@ export default function Home() {
   const [focusedIndex, setFocusedIndex] = React.useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
   const [comments, setComments] = React.useState([]);
-  const windowWidth = Dimensions.get("window").width;
-  const windowHeight = Dimensions.get("window").height;
   const opacity = useState(new Animated.Value(0))[0];
 
   function fadeIn() {

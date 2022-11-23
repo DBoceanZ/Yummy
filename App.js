@@ -70,12 +70,12 @@ function BottomNav() {
                 <View
                   style={styles.square}
                   backgroundColor="#fd004d"
-                  right={42}
+                  left={46}
                 />
                 <View
                   style={styles.square}
                   backgroundColor="#00ffeb"
-                  left={42}
+                  right={46}
                 />
                 <View
                   style={styles.square}
