@@ -23,10 +23,9 @@ export default function Login({ navigation }) {
   };
   const handleRegistration = () => {
     navigation.navigate("Register");
-    console.warn("Registration Pressed");
   };
   const handleGuestLogin = () => {
-    navigation.navigate("Home");
+    navigation.navigate("BottomNav");
     console.warn("Guest Login requested");
   };
   return (

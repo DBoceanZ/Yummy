@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import "expo-dev-client";
 import { AuthProvider } from "./context/authContext.js";
+import { Context } from "./context/GlobalContext";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -121,14 +122,14 @@ const NavigationStack = () => {
         headerTintColor: "#ffae1f",
       }}
     >
+      <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
+      <Stack.Screen name="Login" component={Login}></Stack.Screen>
+      <Stack.Screen name="Register" component={Register}></Stack.Screen>
       <Stack.Screen
         name="BottomNav"
         component={BottomNav}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
-      <Stack.Screen name="Login" component={Login}></Stack.Screen>
-      <Stack.Screen name="Register" component={Register}></Stack.Screen>
       <Stack.Screen
         options={{ headerShown: false }}
         name="Home"
@@ -144,9 +145,11 @@ export default function App() {
   return (
     <AuthProvider>
       {/* <SafeAreaView style={styles.container}> */}
-      <NavigationContainer>
-        <NavigationStack />
-      </NavigationContainer>
+      <Context>
+        <NavigationContainer>
+          <NavigationStack />
+        </NavigationContainer>
+      </Context>
       {/* </SafeAreaView> */}
     </AuthProvider>
   );
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
   },
   screenHeader: {},
   square: {
-    borderRadius: "3px",
+    borderRadius: 3,
     width: 12,
     height: 26,
     position: "absolute",

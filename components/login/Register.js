@@ -12,12 +12,15 @@ import { LightButton } from "../lib/buttons/CustomButton.js";
 import Logo from "../../assets/images/yummyLogo.png";
 import { auth } from "../../config/firebase.js";
 import { useAuth } from "../../context/authContext.js";
+import { useGlobalContext } from "../../context/GlobalContext";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const handleSubmit = () => {
   console.warn("Submit Pressed");
 };
 
 const Register = ({ navigation }) => {
+  const { loading, setLoading } = useGlobalContext();
   const { height } = useWindowDimensions();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +28,7 @@ const Register = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { signup, currentUser, setGlobalUsername, globalUserName } = useAuth();
   const [user, setUser] = useState({});
-  const [loading, setLoading] = useState();
+
   const clearData = () => {
     setPassword("");
     setConfirmPassword("");
@@ -34,23 +37,37 @@ const Register = ({ navigation }) => {
   };
 
   useEffect(() => {
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }, [loading]);
+
+  useEffect(() => {
     if (currentUser.email && currentUser.firebaseId) {
-      createNewUser(currentUser);
-      console.log(currentUser);
+      createNewUser(user);
       clearData();
-      navigation.navigate("Home");
+      navigation.navigate("BottomNav");
     }
   }, [currentUser]);
 
   const createNewUser = async (user) => {
     console.log("create new user route");
     console.log("user", currentUser);
+    setLoading(false);
+    clearData();
+    navigation.navigate("Home");
     //will set globalUsername on DB pull
     // await axios.post("/user", user);
   };
-  const handleSubmit = () => {
-    signup(email, password);
-    createNewUser(user);
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      const user = await signup(email, password);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const passwordRedirect = () => {
@@ -66,47 +83,55 @@ const Register = ({ navigation }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <Image
-        source={Logo}
-        style={[styles.logo, { height: height * 0.3 }]}
-        resizeMode="contain"
-      ></Image>
+      <View>
+        {loading ? (
+          <Spinner visible={loading} textContent={"Loading..."} />
+        ) : (
+          <>
+            <Image
+              source={Logo}
+              style={[styles.logo, { height: height * 0.3 }]}
+              resizeMode="contain"
+            ></Image>
 
-      <Text style={styles.text} variant="h4">
-        Register
-      </Text>
-      <Stack m={4} spacing={4}>
-        <BasicInput
-          placeHolder="Username"
-          value={username}
-          setValue={setUsername}
-        />
-        <BasicInput
-          placeHolder="email"
-          value={email}
-          setValue={setEmail}
-          onChangetext={(text) => {
-            setLoading(true);
-            setEmail(text);
-          }}
-        />
-        <BasicInput
-          placeHolder="Password"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry={true}
-        />
-        <BasicInput
-          placeHolder="Confirm Password"
-          value={confirmPassword}
-          setValue={setConfirmPassword}
-          secureTextEntry={true}
-          onChangeText={(text) =>
-            text === password ? redirectToLogin() : passwordRedirect()
-          }
-        />
-        <LightButton text="submit" onPress={handleSubmit} />
-      </Stack>
+            <Text style={styles.text} variant="h4">
+              Register
+            </Text>
+            <Stack m={4} spacing={4}>
+              <BasicInput
+                placeHolder="Username"
+                value={username}
+                setValue={setUsername}
+              />
+              <BasicInput
+                placeHolder="email"
+                value={email}
+                setValue={setEmail}
+                onChangetext={(text) => {
+                  setLoading(true);
+                  setEmail(text);
+                }}
+              />
+              <BasicInput
+                placeHolder="Password"
+                value={password}
+                setValue={setPassword}
+                secureTextEntry={true}
+              />
+              <BasicInput
+                placeHolder="Confirm Password"
+                value={confirmPassword}
+                setValue={setConfirmPassword}
+                secureTextEntry={true}
+                onChangeText={(text) =>
+                  text === password ? redirectToLogin() : passwordRedirect()
+                }
+              />
+              <LightButton text="submit" onPress={handleSubmit} />
+            </Stack>
+          </>
+        )}
+      </View>
     </KeyboardAvoidingView>
   );
 };
