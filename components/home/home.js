@@ -113,7 +113,7 @@ export default function Home() {
                 size={38}
                 color="white"
                 onPress={() => {
-                  axios.get('http://10.0.0.221:4000/video/comments?video_id=1')
+                  axios.get('http://18.212.89.94:4000/video/comments?video_id=1')
                     .then((response) => {console.log(response)})
                     .catch((err) => {console.log(err)})
                   setDisplayComments(true);
