@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS likes (
   id SERIAL NOT NULL,
   video_id INT NOT NULL REFERENCES videos(id),
   user_id INT NOT NULL REFERENCES users(id),
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  UNIQUE(video_id, user_id)
 );
 
 CREATE TABLE IF NOT EXISTS comments (
@@ -42,7 +43,8 @@ CREATE TABLE IF NOT EXISTS comments (
 CREATE TABLE IF NOT EXISTS tags (
   id SERIAL NOT NULL,
   tag VARCHAR(80) NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  UNIQUE(tag),
 );
 
 CREATE TABLE IF NOT EXISTS video_tags (
