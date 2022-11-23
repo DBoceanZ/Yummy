@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   screenHeader: {},
   square: {
-    borderRadius: "3px",
+    borderRadius: 3,
     width: 12,
     height: 26,
     position: "absolute",
