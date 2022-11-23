@@ -1,6 +1,5 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View, Modal, Pressable } from 'react-native';
-import GestureRecognizer from 'react-native-swipe-gestures'
 import { FontAwesome5 } from '@expo/vector-icons';
 import CommentCard from './CommentCard';
 

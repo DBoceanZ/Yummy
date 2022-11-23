@@ -36,6 +36,7 @@ export default function Home() {
   const [displayComments, setDisplayComments] = React.useState(false);
   const [focusedIndex, setFocusedIndex] = React.useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [comments, setComments] = React.useState([])
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
 
@@ -108,10 +109,13 @@ export default function Home() {
               <Text style={styles.heartstatusText}>0</Text>
               <FontAwesome
                 style={styles.comment}
-                name="commenting-o"status
+                name="commenting-o"
                 size={38}
                 color="white"
                 onPress={() => {
+                  axios.get('http://10.0.0.221:4000/video/comments?video_id=1')
+                    .then((response) => {console.log(response)})
+                    .catch((err) => {console.log(err)})
                   setDisplayComments(true);
                 }}
               />
