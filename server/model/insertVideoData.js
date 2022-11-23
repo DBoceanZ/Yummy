@@ -12,11 +12,11 @@ module.exports = {
   },
   like: async ({ video_id, user_id}) => {
     try {
-      const addLike = await pool.query('INSERT INTO likes(user_id, video_id) VALUES ($1, $2)', [video_id, user_id])
-      console.log(addLike);
+      const addLike = await pool.query('INSERT INTO likes(user_id, video_id) VALUES ($1, $2)', [user_id, video_id])
+      return(addLike)
     } catch (err) {
-      console.log(err)
-      return err
+      console.log("ERROR 1")
+      return 'error'
     }
   }
 }

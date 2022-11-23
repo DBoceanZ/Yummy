@@ -4,7 +4,7 @@ module.exports = {
   comment: async (req, res) => {
     try {
       const pass = await insertVideoData.comment(req.body);
-      if (pass) {
+      if (pass.rowCount) {
         res.sendStatus(201);
       } else {
         res.sendStatus(400);
@@ -17,13 +17,14 @@ module.exports = {
   like: async (req, res) => {
     try {
       const pass = await insertVideoData.like(req.body);
-      if (pass) {
+      console.log(pass)
+      if (pass.rowCount) {
         res.sendStatus(201);
       } else {
         res.sendStatus(400);
       }
     } catch (err) {
-      console.log(err);
+      console.log('ERROR!');
       res.sendStatus(500);
     }
   }
