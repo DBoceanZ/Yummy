@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View, Modal, Pressable } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FlatList, StyleSheet, Text, View, Modal, Pressable, TextInput } from 'react-native';
+import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import CommentCard from './CommentCard';
 
 const styles = StyleSheet.create({
@@ -14,10 +14,25 @@ const styles = StyleSheet.create({
   transparent: {
     flex: 0.4,
     backgroundColor: 'rgba(0,0,0,0)',
+  },
+  inputContainer: {
+    borderWidth: 5,
+    borderColor: '#a0a0a0',
+    borderRadius: 4,
+    flexDirection: 'row',
+  },
+  inputComment: {
+    flex: 1,
+    height: 36,
+    backgroundColor: '#fffa9c',
+    borderWidth: 2,
+    borderColor: '#1e232c',
+    borderRadius: 4,
   }
 })
 
 export default function Comments({ displayComments, setDisplayComments }) {
+  const [ newComment, setNewComment ] = React.useState('');
   const comments = [
     {
       'commenter_name': 'someUsername',
@@ -63,7 +78,7 @@ export default function Comments({ displayComments, setDisplayComments }) {
         }}
         style={{alignItems: 'center'}}
       >
-        <FontAwesome5 name="grip-lines" size={36} color="#fff700" />
+        <FontAwesome5 name="angle-down" size={36} color="#fff700" />
       </Pressable>
     )
   }
@@ -76,12 +91,23 @@ export default function Comments({ displayComments, setDisplayComments }) {
     >
       <View style={styles.transparent} />
       <View style={styles.container}>
+        <RenderHeader />
         <FlatList
           data={comments}
           renderItem={({item}) => <CommentCard comment={item} />}
-          ListHeaderComponent={RenderHeader}
-          stickyHeaderIndices={[0]}
         />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.inputComment}
+            onChangeText={setNewComment}
+            value={newComment}
+            maxLength={600}
+          />
+          <Pressable
+          >
+            <MaterialCommunityIcons name="message-plus-outline" size={36} color="#fff700" />
+          </Pressable>
+        </View>
       </View>
     </Modal>
   )
