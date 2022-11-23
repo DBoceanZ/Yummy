@@ -20,7 +20,7 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const { login, currentUser, globalUsername, setGlobalUsername } = useAuth();
-  const { loading, setLoading } = useGlobalContext();
+  const { loading, setLoading, userData, setUserData } = useGlobalContext();
 
   useEffect(() => {
     if (loading) {
@@ -45,6 +45,12 @@ const Login = ({ navigation }) => {
   const getUserData = (user) => {
     console.log("get user data route");
     // grab globalUsername from DB pull
+    setUserData({
+      ...userData,
+      UID: currentUser.firebaseId,
+    });
+    clearData();
+    alert(`user: ${currentUser.firebaseId} signed in`);
     navigation.navigate("BottomNav");
   };
 
