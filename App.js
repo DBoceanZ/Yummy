@@ -106,7 +106,6 @@ function BottomNav() {
 }
 
 const NavigationStack = () => {
-  const { loading, setLoading } = useGlobalContext();
   return (
     <Stack.Navigator
       screenOptions={{
