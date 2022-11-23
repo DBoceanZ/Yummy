@@ -121,14 +121,14 @@ const NavigationStack = () => {
         headerTintColor: "#ffae1f",
       }}
     >
+      <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
+      <Stack.Screen name="Login" component={Login}></Stack.Screen>
+      <Stack.Screen name="Register" component={Register}></Stack.Screen>
       <Stack.Screen
         name="BottomNav"
         component={BottomNav}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
-      <Stack.Screen name="Login" component={Login}></Stack.Screen>
-      <Stack.Screen name="Register" component={Register}></Stack.Screen>
       <Stack.Screen
         options={{ headerShown: false }}
         name="Home"
