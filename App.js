@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Welcome from "./components/login/Welcome.js";
 import Login from "./components/login/Login.js";
 import Profile from "./components/profile/Profile.js";
@@ -13,6 +14,22 @@ import TestNav from "./components/login/testNav.js";
 import Home from "./components/home/home.js";
 
 const Stack = createNativeStackNavigator();
+
+const Tab = createBottomTabNavigator();
+
+function bottomNav() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: { backgroundColor: "black", height: 80 },
+        headerShown: false,
+      }}
+    >
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Login" component={Login} />
+    </Tab.Navigator>
+  );
+}
 
 const NavigationStack = () => {
   return (
@@ -29,6 +46,11 @@ const NavigationStack = () => {
         headerTintColor: "#B4be00",
       }}
     >
+      <Stack.Screen
+        name="bottomNav"
+        component={bottomNav}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
       <Stack.Screen name="Login" component={Login}></Stack.Screen>
       <Stack.Screen name="Register" component={Register}></Stack.Screen>

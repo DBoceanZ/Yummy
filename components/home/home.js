@@ -2,7 +2,7 @@ import * as React from "react";
 import axios from "axios";
 import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
 import { useState } from "react";
-
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   View,
   StyleSheet,
@@ -13,6 +13,7 @@ import {
   Pressable,
   RefreshControl,
   Animated,
+  Image,
 } from "react-native";
 import { Video, AVPlaybackStatus } from "expo-av";
 import { LightButton } from "../lib/buttons/CustomButton.js";
@@ -22,11 +23,14 @@ import testfile2 from "./testmedia/testvideo2.mp4";
 import testfile3 from "./testmedia/testvideo.mp4";
 import testfile4 from "./testmedia/testvideo1.mp4";
 import testfile5 from "./testmedia/testvideo2.mp4";
+import testpfp from "./testmedia/testpfp.png";
 import { Stack, IconButton } from "@react-native-material/core";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const files = [testfile, testfile1, testfile2, testfile3, testfile4, testfile5];
+const mockUsername = "user";
+const mockDesc = "this is the video description";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -119,6 +123,7 @@ export default function Home() {
                 isLooping
                 onPlaybackStatusUpdate={(status) => setStatus(() => status)}
               />
+              <Image source={testpfp} style={styles.pfp} />
               <Animated.View
                 style={[
                   {
@@ -136,24 +141,26 @@ export default function Home() {
               <AntDesign
                 style={styles.heart}
                 name="heart"
-                size={38}
+                size={32}
                 color="white"
               />
               <Text style={styles.heartText}>0</Text>
               <FontAwesome
                 style={styles.comment}
-                name="commenting-o"
-                size={38}
+                name="commenting"
+                size={32}
                 color="white"
               />
               <Text style={styles.commentText}>0</Text>
               <FontAwesome
                 style={styles.share}
                 name="share"
-                size={38}
+                size={32}
                 color="white"
               />
               <Text style={styles.shareText}>0</Text>
+              <Text style={styles.usernameText}>{mockUsername}</Text>
+              <Text style={styles.descText}>{mockDesc}</Text>
             </Pressable>
           </View>
         ))}
@@ -179,45 +186,39 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   heart: {
-    margin: 5,
     position: "absolute",
     bottom: 330,
     right: 5,
   },
   heartText: {
-    margin: 5,
     fontWeight: "bold",
     position: "absolute",
     bottom: 310,
-    right: 20,
+    right: 17,
     color: "white",
   },
   comment: {
-    margin: 5,
     position: "absolute",
     bottom: 260,
     right: 5,
   },
   commentText: {
-    margin: 5,
     fontWeight: "bold",
     position: "absolute",
     bottom: 240,
-    right: 20,
+    right: 17,
     color: "white",
   },
   share: {
-    margin: 5,
     position: "absolute",
     bottom: 190,
     right: 5,
   },
   shareText: {
-    margin: 5,
     fontWeight: "bold",
     position: "absolute",
     bottom: 170,
-    right: 20,
+    right: 17,
     color: "white",
   },
   playBut: {
@@ -233,12 +234,35 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
-
-    elevation: 4,
   },
   playButContainer: {
     alignItems: "center",
     flex: 1,
     justifyContent: "center",
+  },
+  pfp: {
+    bottom: 400,
+    right: 5,
+    width: 45,
+    height: 45,
+    borderRadius: 200 / 2,
+    position: "absolute",
+    borderColor: "white",
+    borderWidth: 1,
+  },
+  usernameText: {
+    margin: 5,
+    fontWeight: "bold",
+    position: "absolute",
+    bottom: 115,
+    left: 5,
+    color: "white",
+  },
+  descText: {
+    margin: 5,
+    position: "absolute",
+    bottom: 85,
+    left: 5,
+    color: "white",
   },
 });
