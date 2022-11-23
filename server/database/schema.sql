@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS videos (
   id SERIAL NOT NULL,
   video_url VARCHAR NOT NULL,
   creator_id INT NOT NULL REFERENCES users(id),
-  created_at TIMESTAMPTZ DEFAULT Now(),
+  created_at TIMESTAMP DEFAULT Now(),
   PRIMARY KEY (id)
 );
 
