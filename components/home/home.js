@@ -90,7 +90,7 @@ export default function Home() {
     setRefreshing(false);
   }, []);
 
-  console.log(status.isPlaying === false);
+  // console.log(status.isPlaying === false);
   return (
     <View style={styles.container}>
       <Comments
