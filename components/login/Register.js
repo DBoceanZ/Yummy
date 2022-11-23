@@ -6,11 +6,12 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { Stack, Text } from "@react-native-material/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BasicInput } from "../lib/inputs/CustomInput.js";
 import { LightButton } from "../lib/buttons/CustomButton.js";
 import Logo from "../../assets/images/yummyLogo.png";
 import { auth } from "../../config/firebase.js";
+import { useAuth } from "../../context/authContext.js";
 
 const handleSubmit = () => {
   console.warn("Submit Pressed");
@@ -22,20 +23,36 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleSubmit = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        alert("Registered! Welcome!");
-        navigation.navigate("Login");
-      })
-      .catch((err) => {
-        console.log(err.message);
-        alert("Error! Please Try Again");
-      });
+  const { signup, currentUser, setGlobalUsername, globalUserName } = useAuth();
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState();
+  const clearData = () => {
+    setPassword("");
+    setConfirmPassword("");
+    setEmail("");
+    setUsername("");
   };
+
+  useEffect(() => {
+    if (currentUser.email && currentUser.firebaseId) {
+      createNewUser(currentUser);
+      console.log(currentUser);
+      clearData();
+      navigation.navigate("Home");
+    }
+  }, [currentUser]);
+
+  const createNewUser = async (user) => {
+    console.log("create new user route");
+    console.log("user", currentUser);
+    //will set globalUsername on DB pull
+    // await axios.post("/user", user);
+  };
+  const handleSubmit = () => {
+    signup(email, password);
+    createNewUser(user);
+  };
+
   const passwordRedirect = () => {
     alert("Passwords don't match");
     navigation.navigate("Register");
@@ -68,7 +85,10 @@ const Register = ({ navigation }) => {
           placeHolder="email"
           value={email}
           setValue={setEmail}
-          onChangetext={(text) => setEmail(text)}
+          onChangetext={(text) => {
+            setLoading(true);
+            setEmail(text);
+          }}
         />
         <BasicInput
           placeHolder="Password"
