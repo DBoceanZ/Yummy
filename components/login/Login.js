@@ -32,7 +32,6 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     if (currentUser.email && currentUser.firebaseId) {
-      console.log("testing for user");
       getUserData();
     }
   }, [currentUser]);
@@ -47,12 +46,17 @@ const Login = ({ navigation }) => {
     console.log("get user data route");
     // grab globalUsername from DB pull
     setLoading(false);
+    clearData();
     navigation.navigate("Home");
   };
 
-  const handleSubmit = () => {
-    setLoading(true);
-    login(email, password);
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      const user = await login(email, password);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
