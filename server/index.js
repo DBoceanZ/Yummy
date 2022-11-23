@@ -13,6 +13,14 @@ const pool = require('./database');
 const app = express();
 app.use(express.json());
 
+// CORS
+app.use((_, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 // logger
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/access.log'), { flags: 'a' });
 app.use(morgan('tiny', { stream: accessLogStream }));
@@ -38,10 +46,6 @@ app.post('/test', (req, res) => {
     })
 });
 
-app.get('/test', (req, res) => {
-  pool.query("SELECT now();")
-    .then(resp => console.log(formatDistanceToNow(resp.rows[0].now)))
-})
 // routers go here
 app.use('/video', videoRouter)
 /*
@@ -69,7 +73,14 @@ app.use('/video', videoRouter)
 */
 
 const port = process.env.PORT || 4000;
-
+app.listen(3000, (err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(`server listening on 3000`)
+    console.log(`successfully connected at http://${process.env.HOST || 'localhost'}:3000`)
+  }
+})
 https.createServer({
   key: fs.readFileSync('key.pem'),
   cert: fs.readFileSync('cert.pem')
