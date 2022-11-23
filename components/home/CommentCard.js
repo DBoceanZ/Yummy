@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,10 +36,10 @@ export default function CommentCard({ comment }) {
     <View style={styles.container}>
       <View style={styles.detailsContainer}>
         <Text style={styles.commenterStyles}>
-          {comment.commenter_name}
+          {comment.username}
         </Text>
         <Text style={styles.dateStyles}>
-          {formatDistanceToNow(comment.created_at)}
+          {formatDistanceToNow(parseISO(comment.created_at))}
           &nbsp;ago
         </Text>
       </View>
