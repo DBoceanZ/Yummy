@@ -1,8 +1,7 @@
 const videoRouter = require('express').Router();
-const getVideoData = require('../controllers/getVideoData');
-const postVideoData = require('../controllers/postVideoData');
+const videoController = require('../controllers/videoController');
 
-videoRouter.get('/comments', getVideoData.videoComments);
-videoRouter.post('/comments', postVideoData.comment);
-videoRouter.post('/likes', postVideoData.like)
+videoRouter.get('/comments', videoController.getComments);
+videoRouter.post('/comments', videoController.addComment);
+videoRouter.post('/likes', videoController.addLike)
 module.exports = videoRouter

@@ -7,6 +7,7 @@ const { formatDistanceToNow } = require('date-fns');
 require('dotenv').config();
 const router = require('./routes');
 const videoRouter = require('./routes/video');
+const usersRouter = require('./routes/users')
 const pool = require('./database');
 
 // basic server
@@ -48,6 +49,7 @@ app.post('/test', (req, res) => {
 
 // routers go here
 app.use('/video', videoRouter)
+app.use('/users', usersRouter)
 /*
  *
 *

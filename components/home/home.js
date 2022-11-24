@@ -1,7 +1,7 @@
 import * as React from "react";
 import axios from "axios";
 import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   View,
@@ -14,6 +14,7 @@ import {
   RefreshControl,
   Animated,
   Image,
+  Share,
 } from "react-native";
 import { Video, AVPlaybackStatus } from "expo-av";
 import Comments from "./Comments";
@@ -26,9 +27,9 @@ import testfile4 from "./testmedia/testvideo1.mp4";
 import testfile5 from "./testmedia/testvideo2.mp4";
 import testpfp from "./testmedia/testpfp.png";
 import { Stack, IconButton } from "@react-native-material/core";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
 const files = [testfile, testfile1, testfile2, testfile3, testfile4, testfile5];
 const mockUsername = "user";
 const mockDesc = "this is the video description";
@@ -44,9 +45,16 @@ export default function Home() {
   const [focusedIndex, setFocusedIndex] = React.useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
   const [comments, setComments] = React.useState([]);
+  const [aColor, setAColor] = React.useState("white");
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
   const opacity = useState(new Animated.Value(0))[0];
+
+  useEffect(() => {
+    if (status.isPlaying) {
+      fadeOut();
+    }
+  }, [status.isPlaying]);
 
   function fadeIn() {
     Animated.timing(opacity, {
@@ -64,7 +72,7 @@ export default function Home() {
     }).start();
   }
 
-  const handleScroll = React.useCallback(
+  const handleScroll = useCallback(
     ({
       nativeEvent: {
         contentOffset: { y },
@@ -92,7 +100,6 @@ export default function Home() {
     setRefreshing(false);
   }, []);
 
-  // console.log(status.isPlaying === false);
   return (
     <View style={styles.container}>
       <Comments
@@ -151,28 +158,34 @@ export default function Home() {
                 style={styles.heart}
                 name="heart"
                 size={32}
-                color="white"
+                color={aColor}
                 onPress={() => {
-                  axios.post('http://18.212.89.94:3000/video/likes', {
-                    'video_id': 1,
-                    'user_id': 1,
-                  },
-                  {
-                    headers: {
-                      'Content-Type': 'application/json',
-                    }
-                  })
+                  axios
+                    .post(
+                      "http://18.212.89.94:3000/video/likes",
+                      {
+                        video_id: 1,
+                        user_id: 1,
+                      },
+                      {
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                      }
+                    )
                     .then((response) => {
-                      if (response.code === 201) {
-                        console.log('success')
+                      console.log(response);
+                      if (response.status === 201) {
+                        console.log("success");
+                        setAColor("red");
                         /*need to get like count again*/
                       } else {
-                        console.log('failure')
+                        console.log("failure");
                       }
                     })
                     .catch((err) => {
-                      console.log(err)
-                    })
+                      console.log(err);
+                    });
                 }}
               />
               <Text style={styles.heartText}>0</Text>
@@ -182,7 +195,8 @@ export default function Home() {
                 size={38}
                 color="white"
                 onPress={() => {
-                  axios.get("http://18.212.89.94:3000/video/comments?video_id=1")
+                  axios
+                    .get("http://18.212.89.94:3000/video/comments?video_id=1")
                     .then((response) => {
                       setComments(response.data);
                     })
@@ -193,12 +207,14 @@ export default function Home() {
                 }}
               />
               <Text style={styles.commentText}>0</Text>
-              <FontAwesome
-                style={styles.share}
-                name="share"
-                size={34}
-                color="white"
-              />
+              <Pressable onPress={onShare}>
+                <FontAwesome
+                  style={styles.share}
+                  name="share"
+                  size={34}
+                  color="white"
+                />
+              </Pressable>
               <Text style={styles.shareText}>0</Text>
               <Text style={styles.usernameText}>{mockUsername}</Text>
               <Text style={styles.descText}>{mockDesc}</Text>
@@ -307,3 +323,22 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
+
+const onShare = async () => {
+  try {
+    const result = await Share.share({
+      message: `check out this video from Yummy! url goes here`,
+    });
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        // shared with activity type of result.activityType
+      } else {
+        // shared
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+};
