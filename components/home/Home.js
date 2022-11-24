@@ -38,7 +38,7 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export default function Home() {
+export default function Home({ navigation }) {
   const videoref = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const [displayComments, setDisplayComments] = React.useState(false);
@@ -49,6 +49,29 @@ export default function Home() {
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
   const opacity = useState(new Animated.Value(0))[0];
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      console.log("Focus");
+      //Every time the screen is focused the Video starts playing
+      if (videoref) {
+        videoref.current.playAsync();
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      console.log("Blur");
+      //Every time the screen loses focus the Video is paused
+      if (videoref) {
+        videoref.current.pauseAsync();
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     if (status.isPlaying) {
