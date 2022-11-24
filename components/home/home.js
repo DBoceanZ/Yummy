@@ -1,7 +1,7 @@
 import * as React from "react";
 import axios from "axios";
 import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   View,
@@ -14,6 +14,7 @@ import {
   RefreshControl,
   Animated,
   Image,
+  Share,
 } from "react-native";
 import { Video, AVPlaybackStatus } from "expo-av";
 import Comments from "./Comments";
@@ -26,9 +27,9 @@ import testfile4 from "./testmedia/testvideo1.mp4";
 import testfile5 from "./testmedia/testvideo2.mp4";
 import testpfp from "./testmedia/testpfp.png";
 import { Stack, IconButton } from "@react-native-material/core";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-
 const files = [testfile, testfile1, testfile2, testfile3, testfile4, testfile5];
 const mockUsername = "user";
 const mockDesc = "this is the video description";
@@ -38,12 +39,12 @@ const wait = (timeout) => {
 };
 
 export default function Home() {
-  const videoref = React.useRef(null);
-  const [status, setStatus] = React.useState({});
-  const [displayComments, setDisplayComments] = React.useState(false);
-  const [focusedIndex, setFocusedIndex] = React.useState(0);
-  const [refreshing, setRefreshing] = React.useState(false);
-  const [comments, setComments] = React.useState([]);
+  const videoref = useRef(null);
+  const [status, setStatus] = useState({});
+  const [displayComments, setDisplayComments] = useState(false);
+  const [focusedIndex, setFocusedIndex] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
+  const [comments, setComments] = useState([]);
   const opacity = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
@@ -68,7 +69,7 @@ export default function Home() {
     }).start();
   }
 
-  const handleScroll = React.useCallback(
+  const handleScroll = useCallback(
     ({
       nativeEvent: {
         contentOffset: { y },
@@ -173,12 +174,14 @@ export default function Home() {
                 }}
               />
               <Text style={styles.commentText}>0</Text>
-              <FontAwesome
-                style={styles.share}
-                name="share"
-                size={34}
-                color="white"
-              />
+              <Pressable onPress={onShare}>
+                <FontAwesome
+                  style={styles.share}
+                  name="share"
+                  size={34}
+                  color="white"
+                />
+              </Pressable>
               <Text style={styles.shareText}>0</Text>
               <Text style={styles.usernameText}>{mockUsername}</Text>
               <Text style={styles.descText}>{mockDesc}</Text>
@@ -287,3 +290,22 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
+
+const onShare = async () => {
+  try {
+    const result = await Share.share({
+      message: `check out this video from Yummy! url goes here`,
+    });
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        // shared with activity type of result.activityType
+      } else {
+        // shared
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+};

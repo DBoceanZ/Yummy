@@ -17,6 +17,7 @@ import FollowerList from "./components/follows/FollowerList.js";
 import FollowingList from "./components/follows/FollowingList.js";
 import { Entypo, AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import addVideo from "./components/home/addVideo.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -98,7 +99,7 @@ function BottomNav() {
       <Tab.Screen name="Friends" component={Home} />
       <Tab.Screen
         name="Add"
-        component={Home}
+        component={addVideo}
         options={{ tabBarLabel: () => null }}
       />
       <Tab.Screen name="Inbox" component={Home} />
