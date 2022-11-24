@@ -1,12 +1,21 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 
+const userPackage = {
+  userName: "",
+  UID: "",
+  userEmail: "",
+  userToken: "",
+};
 const GlobalContext = createContext();
 
 export function Context({ children }) {
   const [state, setState] = useState({});
   const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState(userPackage);
 
   const values = {
+    userData,
+    setUserData,
     state,
     setState,
     loading,

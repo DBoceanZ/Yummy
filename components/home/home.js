@@ -39,12 +39,15 @@ const wait = (timeout) => {
 };
 
 export default function Home() {
-  const videoref = useRef(null);
-  const [status, setStatus] = useState({});
-  const [displayComments, setDisplayComments] = useState(false);
-  const [focusedIndex, setFocusedIndex] = useState(0);
-  const [refreshing, setRefreshing] = useState(false);
-  const [comments, setComments] = useState([]);
+  const videoref = React.useRef(null);
+  const [status, setStatus] = React.useState({});
+  const [displayComments, setDisplayComments] = React.useState(false);
+  const [focusedIndex, setFocusedIndex] = React.useState(0);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [comments, setComments] = React.useState([]);
+  const [aColor, setAColor] = React.useState("white");
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
   const opacity = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
@@ -102,6 +105,8 @@ export default function Home() {
       <Comments
         displayComments={displayComments}
         setDisplayComments={setDisplayComments}
+        comments={comments}
+        setComments={setComments}
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -153,7 +158,35 @@ export default function Home() {
                 style={styles.heart}
                 name="heart"
                 size={32}
-                color="white"
+                color={aColor}
+                onPress={() => {
+                  axios
+                    .post(
+                      "http://18.212.89.94:3000/video/likes",
+                      {
+                        video_id: 1,
+                        user_id: 1,
+                      },
+                      {
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                      }
+                    )
+                    .then((response) => {
+                      console.log(response);
+                      if (response.status === 201) {
+                        console.log("success");
+                        setAColor("red");
+                        /*need to get like count again*/
+                      } else {
+                        console.log("failure");
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }}
               />
               <Text style={styles.heartText}>0</Text>
               <FontAwesome
@@ -163,9 +196,9 @@ export default function Home() {
                 color="white"
                 onPress={() => {
                   axios
-                    .get("https://18.212.89.94:4000/video/comments?video_id=1")
+                    .get("http://18.212.89.94:3000/video/comments?video_id=1")
                     .then((response) => {
-                      console.log(response);
+                      setComments(response.data);
                     })
                     .catch((err) => {
                       console.log(err);
