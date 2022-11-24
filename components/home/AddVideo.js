@@ -1,7 +1,7 @@
 import { SafeAreaView, StyleSheet, TextInput, View } from "react-native";
 import { useState } from "react";
 
-export default function addVideo() {
+export default function AddVideo() {
   const [text, setText] = useState("");
   const [link, setLink] = useState("");
 
