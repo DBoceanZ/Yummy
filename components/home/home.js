@@ -44,6 +44,7 @@ export default function Home() {
   const [focusedIndex, setFocusedIndex] = React.useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
   const [comments, setComments] = React.useState([]);
+  const [aColor, setAColor] = React.useState('white');
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
   const opacity = useState(new Animated.Value(0))[0];
@@ -151,7 +152,7 @@ export default function Home() {
                 style={styles.heart}
                 name="heart"
                 size={32}
-                color="white"
+                color={aColor}
                 onPress={() => {
                   axios.post('http://18.212.89.94:3000/video/likes', {
                     'video_id': 1,
@@ -163,8 +164,10 @@ export default function Home() {
                     }
                   })
                     .then((response) => {
-                      if (response.code === 201) {
+                      console.log(response)
+                      if (response.status === 201) {
                         console.log('success')
+                        setAColor('red')
                         /*need to get like count again*/
                       } else {
                         console.log('failure')
