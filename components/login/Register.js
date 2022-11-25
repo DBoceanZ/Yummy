@@ -47,15 +47,11 @@ const Register = ({ navigation }) => {
 
   useEffect(() => {
     if (currentUser) {
-      console.log("trying to post user ", currentUser);
       createNewUser(currentUser);
-      // navigation.navigate("BottomNav");
     }
   }, [currentUser]);
 
   const createNewUser = async (user) => {
-    console.log("create new user route");
-    console.log("user", currentUser);
     const postData = {
       auth_key: currentUser.firebaseId,
       username: username,
@@ -63,19 +59,21 @@ const Register = ({ navigation }) => {
     };
     console.log("postdata", postData);
     try {
-      const data = await axios.get("http://18.212.89.94:3000/login/test");
-      console.log(data);
-      // await axios.post("/login/user", postData);
-      // const userFetch = await axios.get(`/login/user/${postData.auth_key}`);
-      // setUserData({
-      //   ...userData,
-      //   username: userFetch.username,
-      //   UID: userFetch.auth_key,
-      // });
-      // alert(`Welcome ${username}!`);
-      // navigation.navigate("BottomNav");
-      // clearData();
-      // setLoading(false);
+      await axios.post("http://18.212.89.94:3000/login/user", postData);
+      const userFetch = await axios.get(
+        `http://18.212.89.94:3000/login/user/${postData.auth_key}`
+      );
+      await setUserData({
+        ...userData,
+        username: userFetch.username,
+        UID: userFetch.id,
+        email: userFetch.email,
+        profile_photo: userFetch.profile_photo_url,
+      });
+      alert(`Welcome ${username}!`);
+      navigation.navigate("BottomNav");
+      clearData();
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
