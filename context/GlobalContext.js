@@ -6,6 +6,7 @@ const userPackage = {
   userEmail: "",
   userToken: "",
   profile_photo: "",
+  selectedUserID: "",
 };
 const GlobalContext = createContext();
 
