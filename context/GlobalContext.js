@@ -6,6 +6,7 @@ const userPackage = {
   firebaseID: "",
   userEmail: "",
   userToken: "",
+  selectedUserID: ""
 };
 const GlobalContext = createContext();
 

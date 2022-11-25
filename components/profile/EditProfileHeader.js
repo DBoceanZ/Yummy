@@ -7,8 +7,8 @@ import axios from 'axios';
 import { CLOUDINARY_NAME, CLOUDINARY_UPLOAD_PRESET } from '@env';
 
 const EditProfileHeader = () => {
-  const [image, setImage] = useState('http://tinyurl.com/68dvbhaw'); // TEMP
-  const [displayName, setDisplayName] = useState('ExampleUser'); // TEMP
+  const [profilePhoto, setProfilePhoto] = useState(''); // TEMP
+  const [username, setUsername] = useState(''); // TEMP
   
   // pick image from phone gallery and prepare image data to upload to cloudinary
   const pickFromGallery = async () => {
@@ -19,7 +19,7 @@ const EditProfileHeader = () => {
       quality: 1
     });
     if (!data.canceled) {
-      setImage(data.assets[0].uri);
+      setProfilePhoto(data.assets[0].uri);
       let newFile = {
         uri:data.assets[0].uri,
         type:`test/${data.assets[0].uri.split(".")[1]}`,
@@ -44,11 +44,11 @@ const EditProfileHeader = () => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <TouchableOpacity onPress={() => pickFromGallery()} style={styles.imageTouchable}>
-          <Image style={styles.image} source={{uri: image}}></Image>
+          <Image style={styles.image} source={{uri: profilePhoto}}></Image>
         </TouchableOpacity>
       </View>
       <TouchableOpacity>
-        <Text style={styles.displayName}>{displayName}</Text>
+        <Text style={styles.username}>{username}</Text>
       </TouchableOpacity>
       <View style={styles.countersContainer}>
         <View style={styles.counterItem}>
@@ -65,9 +65,6 @@ const EditProfileHeader = () => {
           <Text style={styles.counter}>0</Text>
           <Text style={styles.counterLabel}>Likes</Text>
         </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <LightButton text='Follow' />
       </View>
     </View>
   )

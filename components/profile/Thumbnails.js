@@ -12,17 +12,23 @@ const Thumbnails = ({ handleTouch, videos }) => {
 
   const thumbnailUrls = videos.map((video) => {
     let youTubeID = getYouTubeID(video);
-    return `http://img.youtube.com/vi/${youTubeID}/hqdefault.jpg`;
+    return `http://img.youtube.com/vi/${youTubeID}/maxresdefault.jpg`;
   });
 
   return (
-    <View style={styles.container}>
+    <View style={styles.thumbnailsContainer}>
       {thumbnailUrls.map((thumbnailUrl, index) => {
         return (
-          <TouchableOpacity 
-            onPress={() => handleTouch()} key={`TN-touch:${index}`}>
-            <Image style={{width: 150, height: 100}} source={{uri: thumbnailUrl}} key={`TN:${index}`}></Image>
-          </TouchableOpacity>
+          <View style={styles.thumbnailContainer}>
+            <TouchableOpacity
+              onPress={() => handleTouch()} key={`TN-touch:${index}`}>
+              <Image
+                style={styles.thumbnail}
+                source={{uri: thumbnailUrl}}
+                key={`TN:${index}`}>
+              </Image>
+            </TouchableOpacity>
+          </View>
         )
       })}
     </View>

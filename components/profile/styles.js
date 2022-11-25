@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 20
+    paddingTop: 20
   },
   imageContainer: {
     alignItems: 'center'
@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     borderRadius: 50,
     overflow: 'hidden',
+    marginBottom: 15
   },
   image: {
     width: 100,
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginBottom: 15
   },
-  displayName: {
+  username: {
     textAlign: 'center',
     color: 'black',
     fontWeight: 'bold',
@@ -50,12 +51,32 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center'
   },
+  bioContainer: {
+    marginBottom: 15,
+    paddingHorizontal: 15
+  },
+  bio: {
+    textAlign: 'center'
+  },
   buttonContainer: {
     justifyContent: 'center',
     paddingHorizontal: 70,
     paddingBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: 'lightgrey'
+  },
+  thumbnailsContainer: {
+    flexDirection: 'row'
+  },
+  thumbnailContainer: {
+    width: 99,
+    height: 176
+  },
+  thumbnail: {
+    width: 'auto',
+    height: 176,
+    marginHorizontal: 0.5,
+    marginVertical: 0.5
   }
 });
 
