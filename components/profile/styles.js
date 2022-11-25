@@ -69,12 +69,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   thumbnailContainer: {
-    width: 99,
-    height: 176
+    width: '33.3%',
+    height: 188
   },
   thumbnail: {
     width: 'auto',
-    height: 176,
+    height: 188,
     marginHorizontal: 0.5,
     marginVertical: 0.5
   }

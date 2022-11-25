@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
-import { LightButton } from '../lib/buttons/CustomButton';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import { CLOUDINARY_NAME, CLOUDINARY_UPLOAD_PRESET } from '@env';
+import { useGlobalContext } from '../../context/GlobalContext';
 
 const EditProfileHeader = () => {
-  const [profilePhoto, setProfilePhoto] = useState(''); // TEMP
-  const [username, setUsername] = useState(''); // TEMP
+  const { userData } = useGlobalContext(); 
+  const { selectedUserID } = userData;
+  const [profilePhoto, setProfilePhoto] = useState('http://tinyurl.com/68dvbhaw'); // TEMP
+  const [username, setUsername] = useState('ExampleUser'); // TEMP
+  const [bio, setBio] = useState(
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+  ); // TEMP
   
   // pick image from phone gallery and prepare image data to upload to cloudinary
   const pickFromGallery = async () => {
@@ -40,6 +45,19 @@ const EditProfileHeader = () => {
       .catch((err) => console.log(err));
   };
 
+  // on initial render, fetch user profile data from the database
+  useEffect(() => {
+    axios.get(`http://18.212.89.94:3000/users/userData?user_id=${selectedUserID}`)
+      .then((res) => {
+        setUsername(res.data.username);
+        setProfilePhoto(res.data.profile_photo_url);
+        setBio(res.data.bio);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -65,6 +83,11 @@ const EditProfileHeader = () => {
           <Text style={styles.counter}>0</Text>
           <Text style={styles.counterLabel}>Likes</Text>
         </View>
+      </View>
+      <View style={styles.bioContainer}>
+        <TouchableOpacity>
+          <Text style={styles.bio}>{bio}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )

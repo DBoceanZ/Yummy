@@ -124,7 +124,6 @@ const NavigationStack = () => {
         headerTintColor: "#ffae1f",
       }}
     >
-      <Stack.Screen name="Profile" component={Profile}></Stack.Screen>
       <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
       <Stack.Screen name="Login" component={Login}></Stack.Screen>
       <Stack.Screen name="Register" component={Register}></Stack.Screen>
@@ -140,6 +139,7 @@ const NavigationStack = () => {
       ></Stack.Screen>
       <Stack.Screen name="Following" component={FollowingList}></Stack.Screen>
       <Stack.Screen name="Followers" component={FollowerList}></Stack.Screen>
+      <Stack.Screen name="Profile" component={Profile}></Stack.Screen>
       <Stack.Screen name="Edit Profile" component={EditProfile}></Stack.Screen>
     </Stack.Navigator>
   );

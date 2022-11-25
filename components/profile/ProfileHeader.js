@@ -5,7 +5,7 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { LightButton } from '../lib/buttons/CustomButton';
 import axios from 'axios';
 
-const ProfileHeader = ({ handlers, profileData }) => {
+const ProfileHeader = ({ handlers }) => {
   const { userData } = useGlobalContext();
   const { UID, selectedUserID } = userData;
   const { 
@@ -13,12 +13,15 @@ const ProfileHeader = ({ handlers, profileData }) => {
   } = handlers;
   const [username, setUsername] = useState('ExampleUser');
   const [profilePhoto, setProfilePhoto] = useState('http://tinyurl.com/68dvbhaw');
-  const [bio, setBio] = useState('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+  const [bio, setBio] = useState(
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+  );
 
   // on initial render, fetch user profile data from database
   useEffect(() => {
     axios.get(`http://18.212.89.94:3000/users/userData?user_id=${selectedUserID}`)
       .then((res) => {
+        console.log('server response: ', res.data);
         setUsername(res.data.username);
         setProfilePhoto(res.data.profile_photo_url);
         setBio(res.data.bio);
