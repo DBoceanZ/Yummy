@@ -14,6 +14,7 @@ import { auth } from "../../config/firebase.js";
 import { useAuth } from "../../context/authContext.js";
 import { useGlobalContext } from "../../context/GlobalContext";
 import Spinner from "react-native-loading-spinner-overlay";
+import axios from "axios";
 
 const handleSubmit = () => {
   console.warn("Submit Pressed");
@@ -55,22 +56,36 @@ const Register = ({ navigation }) => {
   const createNewUser = async (user) => {
     console.log("create new user route");
     console.log("user", currentUser);
-    setUserData({
-      ...userData,
-      userName: username,
-      UID: currentUser.firebaseId,
-    });
-    setLoading(false);
     clearData();
     alert(`Welcome ${username}!`);
-    navigation.navigate("BottomNav");
-    //will set globalUsername on DB pull
-    // await axios.post("/user", user);
+    const postData = {
+      auth_key: userData.fireBaseID,
+      username: userData.username,
+      email: userData.email,
+    };
+    try {
+      await axios.post("/user", postData);
+      const userFetch = await axios.get(`/user/${postData.auth_key}`);
+      setUserData({
+        ...userData,
+        username: userFetch.username,
+        UID: userFetch.auth_key,
+      });
+      navigation.navigate("BottomNav");
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const handleSubmit = async () => {
     try {
       setLoading(true);
       const user = await signup(email, password);
+      setUserData({
+        ...userData,
+        userName: username,
+        firebaseID: currentUser.firebaseId,
+      });
     } catch (err) {
       console.log(err);
     }

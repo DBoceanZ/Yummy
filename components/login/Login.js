@@ -47,7 +47,7 @@ const Login = ({ navigation }) => {
     // grab globalUsername from DB pull
     setUserData({
       ...userData,
-      UID: currentUser.firebaseId,
+      firebaseID: currentUser.firebaseId,
     });
     clearData();
     alert(`user: ${currentUser.firebaseId} signed in`);
