@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import "expo-dev-client";
 import { AuthProvider } from "./context/authContext.js";
+import { Context } from "./context/GlobalContext";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,6 +17,7 @@ import FollowerList from "./components/follows/FollowerList.js";
 import FollowingList from "./components/follows/FollowingList.js";
 import { Entypo, AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import addVideo from "./components/home/addVideo.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -70,12 +72,12 @@ function BottomNav() {
                 <View
                   style={styles.square}
                   backgroundColor="#fd004d"
-                  right={42}
+                  left={46}
                 />
                 <View
                   style={styles.square}
                   backgroundColor="#00ffeb"
-                  left={42}
+                  right={46}
                 />
                 <View
                   style={styles.square}
@@ -97,7 +99,7 @@ function BottomNav() {
       <Tab.Screen name="Friends" component={Home} />
       <Tab.Screen
         name="Add"
-        component={Home}
+        component={addVideo}
         options={{ tabBarLabel: () => null }}
       />
       <Tab.Screen name="Inbox" component={Home} />
@@ -144,9 +146,11 @@ export default function App() {
   return (
     <AuthProvider>
       {/* <SafeAreaView style={styles.container}> */}
-      <NavigationContainer>
-        <NavigationStack />
-      </NavigationContainer>
+      <Context>
+        <NavigationContainer>
+          <NavigationStack />
+        </NavigationContainer>
+      </Context>
       {/* </SafeAreaView> */}
     </AuthProvider>
   );
@@ -159,7 +163,7 @@ const styles = StyleSheet.create({
   },
   screenHeader: {},
   square: {
-    borderRadius: "3px",
+    borderRadius: 3,
     width: 12,
     height: 26,
     position: "absolute",
