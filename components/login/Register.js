@@ -14,6 +14,7 @@ import { auth } from "../../config/firebase.js";
 import { useAuth } from "../../context/authContext.js";
 import { useGlobalContext } from "../../context/GlobalContext";
 import Spinner from "react-native-loading-spinner-overlay";
+import axios from "axios";
 
 const handleSubmit = () => {
   console.warn("Submit Pressed");
@@ -45,9 +46,9 @@ const Register = ({ navigation }) => {
   }, [loading]);
 
   useEffect(() => {
-    if (currentUser.email && currentUser.firebaseId) {
-      createNewUser(user);
-      clearData();
+    if (currentUser) {
+      console.log("trying to post user ", currentUser);
+      createNewUser(currentUser);
       // navigation.navigate("BottomNav");
     }
   }, [currentUser]);
@@ -55,22 +56,34 @@ const Register = ({ navigation }) => {
   const createNewUser = async (user) => {
     console.log("create new user route");
     console.log("user", currentUser);
-    setUserData({
-      ...userData,
-      userName: username,
-      UID: currentUser.firebaseId,
-    });
-    setLoading(false);
-    clearData();
-    alert(`Welcome ${username}!`);
-    navigation.navigate("BottomNav");
-    //will set globalUsername on DB pull
-    // await axios.post("/user", user);
+    const postData = {
+      auth_key: currentUser.firebaseId,
+      username: username,
+      email: currentUser.email,
+    };
+    console.log("postdata", postData);
+    try {
+      const data = await axios.get("http://18.212.89.94:3000/login/test");
+      console.log(data);
+      // await axios.post("/login/user", postData);
+      // const userFetch = await axios.get(`/login/user/${postData.auth_key}`);
+      // setUserData({
+      //   ...userData,
+      //   username: userFetch.username,
+      //   UID: userFetch.auth_key,
+      // });
+      // alert(`Welcome ${username}!`);
+      // navigation.navigate("BottomNav");
+      // clearData();
+      // setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const user = await signup(email, password);
+      await signup(email, password);
     } catch (err) {
       console.log(err);
     }
