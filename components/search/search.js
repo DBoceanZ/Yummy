@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput, FlatList} from from "react-native";
+import {View, TextInput, FlatList, Pressable} from from "react-native";
 import prefixTree from '../../helpers/prefixTree.js';
 
 const tagTree = new prefixTree();
@@ -8,7 +8,7 @@ for (i = 0; i < allTags.length; i++) {
   tagTree.addword(allTags[i]);
 }
 
-const Search = (props) =>{
+const Search = ({ navigation }) =>{
 const [tagList, setTagList] = React.useState([]);
 const changeHandler = function(prefix){
   if(!prefix){
@@ -18,6 +18,11 @@ const changeHandler = function(prefix){
     setTagList(tags);
   }
 }
+const pressHandler = function(tag) {
+  //axios call to server for videos by tag
+  //cal to video preview grid with my list
+}
+const on
   return (
     <View>
       <TextInput
@@ -26,7 +31,12 @@ const changeHandler = function(prefix){
       />
       <FlatList
         data={tagList}
-        renderItem={renderItem}
+        renderItem={(renderItem) =>{
+          <Pressable
+          key={renderItem}
+          onPress={()=> pressHandler(key) }
+          />
+        }}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
       />
