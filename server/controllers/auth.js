@@ -13,7 +13,7 @@ module.exports = {
   getUser: async (req, res) => {
     const { auth_key } = req.params;
     const user = await validateUser.getUserData(auth_key);
-    console.log(user);
+    console.log("user in controller", user);
     res.status(200).send(user);
   },
   testRoute: async (req, res) => {
