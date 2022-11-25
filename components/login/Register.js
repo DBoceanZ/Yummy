@@ -46,9 +46,9 @@ const Register = ({ navigation }) => {
   }, [loading]);
 
   useEffect(() => {
-    if (currentUser.email && currentUser.firebaseId) {
-      createNewUser(user);
-      clearData();
+    if (currentUser) {
+      console.log("trying to post user ", currentUser);
+      createNewUser(currentUser);
       // navigation.navigate("BottomNav");
     }
   }, [currentUser]);
@@ -56,23 +56,26 @@ const Register = ({ navigation }) => {
   const createNewUser = async (user) => {
     console.log("create new user route");
     console.log("user", currentUser);
-    clearData();
-    alert(`Welcome ${username}!`);
     const postData = {
-      auth_key: userData.fireBaseID,
-      username: userData.username,
-      email: userData.email,
+      auth_key: currentUser.firebaseId,
+      username: username,
+      email: currentUser.email,
     };
+    console.log("postdata", postData);
     try {
-      await axios.post("/user", postData);
-      const userFetch = await axios.get(`/user/${postData.auth_key}`);
-      setUserData({
-        ...userData,
-        username: userFetch.username,
-        UID: userFetch.auth_key,
-      });
-      navigation.navigate("BottomNav");
-      setLoading(false);
+      const data = await axios.get("http://18.212.89.94:3000/login/test");
+      console.log(data);
+      // await axios.post("/login/user", postData);
+      // const userFetch = await axios.get(`/login/user/${postData.auth_key}`);
+      // setUserData({
+      //   ...userData,
+      //   username: userFetch.username,
+      //   UID: userFetch.auth_key,
+      // });
+      // alert(`Welcome ${username}!`);
+      // navigation.navigate("BottomNav");
+      // clearData();
+      // setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -80,12 +83,7 @@ const Register = ({ navigation }) => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const user = await signup(email, password);
-      setUserData({
-        ...userData,
-        userName: username,
-        firebaseID: currentUser.firebaseId,
-      });
+      await signup(email, password);
     } catch (err) {
       console.log(err);
     }
