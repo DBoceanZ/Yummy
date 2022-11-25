@@ -13,6 +13,7 @@ import { LightButton } from "../lib/buttons/CustomButton.js";
 import Logo from "../../assets/images/yummyLogo.png";
 import { useAuth } from "../../context/authContext.js";
 import { useGlobalContext } from "../../context/GlobalContext";
+import axios from "axios";
 
 const Login = ({ navigation }) => {
   const { height } = useWindowDimensions();
@@ -30,11 +31,20 @@ const Login = ({ navigation }) => {
     }
   }, [loading]);
 
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     getUserData(currentUser);
+  //   }
+  // }, [currentUser]);
+
   useEffect(() => {
-    if (currentUser.email && currentUser.firebaseId) {
-      getUserData();
+    if (userData.UID) {
+      alert(`Nice to see you again, ${userData.username}`);
+      clearData();
+      setLoading(false);
+      navigation.navigate("BottomNav");
     }
-  }, [currentUser]);
+  }, [userData]);
 
   const clearData = () => {
     setUsername("");
@@ -42,22 +52,28 @@ const Login = ({ navigation }) => {
     setPassword("");
   };
 
-  const getUserData = (user) => {
-    console.log("get user data route");
-    // grab globalUsername from DB pull
-    setUserData({
-      ...userData,
-      firebaseID: currentUser.firebaseId,
-    });
-    clearData();
-    alert(`user: ${currentUser.firebaseId} signed in`);
-    navigation.navigate("BottomNav");
+  const getUserData = async (loggedInUser) => {
+    try {
+      const { data: user } = await axios.get(
+        `http://18.212.89.94:3000/login/user/${loggedInUser.firebaseId}`
+      );
+      setUserData({
+        ...userData,
+        username: user[0].username,
+        userEmail: user[0].email,
+        profile_photo: user[0].profile_photo_url,
+        UID: user[0].id,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const user = await login(email, password);
+      const loggedInUser = await login(email, password);
+      getUserData(loggedInUser);
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +82,7 @@ const Login = ({ navigation }) => {
   return (
     <View>
       {loading ? (
-        <Spinner visible={loading} textContent={"Loading..."} />
+        <Spinner visible={loading} textContent={`Welcome Back!`} />
       ) : (
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
