@@ -9,6 +9,7 @@ const router = require("./routes");
 const videoRouter = require("./routes/video");
 const loginRouter = require("./routes/loginRoutes");
 const pool = require("./database");
+const usersRouter = require("./routes/users");
 
 // basic server
 const app = express();
@@ -65,6 +66,7 @@ app.post("/test", (req, res) => {
 // routers go here
 app.use("/video", videoRouter);
 app.use("/login", loginRouter);
+app.use("/users", usersRouter);
 /*
  *
  *

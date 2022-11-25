@@ -1,9 +1,9 @@
-const insertVideoData = require('../model/insertVideoData');
+const videoModel = require('../model/videoModel');
 
 module.exports = {
-  comment: async (req, res) => {
+  addComment: async (req, res) => {
     try {
-      const pass = await insertVideoData.comment(req.body);
+      const pass = await videoModel.addComment(req.body);
       if (pass.rowCount) {
         res.sendStatus(201);
       } else {
@@ -14,9 +14,9 @@ module.exports = {
       res.sendStatus(500);
     }
   },
-  like: async (req, res) => {
+  addLike: async (req, res) => {
     try {
-      const pass = await insertVideoData.like(req.body);
+      const pass = await videoModel.addLike(req.body);
       console.log(pass)
       if (pass.rowCount) {
         res.sendStatus(201);
@@ -27,6 +27,10 @@ module.exports = {
       console.log('ERROR!');
       res.sendStatus(500);
     }
+  },
+  getComments: async (req, res) => {
+    const allComments = await videoModel.selectComments(req.query.video_id)
+    res.status(200).json(allComments)
   }
 }
 
