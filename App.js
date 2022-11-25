@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Welcome from "./components/login/Welcome.js";
 import Login from "./components/login/Login.js";
+import EditProfile from "./components/profile/EditProfile.js"
 import Profile from "./components/profile/Profile.js";
 import Register from "./components/login/Register.js";
 import TestNav from "./components/login/testNav.js";
@@ -138,6 +139,8 @@ const NavigationStack = () => {
       ></Stack.Screen>
       <Stack.Screen name="Following" component={FollowingList}></Stack.Screen>
       <Stack.Screen name="Followers" component={FollowerList}></Stack.Screen>
+      <Stack.Screen name="Profile" component={Profile}></Stack.Screen>
+      <Stack.Screen name="Edit Profile" component={EditProfile}></Stack.Screen>
     </Stack.Navigator>
   );
 };
