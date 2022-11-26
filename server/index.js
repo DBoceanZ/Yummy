@@ -1,5 +1,5 @@
 const express = require("express");
-const https = require("https");
+//const https = require("https");
 const path = require("path");
 const morgan = require("morgan");
 const fs = require("fs");
@@ -8,6 +8,7 @@ require("dotenv").config();
 const router = require("./routes");
 const videoRouter = require("./routes/video");
 const loginRouter = require("./routes/loginRoutes");
+const tagsRouter = require("./routes/tags")
 const pool = require("./database");
 const usersRouter = require("./routes/users");
 
@@ -67,6 +68,7 @@ app.post("/test", (req, res) => {
 app.use("/video", videoRouter);
 app.use("/login", loginRouter);
 app.use("/users", usersRouter);
+app.use("/videos", tagsRouter);
 /*
  *
  *
