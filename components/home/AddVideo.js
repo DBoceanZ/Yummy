@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "./cloudinaryConfig";
 import axios from "axios";
 import { Notifier, Easing } from "react-native-notifier";
 
-export default function AddVideo() {
+export default function AddVideo({ navigation }) {
   const [video, setVideo] = useState(null);
   const [currentUpload, setCurrentUpload] = useState(null);
 
@@ -33,6 +33,8 @@ export default function AddVideo() {
         name: `test.${result.assets[0].uri.split(".")[1]}`,
       };
       setCurrentUpload(newFile);
+    } else {
+      navigation.goBack();
     }
   };
   const handleUpload = async (video) => {
@@ -71,10 +73,17 @@ export default function AddVideo() {
         setCurrentUpload(null);
       });
   };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      //Every time the screen is focused the Video starts playing
+      pickVideo();
+    });
+    return unsubscribe;
+  }, [navigation]);
   return (
     <SafeAreaView>
-      <View>
-        <Button onPress={pickVideo} title="hiiiiiiiiiii" />
+      <View style={styles.container}>
         {currentUpload ? (
           <Button
             title="upload"
@@ -87,3 +96,11 @@ export default function AddVideo() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "black",
+  },
+});

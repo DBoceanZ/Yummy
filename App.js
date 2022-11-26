@@ -24,6 +24,12 @@ const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
+const MyTheme = {
+  colors: {
+    background: "black",
+  },
+};
+
 function BottomNav() {
   return (
     <Tab.Navigator
@@ -148,16 +154,16 @@ export default function App() {
     <>
       <AuthProvider>
         {/* <SafeAreaView style={styles.container}> */}
+        <StatusBar style="light" />
         <Context>
           <NotifierWrapper>
-            <NavigationContainer>
+            <NavigationContainer theme={MyTheme}>
               <NavigationStack />
             </NavigationContainer>
           </NotifierWrapper>
         </Context>
         {/* </SafeAreaView> */}
       </AuthProvider>
-      <StatusBar style="light" />
     </>
   );
 }

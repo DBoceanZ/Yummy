@@ -3,6 +3,7 @@ import axios from "axios";
 import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { StatusBar } from "expo-status-bar";
 import {
   View,
   StyleSheet,
@@ -123,6 +124,7 @@ export default function Home({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="light" />
       <Comments
         displayComments={displayComments}
         setDisplayComments={setDisplayComments}
