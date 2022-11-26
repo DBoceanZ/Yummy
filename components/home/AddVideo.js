@@ -13,10 +13,14 @@ import * as ImagePicker from "expo-image-picker";
 import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "./cloudinaryConfig";
 import axios from "axios";
 import { Notifier, Easing } from "react-native-notifier";
+import { formData } from "./formData.js";
+import FormField from "./FormField";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 export default function AddVideo({ navigation }) {
   const [video, setVideo] = useState(null);
   const [currentUpload, setCurrentUpload] = useState(null);
+  const { userData, setUserData } = useGlobalContext();
 
   const pickVideo = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -33,13 +37,22 @@ export default function AddVideo({ navigation }) {
         name: `test.${result.assets[0].uri.split(".")[1]}`,
       };
       setCurrentUpload(newFile);
-    } else {
-      navigation.goBack();
     }
   };
-  const handleUpload = async (video) => {
+  const handleUpload = async () => {
+    if (userData.UID === "") {
+      Notifier.showNotification({
+        title: "Must have account to upload",
+        duration: 3000,
+        showAnimationDuration: 800,
+        hideOnPress: true,
+        swipeEnabled: true,
+        alertType: "warn",
+      });
+      return;
+    }
     const data = new FormData();
-    data.append("file", video);
+    data.append("file", currentUpload);
     data.append("upload_preset", "yummy_upload");
     data.append("cloud_name", CLOUDINARY_CLOUD_NAME);
     axios
@@ -48,7 +61,25 @@ export default function AddVideo({ navigation }) {
         data
       )
       .then((res) => {
-        console.log("data: ", res.data.secure_url);
+        console.log(userData);
+        axios
+          .post("/videos/postvideo", {
+            summary: formValues.description,
+            user_id: userData.UID,
+            video_url: res.data.secure_url,
+          })
+          .catch((err) => {
+            console.log(err);
+            Notifier.showNotification({
+              title: "Upload Failed 🙁 Try Again ",
+              duration: 3000,
+              showAnimationDuration: 800,
+              hideOnPress: true,
+              swipeEnabled: true,
+              alertType: "error",
+            });
+            setCurrentUpload(null);
+          });
         Notifier.showNotification({
           title: "Video Uploaded! 🎉",
           duration: 3000,
@@ -57,18 +88,6 @@ export default function AddVideo({ navigation }) {
           hideOnPress: true,
           swipeEnabled: true,
           alertType: "success",
-        });
-        setCurrentUpload(null);
-      })
-      .catch((err) => {
-        console.log(err);
-        Notifier.showNotification({
-          title: "Upload Failed 🙁 Try Again ",
-          duration: 3000,
-          showAnimationDuration: 800,
-          hideOnPress: true,
-          swipeEnabled: true,
-          alertType: "error",
         });
         setCurrentUpload(null);
       });
@@ -81,14 +100,51 @@ export default function AddVideo({ navigation }) {
     });
     return unsubscribe;
   }, [navigation]);
+
+  const [formValues, handleFormValueChange, setFormValues] = formData({
+    description: "",
+    tags: "",
+  });
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
+        <Text
+          style={{
+            fontSize: 24,
+            textAlign: "center",
+            fontWeight: "300",
+            paddingBottom: 30,
+            color: "white",
+          }}
+        >
+          Upload Video
+        </Text>
+        <FormField
+          formKey="description"
+          placeholder="a description of your video"
+          handleFormValueChange={handleFormValueChange}
+        />
+        <FormField
+          formKey="tags"
+          placeholder="at least 3 tags (comma seperated)"
+          textInputProps={{
+            autoCapitalize: "none",
+          }}
+          handleFormValueChange={handleFormValueChange}
+        />
+        {video !== null ? (
+          <Button title="choose video" onPress={pickVideo} />
+        ) : (
+          <Button title="choose new video" onPress={pickVideo} />
+        )}
         {currentUpload ? (
           <Button
-            title="upload"
+            title="Upload"
             onPress={() => {
-              handleUpload(currentUpload);
+              console.log(formValues.tags.split(","));
+              if (formValues.tags.split(",").length >= 3) {
+                handleUpload();
+              }
             }}
           />
         ) : null}
@@ -102,5 +158,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: "#192734",
+  },
+  header: {
+    color: "white",
   },
 });

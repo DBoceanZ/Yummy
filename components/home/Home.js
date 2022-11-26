@@ -41,6 +41,25 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
+const onShare = async (url) => {
+  try {
+    const result = await Share.share({
+      message: `check out this video from Yummy! ${url}`,
+    });
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        // shared with activity type of result.activityType
+      } else {
+        // shared
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
 export default function Home({ navigation }) {
   const videoref = React.useRef(null);
   const [status, setStatus] = React.useState({});
@@ -243,7 +262,11 @@ export default function Home({ navigation }) {
                 }}
               />
               <Text style={styles.commentText}>0</Text>
-              <Pressable onPress={onShare}>
+              <Pressable
+                onPress={() => {
+                  onShare(src);
+                }}
+              >
                 <FontAwesome
                   style={styles.share}
                   name="share"
@@ -359,22 +382,3 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
-
-const onShare = async () => {
-  try {
-    const result = await Share.share({
-      message: `check out this video from Yummy! url goes here`,
-    });
-    if (result.action === Share.sharedAction) {
-      if (result.activityType) {
-        // shared with activity type of result.activityType
-      } else {
-        // shared
-      }
-    } else if (result.action === Share.dismissedAction) {
-      // dismissed
-    }
-  } catch (error) {
-    alert(error.message);
-  }
-};
