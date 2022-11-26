@@ -7,7 +7,34 @@ module.exports = {
       return userData.rows[0];
     } catch (err) {
       console.log(err)
-      return err
+      throw err
+    }
+  },
+  addFollow: async ({ user_id, followed_id }) => {
+    try {
+      await pool.query('INSERT INTO follows(user_following_id, user_followed_id) VALUES ($1, $2)', [user_id, followed_id]);
+    } catch (err) {
+      throw(err);
+    }
+  },
+  removeFollow: async ({ user_id, followed_id }) => {
+    try {
+      await pool.query('DELETE FROM follows WHERE user_following_id = $1 AND user_followed_id = $2;', [user_id, followed_id]);
+    } catch (err) {
+      throw(err);
+    }
+  },
+  updateUser: async ({ user_id, bio, profile_photo_url }) => {
+    try {
+      if (profile_photo_url && bio) {
+        await pool.query('UPDATE users SET bio = $2, profile_photo_url = $3 WHERE id = $1;', [user_id, bio, profile_photo_url]);
+      } else if (profile_photo_url) {
+        await pool.query('UPDATE users SET profile_photo_url = $2 WHERE id = $1;', [user_id, profile_photo_url]);
+      } else if (bio) {
+        await pool.query('UPDATE users SET bio = $2 WHERE id = $1;', [user_id, bio]);
+      }
+    } catch (err) {
+      throw(err)
     }
   }
 }

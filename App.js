@@ -20,6 +20,11 @@ import { Entypo, AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AddVideo from "./components/home/AddVideo.js";
 import { NotifierWrapper } from "react-native-notifier";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs([
+  "Warning: Async Storage has been extracted from react-native core",
+]);
 
 const Stack = createNativeStackNavigator();
 
@@ -124,7 +129,7 @@ const NavigationStack = () => {
       screenOptions={{
         headerTitleAlign: "center",
         headerStyle: {
-          backgroundColor: "#1e232c",
+          backgroundColor: "#f2f2f2",
         },
         headerTitleStyle: {
           fontWeight: "bold",
@@ -133,7 +138,19 @@ const NavigationStack = () => {
         headerTintColor: "#ffae1f",
       }}
     >
-      <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerTitleStyle: {
+            fontWeight: "bold",
+            color: "#222222",
+          },
+          headerStyle: {
+            backgroundColor: "#ffae1f",
+          },
+        }}
+        name="Welcome"
+        component={Welcome}
+      ></Stack.Screen>
       <Stack.Screen name="Login" component={Login}></Stack.Screen>
       <Stack.Screen name="Register" component={Register}></Stack.Screen>
       <Stack.Screen
