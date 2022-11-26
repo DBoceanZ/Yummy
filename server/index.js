@@ -8,7 +8,7 @@ require("dotenv").config();
 const router = require("./routes");
 const videoRouter = require("./routes/video");
 const loginRouter = require("./routes/loginRoutes");
-const tagsRouter = require("./routes/tags")
+const videosRouter = require("./routes/videos")
 const pool = require("./database");
 const usersRouter = require("./routes/users");
 
@@ -68,7 +68,7 @@ app.post("/test", (req, res) => {
 app.use("/video", videoRouter);
 app.use("/login", loginRouter);
 app.use("/users", usersRouter);
-app.use("/videos", tagsRouter);
+app.use("/videos", videosRouter);
 /*
  *
  *
