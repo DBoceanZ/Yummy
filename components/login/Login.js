@@ -6,7 +6,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
-import { Stack, Text } from "@react-native-material/core";
+import { Surface, VStack, Text, Divider } from "@react-native-material/core";
 import React, { useState, useEffect } from "react";
 import { BasicInput } from "../lib/inputs/CustomInput.js";
 import { LightButton } from "../lib/buttons/CustomButton.js";
@@ -87,32 +87,39 @@ const Login = ({ navigation }) => {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.container}
+          enabled="true"
         >
           <Image
             source={Logo}
             style={[styles.logo, { height: height * 0.3 }]}
             resizeMode="contain"
           ></Image>
+          <Surface elevation={2} category="medium" style={styles.surfaceStyle}>
+            <Text
+              color="#225e6c"
+              style={[styles.text, styles.shadowProp]}
+              variant="h4"
+            >
+              Login
+            </Text>
 
-          <Text style={styles.text} variant="h4">
-            Login
-          </Text>
-          <Stack m={4} spacing={4}>
-            <BasicInput
-              placeHolder="email"
-              value={email}
-              setValue={setEmail}
-              onChangeText={(text) => setEmail(text)}
-            />
-            <BasicInput
-              placeHolder="password"
-              value={password}
-              setValue={setPassword}
-              secureTextEntry={true}
-              onChangeText={(text) => setPassword(text)}
-            />
-            <LightButton text="submit" onPress={handleSubmit} />
-          </Stack>
+            <VStack m={20} spacing={8} style={styles.shadowProp}>
+              <BasicInput
+                placeHolder="email"
+                value={email}
+                setValue={setEmail}
+                onChangeText={(text) => setEmail(text)}
+              />
+              <BasicInput
+                placeHolder="password"
+                value={password}
+                setValue={setPassword}
+                secureTextEntry={true}
+                onChangeText={(text) => setPassword(text)}
+              />
+              <LightButton text="submit" onPress={handleSubmit} />
+            </VStack>
+          </Surface>
         </KeyboardAvoidingView>
       )}
     </View>
@@ -121,18 +128,27 @@ const Login = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: 15,
+    padding: 22,
   },
   text: {
     alignSelf: "center",
+    padding: 10,
   },
   logo: {
     alignSelf: "center",
     width: "70%",
     maxWidth: 500,
     maxHeight: 150,
+  },
+  shadowProp: {
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 6 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  surfaceStyle: {
+    backgroundColor: "#f2f2f2",
+    padding: 11,
   },
 });
 export default Login;
