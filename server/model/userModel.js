@@ -23,6 +23,19 @@ module.exports = {
     } catch (err) {
       throw(err);
     }
+  },
+  updateUser: async ({ user_id, bio, profile_photo_url }) => {
+    try {
+      if (profile_photo_url && bio) {
+        await pool.query('UPDATE users SET bio = $2, profile_photo_url = $3 WHERE id = $1;', [user_id, bio, profile_photo_url]);
+      } else if (profile_photo_url) {
+        await pool.query('UPDATE users SET profile_photo_url = $2 WHERE id = $1;', [user_id, profile_photo_url]);
+      } else if (bio) {
+        await pool.query('UPDATE users SET bio = $2 WHERE id = $1;', [user_id, bio]);
+      }
+    } catch (err) {
+      throw(err)
+    }
   }
 }
 
