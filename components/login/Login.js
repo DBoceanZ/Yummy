@@ -66,6 +66,8 @@ const Login = ({ navigation }) => {
       });
     } catch (err) {
       console.log(err);
+      alert(`Uh-oh! There is an error loging you in. Please try again...`);
+      navigation.navigate("Welcome");
     }
   };
 
