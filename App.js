@@ -129,7 +129,19 @@ const NavigationStack = () => {
         headerTintColor: "#ffae1f",
       }}
     >
-      <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerTitleStyle: {
+            fontWeight: "bold",
+            color: "#222222",
+          },
+          headerStyle: {
+            backgroundColor: "#ffae1f",
+          },
+        }}
+        name="Welcome"
+        component={Welcome}
+      ></Stack.Screen>
       <Stack.Screen name="Login" component={Login}></Stack.Screen>
       <Stack.Screen name="Register" component={Register}></Stack.Screen>
       <Stack.Screen

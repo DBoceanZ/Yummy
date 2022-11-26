@@ -136,15 +136,16 @@ const Register = ({ navigation }) => {
               category="medium"
               style={styles.surfaceStyle}
             >
-              <Text style={[styles.text, styles.shadowProp]} variant="h4">
+              {/* <Text style={[styles.text, styles.shadowProp]} variant="h4">
                 Register
-              </Text>
+              </Text> */}
               <Stack m={16} spacing={4} style={styles.shadowProp}>
                 <BasicInput
                   placeHolder="Username"
                   value={username}
                   setValue={setUsername}
                 />
+                <View />
                 <BasicInput
                   placeHolder="email"
                   value={email}
@@ -154,6 +155,7 @@ const Register = ({ navigation }) => {
                     setEmail(text);
                   }}
                 />
+                <View />
                 <TextInput
                   label="password"
                   value={password}
@@ -174,6 +176,7 @@ const Register = ({ navigation }) => {
                     />
                   )}
                 />
+                <View />
                 <TextInput
                   label="password"
                   value={confirmPassword}
@@ -209,6 +212,7 @@ const styles = StyleSheet.create({
   container: {
     // justifyContent: "center",
     padding: 22,
+    paddingTop: 16,
   },
   text: {
     alignSelf: "center",
@@ -217,7 +221,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "70%",
     maxWidth: 500,
-    maxHeight: 100,
+    maxHeight: 80,
   },
   surfaceStyle: {
     backgroundColor: "#f2f2f2",
@@ -225,7 +229,7 @@ const styles = StyleSheet.create({
   },
   shadowProp: {
     shadowColor: "#171717",
-    shadowOffset: { width: -2, height: 6 },
+    shadowOffset: { width: -2, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
