@@ -7,7 +7,21 @@ module.exports = {
       return userData.rows[0];
     } catch (err) {
       console.log(err)
-      return err
+      throw err
+    }
+  },
+  addFollow: async ({ user_id, followed_id }) => {
+    try {
+      await pool.query('INSERT INTO follows(user_following_id, user_followed_id) VALUES ($1, $2)', [user_id, followed_id]);
+    } catch (err) {
+      throw(err);
+    }
+  },
+  removeFollow: async ({ user_id, followed_id }) => {
+    try {
+      await pool.query('DELETE FROM follows WHERE user_following_id = $1 AND user_followed_id = $2;', [user_id, followed_id]);
+    } catch (err) {
+      throw(err);
     }
   }
 }

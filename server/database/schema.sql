@@ -12,13 +12,15 @@ CREATE TABLE IF NOT EXISTS follows (
   id SERIAL NOT NULL,
   user_following_id INT NOT NULL REFERENCES users(id),
   user_followed_id INT NOT NULL REFERENCES users(id),
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  unique (user_followed_id, user_following_id)
 );
 
 CREATE TABLE IF NOT EXISTS videos (
   id SERIAL NOT NULL,
   video_url VARCHAR NOT NULL,
   creator_id INT NOT NULL REFERENCES users(id),
+  summary VARCHAR(500) NOT NULL DEFAULT '',
   created_at TIMESTAMP DEFAULT Now(),
   PRIMARY KEY (id)
 );
@@ -44,7 +46,7 @@ CREATE TABLE IF NOT EXISTS tags (
   id SERIAL NOT NULL,
   tag VARCHAR(80) NOT NULL,
   PRIMARY KEY (id),
-  UNIQUE(tag),
+  UNIQUE(tag)
 );
 
 CREATE TABLE IF NOT EXISTS video_tags (
