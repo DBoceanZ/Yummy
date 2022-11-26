@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
   KeyboardAvoidingView,
 } from "react-native";
-import { Stack, Text } from "@react-native-material/core";
+import { Stack, Text, Surface } from "@react-native-material/core";
 import React, { useState, useEffect } from "react";
 import { BasicInput } from "../lib/inputs/CustomInput.js";
 import { LightButton } from "../lib/buttons/CustomButton.js";
@@ -113,42 +113,47 @@ const Register = ({ navigation }) => {
               style={[styles.logo, { height: height * 0.3 }]}
               resizeMode="contain"
             ></Image>
-
-            <Text style={styles.text} variant="h4">
-              Register
-            </Text>
-            <Stack m={4} spacing={4}>
-              <BasicInput
-                placeHolder="Username"
-                value={username}
-                setValue={setUsername}
-              />
-              <BasicInput
-                placeHolder="email"
-                value={email}
-                setValue={setEmail}
-                onChangetext={(text) => {
-                  setLoading(true);
-                  setEmail(text);
-                }}
-              />
-              <BasicInput
-                placeHolder="Password"
-                value={password}
-                setValue={setPassword}
-                secureTextEntry={true}
-              />
-              <BasicInput
-                placeHolder="Confirm Password"
-                value={confirmPassword}
-                setValue={setConfirmPassword}
-                secureTextEntry={true}
-                onChangeText={(text) =>
-                  text === password ? redirectToLogin() : passwordRedirect()
-                }
-              />
-              <LightButton text="submit" onPress={handleSubmit} />
-            </Stack>
+            <Surface
+              elevation={2}
+              category="medium"
+              style={styles.surfaceStyle}
+            >
+              <Text style={[styles.text, styles.shadowProp]} variant="h4">
+                Register
+              </Text>
+              <Stack m={16} spacing={4} style={styles.shadowProp}>
+                <BasicInput
+                  placeHolder="Username"
+                  value={username}
+                  setValue={setUsername}
+                />
+                <BasicInput
+                  placeHolder="email"
+                  value={email}
+                  setValue={setEmail}
+                  onChangetext={(text) => {
+                    setLoading(true);
+                    setEmail(text);
+                  }}
+                />
+                <BasicInput
+                  placeHolder="Password"
+                  value={password}
+                  setValue={setPassword}
+                  secureTextEntry={true}
+                />
+                <BasicInput
+                  placeHolder="Confirm Password"
+                  value={confirmPassword}
+                  setValue={setConfirmPassword}
+                  secureTextEntry={true}
+                  onChangeText={(text) =>
+                    text === password ? redirectToLogin() : passwordRedirect()
+                  }
+                />
+                <LightButton text="submit" onPress={handleSubmit} />
+              </Stack>
+            </Surface>
           </>
         )}
       </View>
@@ -158,9 +163,8 @@ const Register = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     // justifyContent: "center",
-    padding: 15,
+    padding: 22,
   },
   text: {
     alignSelf: "center",
@@ -170,6 +174,16 @@ const styles = StyleSheet.create({
     width: "70%",
     maxWidth: 500,
     maxHeight: 100,
+  },
+  surfaceStyle: {
+    backgroundColor: "#f2f2f2",
+    padding: 11,
+  },
+  shadowProp: {
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 6 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
 });
 export default Register;

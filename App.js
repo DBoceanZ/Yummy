@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Welcome from "./components/login/Welcome.js";
 import Login from "./components/login/Login.js";
-import EditProfile from "./components/profile/EditProfile.js"
+import EditProfile from "./components/profile/EditProfile.js";
 import Profile from "./components/profile/Profile.js";
 import Register from "./components/login/Register.js";
 import TestNav from "./components/login/testNav.js";
@@ -19,6 +19,11 @@ import FollowingList from "./components/follows/FollowingList.js";
 import { Entypo, AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import addVideo from "./components/home/addVideo.js";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs([
+  "Warning: Async Storage has been extracted from react-native core",
+]);
 
 const Stack = createNativeStackNavigator();
 
