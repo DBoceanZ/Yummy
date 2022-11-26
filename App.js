@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Welcome from "./components/login/Welcome.js";
 import Login from "./components/login/Login.js";
-import EditProfile from "./components/profile/EditProfile.js"
+import EditProfile from "./components/profile/EditProfile.js";
 import Profile from "./components/profile/Profile.js";
 import Register from "./components/login/Register.js";
 import TestNav from "./components/login/testNav.js";
@@ -26,9 +26,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const MyTheme = {
-  colors: {
-    background: "black",
-  },
+  colors: {},
 };
 
 function BottomNav() {
@@ -97,7 +95,11 @@ function BottomNav() {
             );
           }
         },
-        tabBarStyle: { backgroundColor: "black", height: 80 },
+        tabBarStyle: {
+          backgroundColor: "black",
+          height: 80,
+          borderTopWidth: 0,
+        },
         headerShown: false,
         tabBarInactiveTintColor: "gray",
         tabBarActiveTintColor: "tomato",
@@ -111,7 +113,7 @@ function BottomNav() {
         options={{ tabBarLabel: () => null }}
       />
       <Tab.Screen name="Inbox" component={Home} />
-      <Tab.Screen name="Profile" component={Home} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 }
@@ -160,7 +162,7 @@ export default function App() {
         <StatusBar style="light" />
         <Context>
           <NotifierWrapper>
-            <NavigationContainer theme={MyTheme}>
+            <NavigationContainer>
               <NavigationStack />
             </NavigationContainer>
           </NotifierWrapper>

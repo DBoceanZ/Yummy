@@ -82,7 +82,7 @@ export default function AddVideo({ navigation }) {
     return unsubscribe;
   }, [navigation]);
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         {currentUpload ? (
           <Button
@@ -101,6 +101,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "black",
+    backgroundColor: "#192734",
   },
 });
