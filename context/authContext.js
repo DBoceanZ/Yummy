@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (email, password, userType) => {
     try {
       const user = await auth.createUserWithEmailAndPassword(email, password);
+      console.log("user:", user);
       let currUser = user.user;
       let response = {
         email: currUser.email,
@@ -39,12 +40,14 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const user = await auth.signInWithEmailAndPassword(email, password);
+      console.log("userLogin:", user);
       let currUser = user.user;
       let response = {
         email: currUser.email,
         firebaseId: currUser.uid,
       };
       setCurrentUser(response);
+      return response;
       console.log(response);
     } catch (err) {
       console.log(err);

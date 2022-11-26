@@ -45,45 +45,46 @@ const Register = ({ navigation }) => {
     }
   }, [loading]);
 
-  useEffect(() => {
-    if (currentUser) {
-      console.log("trying to post user ", currentUser);
-      createNewUser(currentUser);
-      // navigation.navigate("BottomNav");
-    }
-  }, [currentUser]);
-
-  const createNewUser = async (user) => {
-    console.log("create new user route");
-    console.log("user", currentUser);
+  const createNewUser = async (newUser) => {
     const postData = {
-      auth_key: currentUser.firebaseId,
+      auth_key: newUser.firebaseId,
       username: username,
-      email: currentUser.email,
+      email: newUser.email,
     };
-    console.log("postdata", postData);
     try {
-      const data = await axios.get("http://18.212.89.94:3000/login/test");
-      console.log(data);
-      // await axios.post("/login/user", postData);
-      // const userFetch = await axios.get(`/login/user/${postData.auth_key}`);
-      // setUserData({
-      //   ...userData,
-      //   username: userFetch.username,
-      //   UID: userFetch.auth_key,
-      // });
-      // alert(`Welcome ${username}!`);
-      // navigation.navigate("BottomNav");
-      // clearData();
-      // setLoading(false);
+      await axios.post("http://18.212.89.94:3000/login/user", postData);
+      getLoggedInUser(postData.auth_key);
     } catch (err) {
       console.log(err);
     }
   };
+  const getLoggedInUser = async (auth_key) => {
+    try {
+      const { data: userFetch } = await axios.get(
+        `http://18.212.89.94:3000/login/user/${auth_key}`
+      );
+      console.log("userFetch", userFetch[0]);
+      setUserData({
+        ...userData,
+        username: userFetch[0].username,
+        UID: userFetch[0].id,
+        userEmail: userFetch[0].email,
+        profile_photo: userFetch[0].profile_photo_url,
+      });
+      alert(`Welcome ${username}!`);
+      navigation.navigate("BottomNav");
+      clearData();
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      await signup(email, password);
+      const newUser = await signup(email, password);
+      createNewUser(newUser);
     } catch (err) {
       console.log(err);
     }

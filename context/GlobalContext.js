@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 
 const userPackage = {
-  userName: "",
+  username: "",
   UID: "",
-  firebaseID: "",
   userEmail: "",
   userToken: "",
+  profile_photo: "",
+  selectedUserID: "",
 };
 const GlobalContext = createContext();
 
