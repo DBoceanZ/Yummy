@@ -2,7 +2,7 @@ const pool = require("../database");
 
 const queries = {
   testQuery: `SELECT * FROM users`,
-  getOneUser: `SELECT id, username, email, profile_photo_url,  FROM users WHERE auth_key= $1`,
+  getOneUser: `SELECT id, username, email, profile_photo_url FROM users WHERE auth_key= $1`,
   addOneUser: `INSERT INTO users (username, email, auth_key) VALUES ($1, $2, $3)`,
 };
 
