@@ -65,3 +65,4 @@ access.log
 
 # enviroment
 .env
+cloudinaryConfig.js

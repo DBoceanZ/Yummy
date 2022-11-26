@@ -31,6 +31,9 @@ import { Stack, IconButton } from "@react-native-material/core";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const files = [testfile, testfile1, testfile2, testfile3, testfile4, testfile5];
+const urls = [
+  "https://res.cloudinary.com/dzuekop5v/video/upload/v1669423527/ltdmybqbpwkofvhzaj6p.mov",
+];
 const mockUsername = "user";
 const mockDesc = "this is the video description";
 
@@ -52,7 +55,6 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      console.log("Focus");
       //Every time the screen is focused the Video starts playing
       if (videoref) {
         videoref.current.playAsync();
@@ -63,7 +65,6 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {
-      console.log("Blur");
       //Every time the screen loses focus the Video is paused
       if (videoref) {
         videoref.current.pauseAsync();
@@ -142,7 +143,7 @@ export default function Home({ navigation }) {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {files.map((src, index) => (
+        {urls.map((src, index) => (
           <View key={index}>
             <Pressable
               onPress={() =>
@@ -157,7 +158,9 @@ export default function Home({ navigation }) {
                 resizeMode="cover"
                 ref={focusedIndex === index ? videoref : null}
                 style={styles.video}
-                source={src}
+                source={{
+                  uri: src,
+                }}
                 useNativeControls={false}
                 isLooping
                 onPlaybackStatusUpdate={(status) => setStatus(() => status)}
