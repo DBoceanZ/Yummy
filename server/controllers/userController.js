@@ -29,5 +29,14 @@ module.exports = {
     } catch (err) {
       console.log(err);
     }
+  },
+  updateUser: async (req, res) => {
+    try {
+      await userModel.updateUser(req.body);
+      res.sendStatus(200);
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(500)
+    }
   }
 }
