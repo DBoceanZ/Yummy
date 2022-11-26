@@ -109,13 +109,13 @@ const Login = ({ navigation }) => {
             resizeMode="contain"
           ></Image>
           <Surface elevation={2} category="medium" style={styles.surfaceStyle}>
-            <Text
+            {/* <Text
               color="#225e6c"
               style={[styles.text, styles.shadowProp]}
               variant="h4"
             >
               Login
-            </Text>
+            </Text> */}
 
             <VStack m={20} spacing={8} style={styles.shadowProp}>
               <BasicInput
@@ -132,6 +132,7 @@ const Login = ({ navigation }) => {
                   <IconButton icon={(props) => <Icon name="eye" />} />
                 )}
               /> */}
+              <View />
               <TextInput
                 label="password"
                 value={password}
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
   },
   shadowProp: {
     shadowColor: "#171717",
-    shadowOffset: { width: -2, height: 6 },
+    shadowOffset: { width: -2, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
