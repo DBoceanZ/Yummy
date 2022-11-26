@@ -159,7 +159,6 @@ export default function App() {
     <>
       <AuthProvider>
         {/* <SafeAreaView style={styles.container}> */}
-        <StatusBar style="light" />
         <Context>
           <NotifierWrapper>
             <NavigationContainer>

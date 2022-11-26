@@ -16,12 +16,14 @@ import {
   Animated,
   Image,
   Share,
+  TouchableOpacity,
 } from "react-native";
 import { Video, AVPlaybackStatus } from "expo-av";
 import Comments from "./Comments";
 import { LightButton } from "../lib/buttons/CustomButton.js";
 import testpfp from "./testmedia/testpfp.png";
 import { Stack, IconButton } from "@react-native-material/core";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -50,6 +52,7 @@ export default function Home({ navigation }) {
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
   const opacity = useState(new Animated.Value(0))[0];
+  const { userData, setUserData } = useGlobalContext();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -164,7 +167,15 @@ export default function Home({ navigation }) {
                 isLooping
                 onPlaybackStatusUpdate={(status) => setStatus(() => status)}
               />
-              <Image source={testpfp} style={styles.pfp} />
+              <TouchableOpacity
+                onPress={() => {
+                  // set userid here later VVVVVVVV
+                  setUserData({ ...userData });
+                  navigation.navigate("Profile");
+                }}
+              >
+                <Image source={testpfp} style={styles.pfp} />
+              </TouchableOpacity>
               <Animated.View
                 style={[
                   {
