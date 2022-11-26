@@ -6,13 +6,24 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
-import { Surface, VStack, Text, Divider } from "@react-native-material/core";
+import {
+  Surface,
+  HStack,
+  VStack,
+  Text,
+  Divider,
+  TextInput,
+  IconButton,
+} from "@react-native-material/core";
 import React, { useState, useEffect } from "react";
-import { BasicInput } from "../lib/inputs/CustomInput.js";
+import { BasicInput, PasswordInput } from "../lib/inputs/CustomInput.js";
 import { LightButton } from "../lib/buttons/CustomButton.js";
 import Logo from "../../assets/images/yummyLogo.png";
 import { useAuth } from "../../context/authContext.js";
 import { useGlobalContext } from "../../context/GlobalContext";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 
 const Login = ({ navigation }) => {
@@ -20,6 +31,7 @@ const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(true);
   const { login, currentUser, globalUsername, setGlobalUsername } = useAuth();
   const { loading, setLoading, userData, setUserData } = useGlobalContext();
 
@@ -112,13 +124,35 @@ const Login = ({ navigation }) => {
                 setValue={setEmail}
                 onChangeText={(text) => setEmail(text)}
               />
-              <BasicInput
-                placeHolder="password"
+              {/* <TextInput
+                label="password"
+                variant="outlined"
+
+                trailing={(props) => (
+                  <IconButton icon={(props) => <Icon name="eye" />} />
+                )}
+              /> */}
+              <TextInput
+                label="password"
                 value={password}
+                color="#222222"
                 setValue={setPassword}
-                secureTextEntry={true}
+                variant="outlined"
+                secureTextEntry={showPassword}
                 onChangeText={(text) => setPassword(text)}
+                style={styles.inputStyle}
+                trailing={(props) => (
+                  <IconButton
+                    onPress={() => {
+                      showPassword
+                        ? setShowPassword(false)
+                        : setShowPassword(true);
+                    }}
+                    icon={(props) => <Icon name="eye" />}
+                  />
+                )}
               />
+
               <LightButton text="submit" onPress={handleSubmit} />
             </VStack>
           </Surface>
@@ -132,6 +166,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 22,
   },
+  passwordContainer: {},
+  inputStyle: {},
   text: {
     alignSelf: "center",
     padding: 10,

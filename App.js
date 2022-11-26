@@ -120,7 +120,7 @@ const NavigationStack = () => {
       screenOptions={{
         headerTitleAlign: "center",
         headerStyle: {
-          backgroundColor: "#1e232c",
+          backgroundColor: "#f2f2f2",
         },
         headerTitleStyle: {
           fontWeight: "bold",

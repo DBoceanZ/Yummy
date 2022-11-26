@@ -1,8 +1,17 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Stack, TextInput, IconButton } from "@react-native-material/core";
 import React from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-export function BasicInput({ value, setValue, placeHolder, secureTextEntry }) {
+export function BasicInput({
+  value,
+  setValue,
+  placeHolder,
+  secureTextEntry,
+  isPassword,
+}) {
   return (
     <View>
       <TextInput
