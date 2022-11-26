@@ -18,6 +18,7 @@ import FollowingList from "./components/follows/FollowingList.js";
 import { Entypo, AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AddVideo from "./components/home/AddVideo.js";
+import { NotifierWrapper } from "react-native-notifier";
 
 const Stack = createNativeStackNavigator();
 
@@ -144,15 +145,20 @@ const NavigationStack = () => {
 
 export default function App() {
   return (
-    <AuthProvider>
-      {/* <SafeAreaView style={styles.container}> */}
-      <Context>
-        <NavigationContainer>
-          <NavigationStack />
-        </NavigationContainer>
-      </Context>
-      {/* </SafeAreaView> */}
-    </AuthProvider>
+    <>
+      <AuthProvider>
+        {/* <SafeAreaView style={styles.container}> */}
+        <Context>
+          <NotifierWrapper>
+            <NavigationContainer>
+              <NavigationStack />
+            </NavigationContainer>
+          </NotifierWrapper>
+        </Context>
+        {/* </SafeAreaView> */}
+      </AuthProvider>
+      <StatusBar style="light" />
+    </>
   );
 }
 

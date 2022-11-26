@@ -19,20 +19,17 @@ import {
 import { Video, AVPlaybackStatus } from "expo-av";
 import Comments from "./Comments";
 import { LightButton } from "../lib/buttons/CustomButton.js";
-import testfile from "./testmedia/testvideo.mp4";
-import testfile1 from "./testmedia/testvideo1.mp4";
-import testfile2 from "./testmedia/testvideo2.mp4";
-import testfile3 from "./testmedia/testvideo.mp4";
-import testfile4 from "./testmedia/testvideo1.mp4";
-import testfile5 from "./testmedia/testvideo2.mp4";
 import testpfp from "./testmedia/testpfp.png";
 import { Stack, IconButton } from "@react-native-material/core";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const files = [testfile, testfile1, testfile2, testfile3, testfile4, testfile5];
 const urls = [
-  "https://res.cloudinary.com/dzuekop5v/video/upload/v1669423527/ltdmybqbpwkofvhzaj6p.mov",
+  "https://res.cloudinary.com/dzuekop5v/video/upload/ac_none/v1669428168/jdsgsl5812uuoa5trbdz.mov",
+  "https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov",
+  "https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov",
+  "https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov",
+  "https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov",
 ];
 const mockUsername = "user";
 const mockDesc = "this is the video description";

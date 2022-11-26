@@ -12,16 +12,18 @@ import { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "./cloudinaryConfig";
 import axios from "axios";
+import { Notifier, Easing } from "react-native-notifier";
 
 export default function AddVideo() {
   const [video, setVideo] = useState(null);
+  const [currentUpload, setCurrentUpload] = useState(null);
 
   const pickVideo = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "Videos",
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 60,
     });
     if (!result.canceled) {
       setVideo(result.assets[0].uri);
@@ -30,10 +32,10 @@ export default function AddVideo() {
         type: `test/${result.assets[0].uri.split(".")[1]}`,
         name: `test.${result.assets[0].uri.split(".")[1]}`,
       };
-      handleUpload(newFile);
+      setCurrentUpload(newFile);
     }
   };
-  const handleUpload = (video) => {
+  const handleUpload = async (video) => {
     const data = new FormData();
     data.append("file", video);
     data.append("upload_preset", "yummy_upload");
@@ -43,14 +45,44 @@ export default function AddVideo() {
         `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`,
         data
       )
-      .then((res) => res.json())
-      .then((data) => console.log("data: ", data.secure_url))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log("data: ", res.data.secure_url);
+        Notifier.showNotification({
+          title: "Video Uploaded! 🎉",
+          duration: 3000,
+          showAnimationDuration: 800,
+          showEasing: Easing.bounce,
+          hideOnPress: true,
+          swipeEnabled: true,
+          alertType: "success",
+        });
+        setCurrentUpload(null);
+      })
+      .catch((err) => {
+        console.log(err);
+        Notifier.showNotification({
+          title: "Upload Failed 🙁 Try Again ",
+          duration: 3000,
+          showAnimationDuration: 800,
+          hideOnPress: true,
+          swipeEnabled: true,
+          alertType: "error",
+        });
+        setCurrentUpload(null);
+      });
   };
   return (
     <SafeAreaView>
       <View>
         <Button onPress={pickVideo} title="hiiiiiiiiiii" />
+        {currentUpload ? (
+          <Button
+            title="upload"
+            onPress={() => {
+              handleUpload(currentUpload);
+            }}
+          />
+        ) : null}
       </View>
     </SafeAreaView>
   );
