@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
-import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "./cloudinaryConfig";
+import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "@env";
 import axios from "axios";
 import { Notifier, Easing } from "react-native-notifier";
 import { formData } from "./formData.js";
