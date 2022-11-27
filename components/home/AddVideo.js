@@ -72,7 +72,7 @@ export default function AddVideo({ navigation }) {
             console.log(err);
             Notifier.showNotification({
               title: "Upload Failed 🙁 Try Again ",
-              duration: 3000,
+              duration: 4000,
               showAnimationDuration: 800,
               hideOnPress: true,
               swipeEnabled: true,
@@ -82,7 +82,7 @@ export default function AddVideo({ navigation }) {
           });
         Notifier.showNotification({
           title: "Video Uploaded! 🎉",
-          duration: 3000,
+          duration: 4000,
           showAnimationDuration: 800,
           showEasing: Easing.bounce,
           hideOnPress: true,
