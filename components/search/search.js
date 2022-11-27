@@ -1,50 +1,75 @@
 import React from 'react';
-import {View, TextInput, FlatList, Pressable} from from "react-native";
+import {StyleSheet, View, TextInput, FlatList, Pressable} from from "react-native";
 import prefixTree from '../../helpers/prefixTree.js';
+import Thumbnails from '../profile/Thumbnails.js';
+import { LightButton } from '../lib/buttons/CustomButton';
 
 const tagTree = new prefixTree();
-const allTags = []; // get request for all tags in database;
-for (i = 0; i < allTags.length; i++) {
-  tagTree.addword(allTags[i]);
-}
 
 const Search = ({ navigation }) =>{
-const [tagList, setTagList] = React.useState([]);
-const changeHandler = function(prefix){
-  if(!prefix){
-    setTagList([]);
-  }else {
-    let tags = tagTree.startsWith(prefix);
-    setTagList(tags);
+  const [tagList, setTagList] = React.useState([]);
+  const [videos, setVideos] = React.useState([])
+  const changeHandler = function(prefix){
+    if(!prefix){
+      setTagList([]);
+    }else {
+      let tags = tagTree.startsWith(prefix);
+      setTagList(tags);
+    }
   }
-}
-const pressHandler = function(tag) {
-  //axios call to server for videos by tag
-  //cal to video preview grid with my list
+  React.useEffect(() => {
+    axios.get('http://18.212.89.94:3000/videos/tags')
+    .then((res) =>{
+          const allTags = res.data
+          for (i = 0; i < allTags.length; i++) {
+            tagTree.addword(allTags[i]);
+          }
+
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }, [])
+  const handleTouch = () => {
+    navigation.navigate("bottombar");
+  }
+  const pressHandler = function(tag) {
+    axios.get(`http://18.212.89.94:3000/videos/${tag}`)
+      .then(res => {
+        setTagList([]);
+        setVideos(res.data);
+      })
+      .catch(err =>{
+        console.log(err)
+      })
 }
 const on
   return (
     <View>
+      <View>
       <TextInput
+        placeholder="Search by for tags here..."
         onChangeText={(e)=>{changeHandler(e.target.value)}}
         value={text}
       />
+      </View>
       <FlatList
         data={tagList}
         renderItem={(renderItem) =>{
-          <Pressable
+          <LightButton
           key={renderItem}
           onPress={()=> pressHandler(key) }
+          text={renderItem}
           />
         }}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
       />
+      <Thumbnails videos={videos} handleTouch={handletouch}/>
     </View>
   )
 
 }
-
 
 
 
