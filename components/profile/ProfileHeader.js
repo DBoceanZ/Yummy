@@ -17,6 +17,23 @@ const ProfileHeader = ({ handlers }) => {
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
   );
 
+  // follow button press handlers
+  const handleFollowPress = () => {
+    axios.post('http://18.212.89.94:3000/users/follow', {
+      user_id: UID,
+      followed_id: selectedUserID
+    })
+      .catch((err) => console.log(err));
+  };
+
+  const handleUnfollowPress = () => {
+    axios.delete('http://18.212.89.94:3000/users/follow', {
+      user_id: UID,
+      followed_id: selectedUserID
+    })
+      .catch((err) => console.log(err));
+  };
+
   // on initial render, fetch user profile data from database
   useEffect(() => {
     axios.get(`http://18.212.89.94:3000/users/userData?user_id=${selectedUserID}`)

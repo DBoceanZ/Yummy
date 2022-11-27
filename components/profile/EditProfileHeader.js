@@ -83,9 +83,7 @@ const EditProfileHeader = () => {
           <Image style={styles.image} source={{uri: profilePhoto}}></Image>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity>
-        <Text style={styles.username}>{username}</Text>
-      </TouchableOpacity>
+      <Text style={styles.username}>{username}</Text>
       <View style={styles.countersContainer}>
         <View style={styles.counterItem}>
           <Text style={styles.counter}>0</Text>

@@ -43,9 +43,6 @@ const Profile = ({ navigation }) => {
         }
         setVideos(videos);
       })
-      .then(() => {
-        console.log('videos: ', videos);
-      })
       .catch((err) => {
         console.log(err);
       });
