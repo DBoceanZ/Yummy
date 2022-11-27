@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput, FlatList, Pressable} from from "react-native";
+import {StyleSheet, View, TextInput, FlatList, Pressable} from from "react-native";
 import prefixTree from '../../helpers/prefixTree.js';
 import Thumbnails from '../profile/Thumbnails.js';
 import { LightButton } from '../lib/buttons/CustomButton';
@@ -34,8 +34,9 @@ const Search = ({ navigation }) =>{
     navigation.navigate("bottombar");
   }
   const pressHandler = function(tag) {
-    axios.get(`http://18.212.89.94:3000/videos/videos/${tag}`)
+    axios.get(`http://18.212.89.94:3000/videos/${tag}`)
       .then(res => {
+        setTagList([]);
         setVideos(res.data);
       })
       .catch(err =>{
@@ -45,10 +46,13 @@ const Search = ({ navigation }) =>{
 const on
   return (
     <View>
+      <View>
       <TextInput
+        placeholder="Search by for tags here..."
         onChangeText={(e)=>{changeHandler(e.target.value)}}
         value={text}
       />
+      </View>
       <FlatList
         data={tagList}
         renderItem={(renderItem) =>{
@@ -66,7 +70,6 @@ const on
   )
 
 }
-
 
 
 
