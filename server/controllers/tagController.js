@@ -9,5 +9,15 @@ module.exports = {
       console.log(err)
       res.sendStatus(500);
     }
+  },
+  getVideosByTag: async (req, res) => {
+    const {tag} = req.params;
+    try {
+      const vids = await tagModel.getVideos(tag);
+      res.status(200).json(vids);
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(500);
+    }
   }
 }
