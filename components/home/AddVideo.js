@@ -138,7 +138,6 @@ export default function AddVideo({ navigation }) {
               helperText="at least 3 comma seperated tags"
               value={tags}
               color="#222222"
-              baseColor="green"
               variant="outlined"
               onChangeText={(text) => setTags(text)}
               style={styles.textInput}

@@ -21,6 +21,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AddVideo from "./components/home/AddVideo.js";
 import { NotifierWrapper } from "react-native-notifier";
 import { LogBox } from "react-native";
+import ProfileVideos from "./components/home/ProfileVideos.js";
 
 LogBox.ignoreLogs([
   "Warning: Async Storage has been extracted from react-native core",
@@ -107,7 +108,7 @@ function BottomNav() {
       })}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Friends" component={Home} />
+      <Tab.Screen name="Friends" component={ProfileVideos} />
       <Tab.Screen
         name="Add"
         component={AddVideo}
@@ -158,6 +159,20 @@ const NavigationStack = () => {
         options={{ headerShown: false }}
         name="Home"
         component={Home}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="ProfileVideos"
+        component={ProfileVideos}
+        cardStyle={{ backgroundColor: "transparent" }}
+        options={{
+          headerBackTitleVisible: false,
+          headerTransparent: true,
+          backgroundColor: "transparent",
+          headerStyle: {
+            backgroundColor: "transparent",
+          },
+          headerTitle: "",
+        }}
       ></Stack.Screen>
       <Stack.Screen name="Following" component={FollowingList}></Stack.Screen>
       <Stack.Screen name="Followers" component={FollowerList}></Stack.Screen>
