@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { View } from "react-native";
-import ProfileHeader from "./ProfileHeader.js";
-import Thumbnails from "./Thumbnails.js";
-import { useGlobalContext } from "../../context/GlobalContext.js";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { View } from 'react-native';
+import ProfileHeader from './ProfileHeader.js';
+import Thumbnails from './Thumbnails.js';
+import { useGlobalContext } from '../../context/GlobalContext.js';
 
 const Profile = ({ navigation }) => {
   const { userData } = useGlobalContext();
   const { selectedUserID } = userData;
   const [videos, setVideos] = useState([
-    "https://res.cloudinary.com/dzuekop5v/video/upload/v1669462538/aidb82iqwb1lmpw0vrbv.mov",
-    "https://res.cloudinary.com/dzuekop5v/video/upload/v1669428168/jdsgsl5812uuoa5trbdz.mov",
-    "https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov",
+    'https://res.cloudinary.com/dzuekop5v/video/upload/v1669462538/aidb82iqwb1lmpw0vrbv.mov',
+    'https://res.cloudinary.com/dzuekop5v/video/upload/v1669428168/jdsgsl5812uuoa5trbdz.mov',
+    'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
   ]);
 
   // on touch navigation handlers
   const handleThumbnailTouch = () => {
-    navigation.navigate("ProfileVideos");
+    navigation.navigate('ProfileVideos');
   };
 
   const handleFollowersTouch = () => {
-    navigation.navigate("Followers");
+    navigation.navigate('Followers');
   };
 
   const handleFollowingTouch = () => {
-    navigation.navigate("Following");
+    navigation.navigate('Following');
   };
 
   const handleEditProfileTouch = () => {
-    navigation.navigate("Edit Profile");
+    navigation.navigate('Edit Profile');
   };
 
   // on initial render, fetch user videos from the database
@@ -45,7 +45,7 @@ const Profile = ({ navigation }) => {
         setVideos(videos);
       })
       .then(() => {
-        console.log("videos: ", videos);
+        console.log('videos: ', videos);
       })
       .catch((err) => {
         console.log(err);

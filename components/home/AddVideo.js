@@ -6,34 +6,27 @@ import {
   TouchableOpacity,
   Button,
   KeyboardAvoidingView,
-} from "react-native";
-import { useState, useEffect } from "react";
-import * as ImagePicker from "expo-image-picker";
-import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "@env";
-import axios from "axios";
-import { Notifier, Easing } from "react-native-notifier";
-import { useGlobalContext } from "../../context/GlobalContext";
-import {
-  Surface,
-  VStack,
-  Text,
-  Divider,
-  TextInput,
-  IconButton,
-} from "@react-native-material/core";
-import { LightButton } from "../lib/buttons/CustomButton.js";
-import { StatusBar } from "expo-status-bar";
+} from 'react-native';
+import { useState, useEffect } from 'react';
+import * as ImagePicker from 'expo-image-picker';
+import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from '@env';
+import axios from 'axios';
+import { Notifier, Easing } from 'react-native-notifier';
+import { useGlobalContext } from '../../context/GlobalContext';
+import { Surface, VStack, Text, Divider, TextInput, IconButton } from '@react-native-material/core';
+import { LightButton } from '../lib/buttons/CustomButton.js';
+import { StatusBar } from 'expo-status-bar';
 
 export default function AddVideo({ navigation }) {
   const [video, setVideo] = useState(null);
   const [currentUpload, setCurrentUpload] = useState(null);
   const { userData, setUserData } = useGlobalContext();
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState('');
   const [tags, setTags] = useState([]);
 
   const pickVideo = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: "Videos",
+      mediaTypes: 'Videos',
       allowsEditing: true,
       aspect: [4, 3],
       quality: 60,
@@ -42,37 +35,34 @@ export default function AddVideo({ navigation }) {
       setVideo(result.assets[0].uri);
       let newFile = {
         uri: result.assets[0].uri,
-        type: `test/${result.assets[0].uri.split(".")[1]}`,
-        name: `test.${result.assets[0].uri.split(".")[1]}`,
+        type: `test/${result.assets[0].uri.split('.')[1]}`,
+        name: `test.${result.assets[0].uri.split('.')[1]}`,
       };
       setCurrentUpload(newFile);
     }
   };
   const handleUpload = async () => {
-    if (userData.UID === "") {
+    if (userData.UID === '') {
       Notifier.showNotification({
-        title: "Must have account to upload",
+        title: 'Must have account to upload',
         duration: 3000,
         showAnimationDuration: 800,
         hideOnPress: true,
         swipeEnabled: true,
-        alertType: "warn",
+        alertType: 'warn',
       });
       return;
     }
     const data = new FormData();
-    data.append("file", currentUpload);
-    data.append("upload_preset", "yummy_upload");
-    data.append("cloud_name", CLOUDINARY_CLOUD_NAME);
+    data.append('file', currentUpload);
+    data.append('upload_preset', 'yummy_upload');
+    data.append('cloud_name', CLOUDINARY_CLOUD_NAME);
     axios
-      .post(
-        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`,
-        data
-      )
+      .post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`, data)
       .then((res) => {
         console.log(userData);
         axios
-          .post("http://18.212.89.94:3000/videos/postvideo", {
+          .post('http://18.212.89.94:3000/videos/postvideo', {
             summary: formValues.description,
             user_id: userData.UID,
             video_url: res.data.secure_url,
@@ -80,30 +70,30 @@ export default function AddVideo({ navigation }) {
           .catch((err) => {
             console.log(err);
             Notifier.showNotification({
-              title: "Upload Failed 🙁 Try Again ",
+              title: 'Upload Failed 🙁 Try Again ',
               duration: 4000,
               showAnimationDuration: 800,
               hideOnPress: true,
               swipeEnabled: true,
-              alertType: "error",
+              alertType: 'error',
             });
             setCurrentUpload(null);
           });
         Notifier.showNotification({
-          title: "Video Uploaded! 🎉",
+          title: 'Video Uploaded! 🎉',
           duration: 4000,
           showAnimationDuration: 800,
           showEasing: Easing.bounce,
           hideOnPress: true,
           swipeEnabled: true,
-          alertType: "success",
+          alertType: 'success',
         });
         setCurrentUpload(null);
       });
   };
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
+    const unsubscribe = navigation.addListener('focus', () => {
       //Every time the screen is focused the Video starts playing
       pickVideo();
     });
@@ -114,11 +104,11 @@ export default function AddVideo({ navigation }) {
     <View style={styles.container}>
       <StatusBar style="dark" />
 
-      <Text style={{ textAlign: "center" }} variant="h5">
+      <Text style={{ textAlign: 'center' }} variant="h5">
         Upload Video
       </Text>
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.formContainer}
         enabled="true"
       >
@@ -158,23 +148,23 @@ export default function AddVideo({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   formContainer: {
     padding: 22,
   },
   text: {
-    alignSelf: "center",
+    alignSelf: 'center',
     padding: 10,
   },
   shadowProp: {
-    shadowColor: "#171717",
+    shadowColor: '#171717',
     shadowOffset: { width: -2, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
   surfaceStyle: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: '#f2f2f2',
     padding: 11,
   },
   textInput: {},

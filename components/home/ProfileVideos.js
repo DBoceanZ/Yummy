@@ -1,9 +1,9 @@
-import * as React from "react";
-import axios from "axios";
-import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
-import { useState, useEffect, useRef, useCallback } from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StatusBar } from "expo-status-bar";
+import * as React from 'react';
+import axios from 'axios';
+import { AntDesign, FontAwesome, Foundation } from '@expo/vector-icons';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { StatusBar } from 'expo-status-bar';
 import {
   View,
   StyleSheet,
@@ -17,36 +17,35 @@ import {
   Image,
   Share,
   TouchableOpacity,
-} from "react-native";
-import { Video, AVPlaybackStatus } from "expo-av";
-import Comments from "./Comments";
-import { LightButton } from "../lib/buttons/CustomButton.js";
-import testpfp from "./testmedia/testpfp.png";
-import { Stack, IconButton } from "@react-native-material/core";
-import { useGlobalContext } from "../../context/GlobalContext";
+} from 'react-native';
+import { Video, AVPlaybackStatus } from 'expo-av';
+import Comments from './Comments';
+import { LightButton } from '../lib/buttons/CustomButton.js';
+import testpfp from './testmedia/testpfp.png';
+import { Stack, IconButton } from '@react-native-material/core';
+import { useGlobalContext } from '../../context/GlobalContext';
 
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-const mockUsername = "user";
-const mockDesc = "this is the video description";
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const mockUsername = 'user';
+const mockDesc = 'this is the video description';
 
 export default function ProfileVideos({ navigation }) {
   const videoref = React.useRef(null);
   const [ref, setref] = useState(null);
   const [status, setStatus] = React.useState({});
   const [displayComments, setDisplayComments] = React.useState(false);
-  const { userData, setUserData, homeVideos, setHomeVideos } =
-    useGlobalContext();
+  const { userData, setUserData, homeVideos, setHomeVideos } = useGlobalContext();
   const [focusedIndex, setFocusedIndex] = React.useState(homeVideos.index);
   const [refreshing, setRefreshing] = React.useState(false);
   const [comments, setComments] = React.useState([]);
-  const [aColor, setAColor] = React.useState("white");
-  const windowWidth = Dimensions.get("window").width;
-  const windowHeight = Dimensions.get("window").height;
+  const [aColor, setAColor] = React.useState('white');
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
   const opacity = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
+    const unsubscribe = navigation.addListener('focus', () => {
       //Every time the screen is focused the Video starts playing
       if (videoref) {
         videoref.current.playAsync();
@@ -56,7 +55,7 @@ export default function ProfileVideos({ navigation }) {
   }, [navigation]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
+    const unsubscribe = navigation.addListener('blur', () => {
       //Every time the screen loses focus the Video is paused
       if (videoref) {
         videoref.current.pauseAsync();
@@ -144,7 +143,7 @@ export default function ProfileVideos({ navigation }) {
                 onPress={() => {
                   // set userid here later VVVVVVVV
                   setUserData({ ...userData });
-                  navigation.navigate("Profile");
+                  navigation.navigate('Profile');
                 }}
               >
                 <Image source={testpfp} style={styles.pfp} />
@@ -156,12 +155,7 @@ export default function ProfileVideos({ navigation }) {
                   },
                 ]}
               >
-                <Foundation
-                  style={styles.playBut}
-                  name="play"
-                  size={88}
-                  color="white"
-                />
+                <Foundation style={styles.playBut} name="play" size={88} color="white" />
               </Animated.View>
               <AntDesign
                 style={styles.heart}
@@ -171,25 +165,25 @@ export default function ProfileVideos({ navigation }) {
                 onPress={() => {
                   axios
                     .post(
-                      "http://18.212.89.94:3000/video/likes",
+                      'http://18.212.89.94:3000/video/likes',
                       {
                         video_id: 1,
                         user_id: 1,
                       },
                       {
                         headers: {
-                          "Content-Type": "application/json",
+                          'Content-Type': 'application/json',
                         },
                       }
                     )
                     .then((response) => {
                       console.log(response);
                       if (response.status === 201) {
-                        console.log("success");
-                        setAColor("red");
+                        console.log('success');
+                        setAColor('red');
                         /*need to get like count again*/
                       } else {
-                        console.log("failure");
+                        console.log('failure');
                       }
                     })
                     .catch((err) => {
@@ -205,7 +199,7 @@ export default function ProfileVideos({ navigation }) {
                 color="white"
                 onPress={() => {
                   axios
-                    .get("http://18.212.89.94:3000/video/comments?video_id=1")
+                    .get('http://18.212.89.94:3000/video/comments?video_id=1')
                     .then((response) => {
                       setComments(response.data);
                     })
@@ -221,12 +215,7 @@ export default function ProfileVideos({ navigation }) {
                   onShare(src);
                 }}
               >
-                <FontAwesome
-                  style={styles.share}
-                  name="share"
-                  size={34}
-                  color="white"
-                />
+                <FontAwesome style={styles.share} name="share" size={34} color="white" />
               </Pressable>
               <Text style={styles.shareText}>0</Text>
               <Text style={styles.usernameText}>{mockUsername}</Text>
@@ -242,8 +231,8 @@ export default function ProfileVideos({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#ecf0f1",
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
   },
   video: {
     flex: 1,
@@ -251,53 +240,53 @@ const styles = StyleSheet.create({
     height: windowHeight,
   },
   buttons: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   heart: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 370,
     right: 5,
   },
   heartText: {
-    fontWeight: "bold",
-    position: "absolute",
+    fontWeight: 'bold',
+    position: 'absolute',
     bottom: 350,
     right: 17,
-    color: "white",
+    color: 'white',
   },
   comment: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 305,
     right: 5,
   },
   commentText: {
-    fontWeight: "bold",
-    position: "absolute",
+    fontWeight: 'bold',
+    position: 'absolute',
     bottom: 280,
     right: 17,
-    color: "white",
+    color: 'white',
   },
   share: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 230,
     right: 5,
   },
   shareText: {
-    fontWeight: "bold",
-    position: "absolute",
+    fontWeight: 'bold',
+    position: 'absolute',
     bottom: 210,
     right: 17,
-    color: "white",
+    color: 'white',
   },
   playBut: {
     margin: 50,
     bottom: 350,
     right: 110,
-    position: "absolute",
+    position: 'absolute',
     opacity: 0.4,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -306,9 +295,9 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
   },
   playButContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   pfp: {
     bottom: 430,
@@ -316,23 +305,23 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 200 / 2,
-    position: "absolute",
-    borderColor: "white",
+    position: 'absolute',
+    borderColor: 'white',
     borderWidth: 1,
   },
   usernameText: {
     margin: 5,
-    fontWeight: "bold",
-    position: "absolute",
+    fontWeight: 'bold',
+    position: 'absolute',
     bottom: 115,
     left: 5,
-    color: "white",
+    color: 'white',
   },
   descText: {
     margin: 5,
-    position: "absolute",
+    position: 'absolute',
     bottom: 85,
     left: 5,
-    color: "white",
+    color: 'white',
   },
 });
