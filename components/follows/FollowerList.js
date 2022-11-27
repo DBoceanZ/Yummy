@@ -3,9 +3,14 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import ListItem from './ListItem.js';
 
 
-export default function Followers() {
+export default function Followers({ navigation }) {
+
+  const handleProfileNavigation = () => {
+    navigation.navigate('Profile');
+  }
+
   const renderItem = ({ item }) => (
-    <ListItem user={item} buttonName={"Remove"} />
+    <ListItem user={item} buttonName={"Remove"} handleProfileNavigation={handleProfileNavigation} />
   )
   return (
     <View>
@@ -14,6 +19,7 @@ export default function Followers() {
   );
 }
 
+// Temp sample data
 const list = [
   { id: 0, username: 'Goku' },
   { id: 1, username: 'Gohan' },

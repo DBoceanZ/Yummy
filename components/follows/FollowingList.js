@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import ListItem from './ListItem.js';
+import axios from 'axios';
+import { useGlobalContext } from '../../context/GlobalContext';
 
 
-export default function Following() {
+export default function Following({ navigation }) {
+  const { userData, setUserData } = useGlobalContext();
+  const { selectedUserID } = userData;
+
+  useEffect(() => {
+    axios.get(`http://localhost:3000/follows/followsData?user_followed_id=3`)
+      .then(results => {
+        return console.log(results.data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [])
+
+  const handleProfileNavigation = () => {
+    setUserData({ ...userData, selectedUserID: 6 })
+    navigation.navigate('Profile');
+  }
+
   const renderItem = ({ item }) => (
-    <ListItem user={item} buttonName="Unfollow" />
+    <ListItem user={item} buttonName="Unfollow" handleProfileNavigation={handleProfileNavigation} />
   )
   return (
     <View>
@@ -14,6 +34,7 @@ export default function Following() {
   );
 }
 
+// Temp sample data
 const list = [
   { id: 0, username: 'Goku' },
   { id: 1, username: 'Gohan' },
