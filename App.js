@@ -30,10 +30,6 @@ const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
-const MyTheme = {
-  colors: {},
-};
-
 function BottomNav() {
   return (
     <Tab.Navigator
