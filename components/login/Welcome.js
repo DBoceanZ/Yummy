@@ -30,7 +30,7 @@ export default function Login({ navigation }) {
   };
   return (
     <View style={styles.root}>
-      <StatusBar />
+      <StatusBar barStyle="light-content" translucent={true} />
       <Image
         source={Logo}
         style={[styles.logo, { height: height * 0.3 }]}
@@ -57,6 +57,11 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   bottomAlign: {},
+  safeContainer: {
+    flex: 1,
+    backgroundColor: "#ffffff",
+    color: "#ffffff",
+  },
   text: {
     fontWeight: "bold",
     color: "#ffffff",

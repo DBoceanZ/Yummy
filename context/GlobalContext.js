@@ -8,12 +8,19 @@ const userPackage = {
   profile_photo: "",
   selectedUserID: "",
 };
+
+const videos = {
+  videos: [],
+  index: 0
+};
+
 const GlobalContext = createContext();
 
 export function Context({ children }) {
   const [state, setState] = useState({});
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState(userPackage);
+  const [homeVideos, setHomeVideos] = useState(videos);
 
   // from Register:
   // axios.post new user --> then get UID and username from db
@@ -30,6 +37,8 @@ export function Context({ children }) {
     setState,
     loading,
     setLoading,
+    homeVideos,
+    setHomeVideos
   };
 
   return (
