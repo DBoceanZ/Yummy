@@ -63,7 +63,7 @@ export default function AddVideo({ navigation }) {
       .then((res) => {
         console.log(userData);
         axios
-          .post("/videos/postvideo", {
+          .post("http://18.212.89.94:3000/videos/postvideo", {
             summary: formValues.description,
             user_id: userData.UID,
             video_url: res.data.secure_url,
