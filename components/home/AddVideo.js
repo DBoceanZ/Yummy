@@ -1,26 +1,34 @@
 import {
   SafeAreaView,
   StyleSheet,
-  TextInput,
   View,
-  Text,
   Image,
   TouchableOpacity,
   Button,
+  KeyboardAvoidingView,
 } from "react-native";
 import { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from "@env";
 import axios from "axios";
 import { Notifier, Easing } from "react-native-notifier";
-import { formData } from "./formData.js";
-import FormField from "./FormField";
 import { useGlobalContext } from "../../context/GlobalContext";
+import {
+  Surface,
+  VStack,
+  Text,
+  Divider,
+  TextInput,
+  IconButton,
+} from "@react-native-material/core";
+import { LightButton } from "../lib/buttons/CustomButton.js";
 
 export default function AddVideo({ navigation }) {
   const [video, setVideo] = useState(null);
   const [currentUpload, setCurrentUpload] = useState(null);
   const { userData, setUserData } = useGlobalContext();
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState([]);
 
   const pickVideo = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -101,55 +109,45 @@ export default function AddVideo({ navigation }) {
     return unsubscribe;
   }, [navigation]);
 
-  const [formValues, handleFormValueChange, setFormValues] = formData({
-    description: "",
-    tags: "",
-  });
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <Text
-          style={{
-            fontSize: 24,
-            textAlign: "center",
-            fontWeight: "300",
-            paddingBottom: 30,
-            color: "white",
-          }}
-        >
-          Upload Video
-        </Text>
-        <FormField
-          formKey="description"
-          placeholder="a description of your video"
-          handleFormValueChange={handleFormValueChange}
-        />
-        <FormField
-          formKey="tags"
-          placeholder="at least 3 tags (comma seperated)"
-          textInputProps={{
-            autoCapitalize: "none",
-          }}
-          handleFormValueChange={handleFormValueChange}
-        />
-        {video !== null ? (
-          <Button title="choose video" onPress={pickVideo} />
-        ) : (
-          <Button title="choose new video" onPress={pickVideo} />
-        )}
-        {currentUpload ? (
-          <Button
-            title="Upload"
-            onPress={() => {
-              console.log(formValues.tags.split(","));
-              if (formValues.tags.split(",").length >= 3) {
-                handleUpload();
-              }
-            }}
-          />
-        ) : null}
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <Text style={{ textAlign: "center" }} variant="h4">
+        Upload Video
+      </Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.formContainer}
+        enabled="true"
+      >
+        <Surface elevation={2} category="medium" style={styles.surfaceStyle}>
+          <VStack m={20} spacing={8} style={styles.shadowProp}>
+            <TextInput
+              label="description"
+              value={description}
+              color="#222222"
+              variant="outlined"
+              onChangeText={(text) => setDescription(text)}
+              style={styles.inputStyle}
+            />
+            <View />
+            <TextInput
+              label="tags"
+              value={tags}
+              color="#222222"
+              variant="outlined"
+              onChangeText={(text) => setTags(text)}
+              style={styles.inputStyle}
+            />
+            {video !== null ? (
+              <Button title="change video" onPress={pickVideo} />
+            ) : (
+              <Button title="choose video" onPress={pickVideo} />
+            )}
+            <LightButton text="submit" onPress={handleUpload} />
+          </VStack>
+        </Surface>
+      </KeyboardAvoidingView>
+    </View>
   );
 }
 
@@ -157,9 +155,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#192734",
   },
-  header: {
-    color: "white",
+  formContainer: {
+    padding: 22,
+  },
+  text: {
+    alignSelf: "center",
+    padding: 10,
+  },
+  logo: {
+    alignSelf: "center",
+    width: "70%",
+    maxWidth: 500,
+    maxHeight: 150,
+  },
+  shadowProp: {
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  surfaceStyle: {
+    backgroundColor: "#f2f2f2",
+    padding: 11,
   },
 });
