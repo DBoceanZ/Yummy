@@ -13,12 +13,13 @@ import EditProfile from "./components/profile/EditProfile.js";
 import Profile from "./components/profile/Profile.js";
 import Register from "./components/login/Register.js";
 import TestNav from "./components/login/testNav.js";
-import Home from "./components/home/home.js";
+import Home from "./components/home/Home.js";
 import FollowerList from "./components/follows/FollowerList.js";
 import FollowingList from "./components/follows/FollowingList.js";
 import { Entypo, AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import addVideo from "./components/home/addVideo.js";
+import AddVideo from "./components/home/AddVideo.js";
+import { NotifierWrapper } from "react-native-notifier";
 import { LogBox } from "react-native";
 
 LogBox.ignoreLogs([
@@ -95,7 +96,11 @@ function BottomNav() {
             );
           }
         },
-        tabBarStyle: { backgroundColor: "black", height: 80 },
+        tabBarStyle: {
+          backgroundColor: "black",
+          height: 80,
+          borderTopWidth: 0,
+        },
         headerShown: false,
         tabBarInactiveTintColor: "gray",
         tabBarActiveTintColor: "tomato",
@@ -105,11 +110,11 @@ function BottomNav() {
       <Tab.Screen name="Friends" component={Home} />
       <Tab.Screen
         name="Add"
-        component={addVideo}
+        component={AddVideo}
         options={{ tabBarLabel: () => null }}
       />
       <Tab.Screen name="Inbox" component={Home} />
-      <Tab.Screen name="Profile" component={Home} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 }
@@ -129,7 +134,19 @@ const NavigationStack = () => {
         headerTintColor: "#ffae1f",
       }}
     >
-      <Stack.Screen name="Welcome" component={Welcome}></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerTitleStyle: {
+            fontWeight: "bold",
+            color: "#222222",
+          },
+          headerStyle: {
+            backgroundColor: "#ffae1f",
+          },
+        }}
+        name="Welcome"
+        component={Welcome}
+      ></Stack.Screen>
       <Stack.Screen name="Login" component={Login}></Stack.Screen>
       <Stack.Screen name="Register" component={Register}></Stack.Screen>
       <Stack.Screen
@@ -152,15 +169,19 @@ const NavigationStack = () => {
 
 export default function App() {
   return (
-    <AuthProvider>
-      {/* <SafeAreaView style={styles.container}> */}
-      <Context>
-        <NavigationContainer>
-          <NavigationStack />
-        </NavigationContainer>
-      </Context>
-      {/* </SafeAreaView> */}
-    </AuthProvider>
+    <>
+      <AuthProvider>
+        {/* <SafeAreaView style={styles.container}> */}
+        <Context>
+          <NotifierWrapper>
+            <NavigationContainer>
+              <NavigationStack />
+            </NavigationContainer>
+          </NotifierWrapper>
+        </Context>
+        {/* </SafeAreaView> */}
+      </AuthProvider>
+    </>
   );
 }
 

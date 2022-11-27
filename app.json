@@ -3,6 +3,9 @@
     "name": "yummy",
     "slug": "yummy",
     "version": "1.0.0",
+    "plugins": [
+      "react-native-compressor"
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -13,6 +16,9 @@
     },
     "android": {
       "package": "com.colebienek.yummy"
+    },
+    "ios": {
+      "bundleIdentifier": "com.colebienek.yummy"
     }
   },
   "name": "yummy"

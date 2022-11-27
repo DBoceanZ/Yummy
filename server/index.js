@@ -1,5 +1,5 @@
 const express = require("express");
-//const https = require("https");
+// const https = require("https");
 const path = require("path");
 const morgan = require("morgan");
 const fs = require("fs");
@@ -8,7 +8,7 @@ require("dotenv").config();
 const router = require("./routes");
 const videoRouter = require("./routes/video");
 const loginRouter = require("./routes/loginRoutes");
-const videosRouter = require("./routes/videos")
+const videosRouter = require("./routes/videos");
 const pool = require("./database");
 const usersRouter = require("./routes/users");
 const followsRouter = require("./routes/follows");

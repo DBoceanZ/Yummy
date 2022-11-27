@@ -21,10 +21,11 @@ const ProfileHeader = ({ handlers }) => {
   useEffect(() => {
     axios.get(`http://18.212.89.94:3000/users/userData?user_id=${selectedUserID}`)
       .then((res) => {
-        console.log('server response: ', res.data);
         setUsername(res.data.username);
-        setProfilePhoto(res.data.profile_photo_url);
         setBio(res.data.bio);
+        if (res.data.profile_photo_url) {
+          setProfilePhoto(res.data.profile_photo_url);
+        }
       })
       .catch((err) => {
         console.log(err);

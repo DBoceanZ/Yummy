@@ -3,6 +3,7 @@ import axios from "axios";
 import { AntDesign, FontAwesome, Foundation } from "@expo/vector-icons";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { StatusBar } from "expo-status-bar";
 import {
   View,
   StyleSheet,
@@ -15,22 +16,24 @@ import {
   Animated,
   Image,
   Share,
+  TouchableOpacity,
 } from "react-native";
 import { Video, AVPlaybackStatus } from "expo-av";
 import Comments from "./Comments";
 import { LightButton } from "../lib/buttons/CustomButton.js";
-import testfile from "./testmedia/testvideo.mp4";
-import testfile1 from "./testmedia/testvideo1.mp4";
-import testfile2 from "./testmedia/testvideo2.mp4";
-import testfile3 from "./testmedia/testvideo.mp4";
-import testfile4 from "./testmedia/testvideo1.mp4";
-import testfile5 from "./testmedia/testvideo2.mp4";
 import testpfp from "./testmedia/testpfp.png";
 import { Stack, IconButton } from "@react-native-material/core";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const files = [testfile, testfile1, testfile2, testfile3, testfile4, testfile5];
+const urls = [
+  "https://res.cloudinary.com/dzuekop5v/video/upload/ac_none/v1669428168/jdsgsl5812uuoa5trbdz.mov",
+  "https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov",
+  "https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov",
+  "https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov",
+  "https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov",
+];
 const mockUsername = "user";
 const mockDesc = "this is the video description";
 
@@ -38,7 +41,26 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export default function Home() {
+const onShare = async (url) => {
+  try {
+    const result = await Share.share({
+      message: `check out this video from Yummy! ${url}`,
+    });
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        // shared with activity type of result.activityType
+      } else {
+        // shared
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+    }
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+export default function Home({ navigation }) {
   const videoref = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const [displayComments, setDisplayComments] = React.useState(false);
@@ -49,6 +71,28 @@ export default function Home() {
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
   const opacity = useState(new Animated.Value(0))[0];
+  const { userData, setUserData } = useGlobalContext();
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      //Every time the screen is focused the Video starts playing
+      if (videoref) {
+        videoref.current.playAsync();
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      //Every time the screen loses focus the Video is paused
+      if (videoref) {
+        videoref.current.pauseAsync();
+      }
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     if (status.isPlaying) {
@@ -102,6 +146,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="light" />
       <Comments
         displayComments={displayComments}
         setDisplayComments={setDisplayComments}
@@ -119,7 +164,7 @@ export default function Home() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {files.map((src, index) => (
+        {urls.map((src, index) => (
           <View key={index}>
             <Pressable
               onPress={() =>
@@ -134,12 +179,22 @@ export default function Home() {
                 resizeMode="cover"
                 ref={focusedIndex === index ? videoref : null}
                 style={styles.video}
-                source={src}
+                source={{
+                  uri: src,
+                }}
                 useNativeControls={false}
                 isLooping
                 onPlaybackStatusUpdate={(status) => setStatus(() => status)}
               />
-              <Image source={testpfp} style={styles.pfp} />
+              <TouchableOpacity
+                onPress={() => {
+                  // set userid here later VVVVVVVV
+                  setUserData({ ...userData });
+                  navigation.navigate("Profile");
+                }}
+              >
+                <Image source={testpfp} style={styles.pfp} />
+              </TouchableOpacity>
               <Animated.View
                 style={[
                   {
@@ -207,7 +262,11 @@ export default function Home() {
                 }}
               />
               <Text style={styles.commentText}>0</Text>
-              <Pressable onPress={onShare}>
+              <Pressable
+                onPress={() => {
+                  onShare(src);
+                }}
+              >
                 <FontAwesome
                   style={styles.share}
                   name="share"
@@ -323,22 +382,3 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
-
-const onShare = async () => {
-  try {
-    const result = await Share.share({
-      message: `check out this video from Yummy! url goes here`,
-    });
-    if (result.action === Share.sharedAction) {
-      if (result.activityType) {
-        // shared with activity type of result.activityType
-      } else {
-        // shared
-      }
-    } else if (result.action === Share.dismissedAction) {
-      // dismissed
-    }
-  } catch (error) {
-    alert(error.message);
-  }
-};
