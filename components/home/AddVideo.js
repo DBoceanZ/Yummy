@@ -22,6 +22,7 @@ import {
   IconButton,
 } from "@react-native-material/core";
 import { LightButton } from "../lib/buttons/CustomButton.js";
+import { StatusBar } from "expo-status-bar";
 
 export default function AddVideo({ navigation }) {
   const [video, setVideo] = useState(null);
@@ -111,7 +112,9 @@ export default function AddVideo({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={{ textAlign: "center" }} variant="h4">
+      <StatusBar style="dark" />
+
+      <Text style={{ textAlign: "center" }} variant="h5">
         Upload Video
       </Text>
       <KeyboardAvoidingView
@@ -127,16 +130,18 @@ export default function AddVideo({ navigation }) {
               color="#222222"
               variant="outlined"
               onChangeText={(text) => setDescription(text)}
-              style={styles.inputStyle}
+              style={styles.textInput}
             />
             <View />
             <TextInput
               label="tags"
+              helperText="at least 3 comma seperated tags"
               value={tags}
               color="#222222"
+              baseColor="green"
               variant="outlined"
               onChangeText={(text) => setTags(text)}
-              style={styles.inputStyle}
+              style={styles.textInput}
             />
             {video !== null ? (
               <Button title="change video" onPress={pickVideo} />
@@ -163,12 +168,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 10,
   },
-  logo: {
-    alignSelf: "center",
-    width: "70%",
-    maxWidth: 500,
-    maxHeight: 150,
-  },
   shadowProp: {
     shadowColor: "#171717",
     shadowOffset: { width: -2, height: 1 },
@@ -179,4 +178,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#f2f2f2",
     padding: 11,
   },
+  textInput: {},
 });
