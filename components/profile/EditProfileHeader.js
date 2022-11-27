@@ -41,7 +41,12 @@ const EditProfileHeader = () => {
     data.append('cloud_name', CLOUDINARY_NAME);
     axios.post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`, data)
       .then(res => res.json())
-      .then(data => console.log('data: ', data.secure_url))
+      .then(data => {
+        axios.put('http://18.212.89.94:3000/users/userData', {
+          user_id: selectedUserID,
+          profile_photo_url: data.secure_url
+        })
+      })
       .catch((err) => console.log(err));
   };
 
@@ -50,8 +55,10 @@ const EditProfileHeader = () => {
     axios.get(`http://18.212.89.94:3000/users/userData?user_id=${selectedUserID}`)
       .then((res) => {
         setUsername(res.data.username);
-        setProfilePhoto(res.data.profile_photo_url);
         setBio(res.data.bio);
+        if (res.data.profile_photo_url) {
+          setProfilePhoto(res.data.profile_photo_url);
+        }
       })
       .catch((err) => {
         console.log(err);
