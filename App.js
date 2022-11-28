@@ -211,7 +211,28 @@ const NavigationStack = () => {
         }}
         name="Followers" 
         component={FollowerList}></Stack.Screen>
-      <Stack.Screen name="Profile" component={Profile}></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#222222',
+          },
+          headerTintColor: '#ffae1f',
+        }}
+        name="Profile"
+        component={Profile}
+      ></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#222222',
+          },
+          headerTintColor: '#ffae1f',
+        }}
+        name="Selected Profile"
+        component={SelectedProfile}
+      ></Stack.Screen>
       <Stack.Screen
         options={{
           headerTitleStyle: {
