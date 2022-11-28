@@ -25,6 +25,7 @@ import testpfp from './testmedia/testpfp.png';
 import { Stack, IconButton } from '@react-native-material/core';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import LottieView from 'lottie-react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -197,7 +198,12 @@ export default function Home({ navigation }) {
               >
                 <Foundation style={styles.playBut} name="play" size={88} color="white" />
               </Animated.View>
-              <AntDesign
+              <LottieView
+                style={styles.heartLottie}
+                source={require('./assets/like.json')}
+                autoPlay
+              />
+              {/* <AntDesign
                 style={styles.heart}
                 name="heart"
                 size={32}
@@ -221,7 +227,6 @@ export default function Home({ navigation }) {
                       if (response.status === 201) {
                         console.log('success');
                         setAColor('red');
-                        /*need to get like count again*/
                       } else {
                         console.log('failure');
                       }
@@ -230,7 +235,8 @@ export default function Home({ navigation }) {
                       console.log(err);
                     });
                 }}
-              />
+              /> */}
+
               <Text style={styles.heartText}>0</Text>
               <FontAwesome
                 style={styles.comment}
@@ -293,16 +299,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  heart: {
-    position: 'absolute',
-    bottom: 370,
-    right: 5,
-  },
+  // heart: {
+  //   position: 'absolute',
+  //   bottom: 370,
+  //   right: 5,
+  // },
   heartText: {
     fontWeight: 'bold',
     position: 'absolute',
     bottom: 350,
-    right: 17,
+    right: 21,
     color: 'white',
   },
   comment: {
@@ -377,5 +383,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 50,
     right: 10,
+  },
+  heartLottie: {
+    position: 'absolute',
+    bottom: 382,
+    right: -10,
+    width: 112,
+    height: 112,
   },
 });
