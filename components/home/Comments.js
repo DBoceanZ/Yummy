@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, Text, View, Modal, Pressable, TextInput } from 'r
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import CommentCard from './CommentCard';
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   inputComment: {
     flex: 1,
     height: 36,
-    backgroundColor: '#fffa9c',
+    backgroundColor: '#ffd696',
     borderWidth: 2,
     borderColor: '#1e232c',
     borderRadius: 4,
@@ -33,39 +34,8 @@ const styles = StyleSheet.create({
 });
 
 export default function Comments({ comments, setComments, displayComments, setDisplayComments }) {
-  const [newComment, setNewComment] = React.useState('');
-  // const comments = [
-  //   {
-  //     'commenter_name': 'someUsername',
-  //     comment: 'This is a vital comment',
-  //     'created_at': Date.now() - 600000,
-  //   },
-  //   {
-  //     'commenter_name': 'anotherUsername',
-  //     comment: 'This comment is absolutely meaningless',
-  //     'created_at': Date.now() - 1200000,
-  //   },
-  //   {
-  //     'commenter_name': 'someUsername',
-  //     comment: 'This is a vital comment',
-  //     'created_at': Date.now() - 600000,
-  //   },
-  //   {
-  //     'commenter_name': 'anotherUsername',
-  //     comment: 'This comment is absolutely meaningless',
-  //     'created_at': Date.now() - 1200000,
-  //   },
-  //   {
-  //     'commenter_name': 'someUsername',
-  //     comment: 'This is a vital comment',
-  //     'created_at': Date.now() - 600000,
-  //   },
-  //   {
-  //     'commenter_name': 'anotherUsername',
-  //     comment: 'This comment is absolutely meaningless',
-  //     'created_at': Date.now() - 1200000,
-  //   }
-  // ];
+  const [ newComment, setNewComment ] = React.useState('');
+  const { userData } = useGlobalContext();
   const RenderHeader = () => {
     return (
       <Pressable
@@ -79,7 +49,7 @@ export default function Comments({ comments, setComments, displayComments, setDi
         }}
         style={{ alignItems: 'center' }}
       >
-        <FontAwesome5 name="angle-down" size={36} color="#fff700" />
+        <FontAwesome5 name="angle-down" size={36} color="#ffc874" />
       </Pressable>
     );
   };
@@ -108,7 +78,7 @@ export default function Comments({ comments, setComments, displayComments, setDi
                   'http://18.212.89.94:3000/video/comments',
                   {
                     video_id: 1,
-                    commenter_id: 1,
+                    'commenter_id': userData.UID,
                     comment: newComment,
                   },
                   {
@@ -131,7 +101,7 @@ export default function Comments({ comments, setComments, displayComments, setDi
                 });
             }}
           >
-            <MaterialCommunityIcons name="message-plus-outline" size={36} color="#fff700" />
+            <MaterialCommunityIcons name="message-plus-outline" size={36} color="#ffc874" />
           </Pressable>
         </View>
       </View>
