@@ -30,11 +30,23 @@ import LottieView from 'lottie-react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const urls = [
-  'https://res.cloudinary.com/dzuekop5v/video/upload/ac_none/v1669428168/jdsgsl5812uuoa5trbdz.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
+  {
+    video_url:
+      'https://res.cloudinary.com/dzuekop5v/video/upload/ac_none/v1669428168/jdsgsl5812uuoa5trbdz.mov',
+    UID: 1,
+    username: 'kyle',
+    description: 'first desc',
+    profile_photo_url: 'https://i.pinimg.com/550x/31/ce/d6/31ced66059145d6721c1b379fb38551c.jpg',
+  },
+  {
+    video_url:
+      'https://res.cloudinary.com/dzuekop5v/video/upload/ac_none/v1669428168/jdsgsl5812uuoa5trbdz.mov',
+    UID: 1,
+    username: 'not kyle',
+    description: 'second desc',
+    profile_photo_url:
+      'https://www.boredpanda.com/blog/wp-content/uploads/2015/09/post-the-happiest-dogs-who-show-the-best-smiles-163__700.jpg',
+  },
 ];
 const mockUsername = 'user';
 const mockDesc = 'this is the video description';
@@ -139,7 +151,6 @@ export default function Home({ navigation }) {
       });
     setRefreshing(false);
   }, []);
-
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -174,7 +185,7 @@ export default function Home({ navigation }) {
                 ref={focusedIndex === index ? videoref : null}
                 style={styles.video}
                 source={{
-                  uri: src,
+                  uri: src.video_url,
                 }}
                 useNativeControls={false}
                 isLooping
@@ -184,10 +195,12 @@ export default function Home({ navigation }) {
                 onPress={() => {
                   // set userid here later VVVVVVVV
                   setUserData({ ...userData });
-                  navigation.navigate('Profile');
+                  navigation.navigate('Selected Profile', {
+                    selected_userid: 1,
+                  });
                 }}
               >
-                <Image source={testpfp} style={styles.pfp} />
+                <Image source={{ uri: src.profile_photo_url }} style={styles.pfp} />
               </TouchableOpacity>
               <Animated.View
                 style={[
@@ -198,12 +211,12 @@ export default function Home({ navigation }) {
               >
                 <Foundation style={styles.playBut} name="play" size={88} color="white" />
               </Animated.View>
-              <LottieView
+              {/* <LottieView
                 style={styles.heartLottie}
                 source={require('./assets/like.json')}
                 autoPlay
-              />
-              {/* <AntDesign
+              /> */}
+              <AntDesign
                 style={styles.heart}
                 name="heart"
                 size={32}
@@ -235,13 +248,13 @@ export default function Home({ navigation }) {
                       console.log(err);
                     });
                 }}
-              /> */}
+              />
 
               <Text style={styles.heartText}>0</Text>
               <FontAwesome
                 style={styles.comment}
                 name="commenting"
-                size={38}
+                size={34}
                 color="white"
                 onPress={() => {
                   axios
@@ -264,8 +277,8 @@ export default function Home({ navigation }) {
                 <FontAwesome style={styles.share} name="share" size={34} color="white" />
               </Pressable>
               <Text style={styles.shareText}>0</Text>
-              <Text style={styles.usernameText}>{mockUsername}</Text>
-              <Text style={styles.descText}>{mockDesc}</Text>
+              <Text style={styles.usernameText}>{src.username}</Text>
+              <Text style={styles.descText}>{src.description}</Text>
             </Pressable>
           </View>
         ))}
@@ -299,16 +312,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // heart: {
-  //   position: 'absolute',
-  //   bottom: 370,
-  //   right: 5,
-  // },
+  heart: {
+    position: 'absolute',
+    bottom: 370,
+    right: 5,
+  },
   heartText: {
     fontWeight: 'bold',
     position: 'absolute',
     bottom: 350,
-    right: 21,
+    right: 17,
     color: 'white',
   },
   comment: {
@@ -325,13 +338,13 @@ const styles = StyleSheet.create({
   },
   share: {
     position: 'absolute',
-    bottom: 230,
+    bottom: 235,
     right: 5,
   },
   shareText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 210,
+    bottom: 215,
     right: 17,
     color: 'white',
   },
@@ -384,11 +397,11 @@ const styles = StyleSheet.create({
     top: 50,
     right: 10,
   },
-  heartLottie: {
-    position: 'absolute',
-    bottom: 382,
-    right: -10,
-    width: 112,
-    height: 112,
-  },
+  // heartLottie: {
+  //   position: 'absolute',
+  //   bottom: 382,
+  //   right: -10,
+  //   width: 112,
+  //   height: 112,
+  // },
 });
