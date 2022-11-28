@@ -8,6 +8,7 @@ import { SafeAreaView, Text, Image, useWindowDimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Logo from '../../assets/images/yummyLogo.png';
 import { DarkButton, LightButton } from '../lib/buttons/CustomButton.js';
+import { CommonActions } from '@react-navigation/native';
 //
 
 export default function Login({ navigation }) {
@@ -20,7 +21,12 @@ export default function Login({ navigation }) {
     navigation.navigate('Register');
   };
   const handleGuestLogin = () => {
-    navigation.navigate('BottomNav');
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'BottomNav' }],
+      })
+    );
   };
   return (
     <View style={styles.root}>

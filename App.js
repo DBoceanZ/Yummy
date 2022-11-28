@@ -84,6 +84,15 @@ function BottomNav() {
             );
           }
         },
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#f2f2f2',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          color: '#B4be00',
+        },
+        headerTintColor: '#ffae1f',
         tabBarStyle: {
           backgroundColor: 'black',
           height: 80,
@@ -98,7 +107,7 @@ function BottomNav() {
       <Tab.Screen name="Friends" component={Home} />
       <Tab.Screen name="Add" component={AddVideo} options={{ tabBarLabel: () => null }} />
       <Tab.Screen name="Inbox" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Profile" component={Profile} options={{ headerShown: true }} />
     </Tab.Navigator>
   );
 }
