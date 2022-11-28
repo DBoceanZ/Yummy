@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { FlatList, View, Image, TouchableOpacity } from 'react-native';
 import { useGlobalContext } from '../../context/GlobalContext';
 import styles from './styles';
 
@@ -34,8 +34,13 @@ const Thumbnails = ({ handleTouch, videos }) => {
 
   return (
     <View style={styles.thumbnailsContainer}>
-      {thumbnailUrls.map((thumbnailUrl, index) => {
-        return (
+      <FlatList
+        numColumns={3}
+        removeClippedSubviews
+        data={thumbnailUrls}
+        keyExtractor={(video) => video.id}
+        renderItem={(thumbnailUrl, index) => {
+          return (
           <View style={styles.thumbnailContainer} key={`TN-container:${index}`}>
             <TouchableOpacity
               onPress={
@@ -52,13 +57,40 @@ const Thumbnails = ({ handleTouch, videos }) => {
             >
               <Image
                 style={styles.thumbnail}
-                source={{uri: thumbnailUrl}}
+                source={{uri: thumbnailUrl.item}}
                 key={`TN:${index}`}>
               </Image>
             </TouchableOpacity>
           </View>
         )
-      })}
+      }}
+      >
+        {/* {thumbnailUrls.map((thumbnailUrl, index) => {
+          return (
+            <View style={styles.thumbnailContainer} key={`TN-container:${index}`}>
+              <TouchableOpacity
+                onPress={
+                  () => {
+                    setHomeVideos({
+                      videos: videos,
+                      index: index
+                    });
+                    handleTouch();
+                  }
+                }
+                key={`TN-touch:${index}`}
+                value={index}
+              >
+                <Image
+                  style={styles.thumbnail}
+                  source={{uri: thumbnailUrl}}
+                  key={`TN:${index}`}>
+                </Image>
+              </TouchableOpacity>
+            </View>
+          )
+        })} */}
+      </FlatList>
     </View>
   );
 };

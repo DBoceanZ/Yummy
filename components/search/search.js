@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, TextInput, FlatList, Pressable} from from "react-native";
+import {StyleSheet, View, TextInput, FlatList, Pressable} from 'react-native';
 import prefixTree from '../../helpers/prefixTree.js';
 import Thumbnails from '../profile/Thumbnails.js';
 import { LightButton } from '../lib/buttons/CustomButton';
@@ -31,7 +31,7 @@ const Search = ({ navigation }) =>{
     })
   }, [])
   const handleTouch = () => {
-    navigation.navigate("bottombar");
+    navigation.navigate('Profile Videos');
   }
   const pressHandler = function(tag) {
     axios.get(`http://18.212.89.94:3000/videos/${tag}`)
@@ -43,7 +43,7 @@ const Search = ({ navigation }) =>{
         console.log(err)
       })
 }
-const on
+
   return (
     <View>
       <View>
@@ -68,7 +68,6 @@ const on
       <Thumbnails videos={videos} handleTouch={handletouch}/>
     </View>
   )
-
 }
 
 
