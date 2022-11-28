@@ -7,18 +7,18 @@ import axios from 'axios';
 
 export default function Followers({ navigation }) {
   const { userData, setUserData } = useGlobalContext();
-  const { selectedUserID } = userData;
+  const { UID } = userData;
   const [followerList, setFollowerList] = useState([]);
 
   const handleProfileNavigation = (id) => {
-    setUserData({ ...userData, selectedUserID: id });
+    setUserData({ ...userData, UID: id });
     navigation.navigate('Profile');
   }
 
   useEffect(() => {
 
     const unsubscribe = navigation.addListener('focus', () => {
-      axios.get(`http://18.212.89.94:3000/follows/followers?user_followed_id=3`)
+      axios.get(`http://18.212.89.94:3000/follows/followers?user_followed_id=${UID}`)
         .then(results => {
           setFollowerList(results.data)
         })
@@ -31,7 +31,7 @@ export default function Followers({ navigation }) {
 
 
   const renderItem = ({ item }) => (
-    <ListItem user={item} buttonName={"Remove"} handleProfileNavigation={handleProfileNavigation} />
+    <ListItem user={item} btn1="Remove" btn2="Allow" handleProfileNavigation={handleProfileNavigation} />
   )
   return (
     <View>

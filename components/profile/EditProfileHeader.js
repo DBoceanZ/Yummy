@@ -7,13 +7,14 @@ import { CLOUDINARY_NAME, CLOUDINARY_UPLOAD_PRESET } from '@env';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { Feather } from '@expo/vector-icons';
 
-const EditProfileHeader = () => {
+const EditProfileHeader = ({ handlers }) => {
   const { userData } = useGlobalContext(); 
   const { UID } = userData;
   const [profilePhoto, setProfilePhoto] = useState('http://tinyurl.com/68dvbhaw'); // TEMP
   const [username, setUsername] = useState('ExampleUser'); // TEMP
   const [bio, setBio] = useState('');
   const [likes, setLikes] = useState(0);
+  const { handleFollowingTouch, handleFollowersTouch } = handlers;
   
   // pick image from phone gallery and prepare image data to upload to cloudinary
   const pickFromGallery = async () => {
@@ -94,14 +95,18 @@ const EditProfileHeader = () => {
       </View>
       <Text style={styles.username}>{username}</Text>
       <View style={styles.countersContainer}>
-        <View style={styles.counterItem}>
-          <Text style={styles.counter}>0</Text>
-          <Text style={styles.counterLabel}>Following</Text>
+      <View style={styles.counterItem}>
+          <TouchableOpacity onPress={() => handleFollowingTouch()}>
+            <Text style={styles.counter}>0</Text>
+            <Text style={styles.counterLabel}>Following</Text>
+          </TouchableOpacity>
         </View>
         <Text style={styles.counterDivider}>|</Text>
         <View style={styles.counterItem}>
-          <Text style={styles.counter}>0</Text>
-          <Text style={styles.counterLabel}>Followers</Text>
+          <TouchableOpacity onPress={() => handleFollowersTouch()}>
+            <Text style={styles.counter}>0</Text>
+            <Text style={styles.counterLabel}>Followers</Text>
+          </TouchableOpacity>
         </View>
         <Text style={styles.counterDivider}>|</Text>
         <View style={styles.counterItem}>
