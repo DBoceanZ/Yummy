@@ -32,7 +32,7 @@ const windowHeight = Dimensions.get('window').height;
 const urls = [
   {
     video_url:
-      'https://res.cloudinary.com/dzuekop5v/video/upload/ac_none/v1669428168/jdsgsl5812uuoa5trbdz.mov',
+      'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610582/xy2fh6mvmsmrdrtkc5bm.mov',
     UID: 1,
     username: 'kyle',
     description: 'first desc',
@@ -40,7 +40,7 @@ const urls = [
   },
   {
     video_url:
-      'https://res.cloudinary.com/dzuekop5v/video/upload/ac_none/v1669428168/jdsgsl5812uuoa5trbdz.mov',
+      'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610659/fa6cx9gyitugkioimheh.mov',
     UID: 1,
     username: 'not kyle',
     description: 'second desc',
