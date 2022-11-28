@@ -44,7 +44,6 @@ export default function ProfileVideos({ navigation }) {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const opacity = useState(new Animated.Value(0))[0];
-  console.log(homeVideos);
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       //Every time the screen is focused the Video starts playing
