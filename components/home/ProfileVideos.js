@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
-import { AntDesign, FontAwesome, Foundation, Entypo } from '@expo/vector-icons';
+import { AntDesign, FontAwesome, Foundation } from '@expo/vector-icons';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
@@ -28,47 +28,22 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const urls = [
-  'https://res.cloudinary.com/dzuekop5v/video/upload/ac_none/v1669428168/jdsgsl5812uuoa5trbdz.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-];
 const mockUsername = 'user';
 const mockDesc = 'this is the video description';
 
-const onShare = async (url) => {
-  try {
-    const result = await Share.share({
-      message: `check out this video from Yummy! ${url}`,
-    });
-    if (result.action === Share.sharedAction) {
-      if (result.activityType) {
-        // shared with activity type of result.activityType
-      } else {
-        // shared
-      }
-    } else if (result.action === Share.dismissedAction) {
-      // dismissed
-    }
-  } catch (error) {
-    alert(error.message);
-  }
-};
-
-export default function Home({ navigation }) {
+export default function ProfileVideos({ navigation }) {
   const videoref = React.useRef(null);
+  const [ref, setref] = useState(null);
   const [status, setStatus] = React.useState({});
   const [displayComments, setDisplayComments] = React.useState(false);
-  const [focusedIndex, setFocusedIndex] = React.useState(0);
+  const { userData, setUserData, homeVideos, setHomeVideos } = useGlobalContext();
+  const [focusedIndex, setFocusedIndex] = React.useState(homeVideos.index);
   const [refreshing, setRefreshing] = React.useState(false);
   const [comments, setComments] = React.useState([]);
   const [aColor, setAColor] = React.useState('white');
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const opacity = useState(new Animated.Value(0))[0];
-  const { userData, setUserData } = useGlobalContext();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -112,13 +87,12 @@ export default function Home({ navigation }) {
       useNativeDriver: true,
     }).start();
   }
-
   const handleScroll = useCallback(
     ({
       nativeEvent: {
         contentOffset: { y },
       },
-    }) => {
+    }: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offset = Math.round(y / windowHeight);
 
       setFocusedIndex(offset);
@@ -126,18 +100,25 @@ export default function Home({ navigation }) {
     [setFocusedIndex]
   );
 
-  const onRefresh = React.useCallback(async () => {
-    setRefreshing(true);
-    axios
-      .get('http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json')
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
+  const onShare = async (url) => {
+    try {
+      const result = await Share.share({
+        message: `check out this video from Yummy! ${url}`,
       });
-    setRefreshing(false);
-  }, []);
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -154,9 +135,9 @@ export default function Home({ navigation }) {
         snapToInterval={windowHeight}
         decelerationRate="fast"
         vertical
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        contentOffset={{ x: 0, y: windowHeight * homeVideos.index }}
       >
-        {urls.map((src, index) => (
+        {homeVideos.videos.map((src, index) => (
           <View key={index}>
             <Pressable
               onPress={() =>
@@ -172,7 +153,7 @@ export default function Home({ navigation }) {
                 ref={focusedIndex === index ? videoref : null}
                 style={styles.video}
                 source={{
-                  uri: src,
+                  uri: src.video_url,
                 }}
                 useNativeControls={false}
                 isLooping
@@ -207,7 +188,7 @@ export default function Home({ navigation }) {
                       'http://18.212.89.94:3000/video/likes',
                       {
                         video_id: 1,
-                        user_id: userData.UID,
+                        user_id: 1,
                       },
                       {
                         headers: {
@@ -251,7 +232,7 @@ export default function Home({ navigation }) {
               <Text style={styles.commentText}>0</Text>
               <Pressable
                 onPress={() => {
-                  onShare(src);
+                  onShare(src.video_url);
                 }}
               >
                 <FontAwesome style={styles.share} name="share" size={34} color="white" />
@@ -263,15 +244,7 @@ export default function Home({ navigation }) {
           </View>
         ))}
       </ScrollView>
-      <MaterialCommunityIcons
-        onPress={() => {
-          navigation.navigate('Search');
-        }}
-        style={styles.searchBut}
-        name="magnify"
-        size={34}
-        color="white"
-      />
+      <MaterialCommunityIcons style={styles.searchBut} name="magnify" size={32} color="white" />
     </View>
   );
 }
@@ -294,37 +267,37 @@ const styles = StyleSheet.create({
   },
   heart: {
     position: 'absolute',
-    bottom: 370,
+    bottom: 350,
     right: 5,
   },
   heartText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 350,
+    bottom: 330,
     right: 17,
     color: 'white',
   },
   comment: {
     position: 'absolute',
-    bottom: 305,
+    bottom: 280,
     right: 5,
   },
   commentText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 280,
+    bottom: 260,
     right: 17,
     color: 'white',
   },
   share: {
     position: 'absolute',
-    bottom: 230,
+    bottom: 210,
     right: 5,
   },
   shareText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 210,
+    bottom: 190,
     right: 17,
     color: 'white',
   },
@@ -348,7 +321,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pfp: {
-    bottom: 430,
+    bottom: 410,
     right: 5,
     width: 45,
     height: 45,
@@ -361,20 +334,20 @@ const styles = StyleSheet.create({
     margin: 5,
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 115,
+    bottom: 95,
     left: 5,
     color: 'white',
   },
   descText: {
     margin: 5,
     position: 'absolute',
-    bottom: 85,
+    bottom: 65,
     left: 5,
     color: 'white',
   },
   searchBut: {
     position: 'absolute',
-    top: 50,
-    right: 10,
+    top: 52,
+    right: 8,
   },
 });

@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { LightButton } from '../lib/buttons/CustomButton';
 
-export default function ListItem({ user, buttonName }) {
+export default function ListItem({ user, buttonName, handleProfileNavigation }) {
 
   const handlePress = () => {
-    console.log('pressed')
+    handleProfileNavigation(user.id);
   }
 
   return (
@@ -13,9 +13,11 @@ export default function ListItem({ user, buttonName }) {
       <View style={styles.imgContainer}>
         <Image style={styles.img}></Image>
       </View>
-      <View>
-        <Text style={styles.text}>{user.username}</Text>
-      </View>
+      <TouchableOpacity onPress={handlePress}>
+        <View>
+          <Text style={styles.text}>{user.username}</Text>
+        </View>
+      </TouchableOpacity>
       <View style={styles.btnContainer}>
         <LightButton text={buttonName} />
       </View>
@@ -26,13 +28,13 @@ export default function ListItem({ user, buttonName }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    width: '100%',
+    flex: 1,
     flexDirection: 'row',
     padding: 10,
     margin: 10
   },
   img: {
-    borderRadius: '50%',
+    borderRadius: 50,
     backgroundColor: '#000',
     marginRight: 20,
     width: 50,

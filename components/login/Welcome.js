@@ -1,32 +1,32 @@
-import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet, View } from "react-native";
-import { Box, Flex } from "@react-native-material/core";
-import { Spacer } from "react-native-flex-layout";
-import {
-  TextInput,
-  Stack,
-  IconButton,
-  Button,
-} from "@react-native-material/core";
-import { Form, FormItem } from "react-native-form-component";
-import { SafeAreaView, Text, Image, useWindowDimensions } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import Logo from "../../assets/images/yummyLogo.png";
-import { DarkButton, LightButton } from "../lib/buttons/CustomButton.js";
+import React, { useState } from 'react';
+import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { Box, Flex } from '@react-native-material/core';
+import { Spacer } from 'react-native-flex-layout';
+import { TextInput, Stack, IconButton, Button } from '@react-native-material/core';
+import { Form, FormItem } from 'react-native-form-component';
+import { SafeAreaView, Text, Image, useWindowDimensions } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import Logo from '../../assets/images/yummyLogo.png';
+import { DarkButton, LightButton } from '../lib/buttons/CustomButton.js';
+import { CommonActions } from '@react-navigation/native';
 //
 
 export default function Login({ navigation }) {
   const { height } = useWindowDimensions();
 
   const handleLoginPress = () => {
-    navigation.navigate("Login");
+    navigation.navigate('Login');
   };
   const handleRegistration = () => {
-    navigation.navigate("Register");
+    navigation.navigate('Register');
   };
   const handleGuestLogin = () => {
-    navigation.navigate("BottomNav");
-    console.warn("Guest Login requested");
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: 'BottomNav' }],
+      })
+    );
   };
   return (
     <View style={styles.root}>
@@ -52,28 +52,28 @@ export default function Login({ navigation }) {
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: "#111111",
-    flexDirection: "column",
+    backgroundColor: '#111111',
+    flexDirection: 'column',
     padding: 20,
   },
   bottomAlign: {},
   safeContainer: {
     flex: 1,
-    backgroundColor: "#ffffff",
-    color: "#ffffff",
+    backgroundColor: '#ffffff',
+    color: '#ffffff',
   },
   text: {
-    fontWeight: "bold",
-    color: "#ffffff",
-    alignSelf: "center",
+    fontWeight: 'bold',
+    color: '#ffffff',
+    alignSelf: 'center',
   },
   logo: {
-    alignSelf: "center",
-    width: "70%",
+    alignSelf: 'center',
+    width: '70%',
     maxWidth: 500,
     maxHeight: 300,
   },
   spaceHolder: {
-    height: "60%",
+    height: '60%',
   },
 });
