@@ -1,4 +1,4 @@
-const videosModel = require("../model/videosModel");
+const videosModel = require('../model/videosModel');
 
 module.exports = {
   homeVideos: async (req, res) => {
@@ -11,7 +11,6 @@ module.exports = {
     }
   },
   addVideo: async (req, res) => {
-    console.log(req);
     try {
       const addVideo = await videosModel.addVideo(req.body);
       if (addVideo.rowcount) {
@@ -26,11 +25,11 @@ module.exports = {
   },
   search: async (req, res) => {
     try {
-      const videos = await videosModel.searchByTag(req.path.slice(1))
+      const videos = await videosModel.searchByTag(req.path.slice(1));
       res.status(200).json(videos);
     } catch (err) {
       console.log(err);
       res.sendStatus(500);
     }
-  }
+  },
 };

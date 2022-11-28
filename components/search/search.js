@@ -27,11 +27,11 @@ export default function Search({ navigation }) {
       .then((res) => {
         const allTags = res.data;
         for (let i = 0; i < allTags.length; i++) {
-            tagTree.addword(allTags[i].tag);
-          }
-    })
+          tagTree.addword(allTags[i].tag);
+        }
+      })
       .catch((err) => {
-      console.log(err);
+        console.log(err);
       });
   }, []);
 
@@ -57,18 +57,16 @@ export default function Search({ navigation }) {
   return (
     <View>
       <View>
-      <TextInput
-        placeholder="Search by for tags here..."
+        <TextInput
+          placeholder="Search by for tags here..."
           onChangeText={setSearchText}
           value={searchText}
-      />
+        />
       </View>
       <FlatList
         data={tagList}
         renderItem={(item) => {
-          return (
-            <LightButton key={item.tag} onPress={() => pressHandler(key)} text={item.tag} />;
-          )
+          return <LightButton key={item.tag} onPress={() => pressHandler(key)} text={item.tag} />;
         }}
       />
       <Thumbnails videos={videos} handleTouch={handleTouch} />
@@ -82,5 +80,5 @@ export default function Search({ navigation }) {
 
 //render searchbar
 //onchange search prefixtree for tags
-  //populate dropdown options with tags from pefixtree
+//populate dropdown options with tags from pefixtree
 //onsubmit tell video carosel to populate based on that tag.
