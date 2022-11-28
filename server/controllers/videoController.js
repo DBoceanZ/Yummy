@@ -17,7 +17,7 @@ module.exports = {
   addLike: async (req, res) => {
     try {
       const pass = await videoModel.addLike(req.body);
-      console.log(pass)
+      console.log(pass);
       if (pass.rowCount) {
         res.sendStatus(201);
       } else {
@@ -29,8 +29,7 @@ module.exports = {
     }
   },
   getComments: async (req, res) => {
-    const allComments = await videoModel.selectComments(req.query.video_id)
-    res.status(200).json(allComments)
-  }
-}
-
+    const allComments = await videoModel.selectComments(req.query.video_id);
+    res.status(200).json(allComments);
+  },
+};
