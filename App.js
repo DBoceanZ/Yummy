@@ -16,6 +16,7 @@ import TestNav from './components/login/testNav.js';
 import Home from './components/home/Home.js';
 import FollowerList from './components/follows/FollowerList.js';
 import FollowingList from './components/follows/FollowingList.js';
+import Search from './components/search/search.js';
 import { Entypo, AntDesign, Ionicons, Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AddVideo from './components/home/AddVideo.js';
@@ -152,6 +153,7 @@ const NavigationStack = () => {
       <Stack.Screen name="Followers" component={FollowerList}></Stack.Screen>
       <Stack.Screen name="Profile" component={Profile}></Stack.Screen>
       <Stack.Screen name="Edit Profile" component={EditProfile}></Stack.Screen>
+      <Stack.Screen name="Search" component={Search}></Stack.Screen>
     </Stack.Navigator>
   );
 };
