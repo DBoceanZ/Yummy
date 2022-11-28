@@ -38,8 +38,7 @@ const Thumbnails = ({ handleTouch, videos }) => {
         numColumns={3}
         removeClippedSubviews
         data={thumbnailUrls}
-        keyExtractor={(video) => video.id}
-        renderItem={(thumbnailUrl, index) => {
+        renderItem={({item, index}) => {
           return (
           <View style={styles.thumbnailContainer} key={`TN-container:${index}`}>
             <TouchableOpacity
@@ -57,7 +56,7 @@ const Thumbnails = ({ handleTouch, videos }) => {
             >
               <Image
                 style={styles.thumbnail}
-                source={{uri: thumbnailUrl.item}}
+                source={{uri: item}}
                 key={`TN:${index}`}>
               </Image>
             </TouchableOpacity>
