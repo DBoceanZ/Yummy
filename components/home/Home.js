@@ -25,7 +25,6 @@ import testpfp from './testmedia/testpfp.png';
 import { Stack, IconButton } from '@react-native-material/core';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import ReadMore from '@fawazahmed/react-native-read-more';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
