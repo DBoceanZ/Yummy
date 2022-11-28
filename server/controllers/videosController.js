@@ -10,6 +10,15 @@ module.exports = {
       res.sendStatus(500);
     }
   },
+  allVideos: async (req, res) => {
+    try {
+      const videos = await videosModel.allVideos(req.query);
+      res.status(200).json(videos);
+    } catch (err) {
+      console.log(err);
+      res.sendStatus(500);
+    }
+  },
   addVideo: async (req, res) => {
     try {
       const addVideo = await videosModel.addVideo(req.body);

@@ -12,6 +12,14 @@ module.exports = {
       throw err;
     }
   },
+  allVidoes: async () => {
+    try {
+      const videos = await pool.query('SELECT * FROM videos');
+      return videos.rows;
+    } catch (err) {
+      throw err;
+    }
+  },
   addVideo: async ({ video_url, user_id, summary }) => {
     try {
       const addVideo = await pool.query(
