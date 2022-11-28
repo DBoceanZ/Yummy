@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { LightButton } from '../lib/buttons/CustomButton';
 
 export default function ListItem({ user, buttonName, handleProfileNavigation }) {
 
   const handlePress = () => {
-    handleProfileNavigation();
+    handleProfileNavigation(user.id);
   }
 
   return (
@@ -13,9 +13,11 @@ export default function ListItem({ user, buttonName, handleProfileNavigation }) 
       <View style={styles.imgContainer}>
         <Image style={styles.img}></Image>
       </View>
-      <Pressable onPress={handlePress}>
-        <Text style={styles.text}>{user.username}</Text>
-      </Pressable>
+      <TouchableOpacity onPress={handlePress}>
+        <View>
+          <Text style={styles.text}>{user.username}</Text>
+        </View>
+      </TouchableOpacity>
       <View style={styles.btnContainer}>
         <LightButton text={buttonName} />
       </View>
