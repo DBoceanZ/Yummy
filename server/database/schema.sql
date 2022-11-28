@@ -12,8 +12,7 @@ CREATE TABLE IF NOT EXISTS follows (
   id SERIAL NOT NULL,
   user_following_id INT NOT NULL REFERENCES users(id),
   user_followed_id INT NOT NULL REFERENCES users(id),
-  PRIMARY KEY (id),
-  unique (user_followed_id, user_following_id)
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS videos (

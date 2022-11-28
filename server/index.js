@@ -11,6 +11,7 @@ const loginRouter = require("./routes/loginRoutes");
 const videosRouter = require("./routes/videos");
 const pool = require("./database");
 const usersRouter = require("./routes/users");
+const followsRouter = require("./routes/follows");
 
 // basic server
 const app = express();
@@ -64,11 +65,17 @@ app.post("/test", (req, res) => {
     });
 });
 
+app.post('/', (req, res) => {
+  pool.query('SELECT * FROM users')
+    .then(results => res.send(results))
+})
+
 // routers go here
 app.use("/video", videoRouter);
 app.use("/login", loginRouter);
 app.use("/users", usersRouter);
 app.use("/videos", videosRouter);
+app.use("/follows", followsRouter);
 /*
  *
  *
