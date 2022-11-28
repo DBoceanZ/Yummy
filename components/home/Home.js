@@ -29,11 +29,23 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const urls = [
-  'https://res.cloudinary.com/dzuekop5v/video/upload/ac_none/v1669428168/jdsgsl5812uuoa5trbdz.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
+  {
+    video_url:
+      'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610582/xy2fh6mvmsmrdrtkc5bm.mov',
+    UID: 1,
+    username: 'kyle',
+    description: 'this has got to be the best food I have ever made!! sooooo good',
+    profile_photo_url: 'https://i.pinimg.com/550x/31/ce/d6/31ced66059145d6721c1b379fb38551c.jpg',
+  },
+  {
+    video_url:
+      'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610659/fa6cx9gyitugkioimheh.mov',
+    UID: 1,
+    username: 'not kyle',
+    description: 'this is my description not that long but its decent length. great recipe!',
+    profile_photo_url:
+      'https://www.boredpanda.com/blog/wp-content/uploads/2015/09/post-the-happiest-dogs-who-show-the-best-smiles-163__700.jpg',
+  },
 ];
 const mockUsername = 'user';
 const mockDesc = 'this is the video description';
@@ -41,7 +53,7 @@ const mockDesc = 'this is the video description';
 const onShare = async (url) => {
   try {
     const result = await Share.share({
-      message: `check out this video from Yummy! ${url}`,
+      message: `check out this video from Yummy! ${url.video_url}`,
     });
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
@@ -172,7 +184,7 @@ export default function Home({ navigation }) {
                 ref={focusedIndex === index ? videoref : null}
                 style={styles.video}
                 source={{
-                  uri: src,
+                  uri: src.video_url,
                 }}
                 useNativeControls={false}
                 isLooping
@@ -182,10 +194,12 @@ export default function Home({ navigation }) {
                 onPress={() => {
                   // set userid here later VVVVVVVV
                   setUserData({ ...userData });
-                  navigation.navigate('Profile');
+                  navigation.navigate('Selected Profile', {
+                    selected_userid: 1,
+                  });
                 }}
               >
-                <Image source={testpfp} style={styles.pfp} />
+                <Image source={{ uri: src.profile_photo_url }} style={styles.pfp} />
               </TouchableOpacity>
               <Animated.View
                 style={[
@@ -196,6 +210,11 @@ export default function Home({ navigation }) {
               >
                 <Foundation style={styles.playBut} name="play" size={88} color="white" />
               </Animated.View>
+              {/* <LottieView
+                style={styles.heartLottie}
+                source={require('./assets/like.json')}
+                autoPlay
+              /> */}
               <AntDesign
                 style={styles.heart}
                 name="heart"
@@ -220,7 +239,6 @@ export default function Home({ navigation }) {
                       if (response.status === 201) {
                         console.log('success');
                         setAColor('red');
-                        /*need to get like count again*/
                       } else {
                         console.log('failure');
                       }
@@ -230,11 +248,12 @@ export default function Home({ navigation }) {
                     });
                 }}
               />
+
               <Text style={styles.heartText}>0</Text>
               <FontAwesome
                 style={styles.comment}
                 name="commenting"
-                size={38}
+                size={34}
                 color="white"
                 onPress={() => {
                   axios
@@ -257,8 +276,8 @@ export default function Home({ navigation }) {
                 <FontAwesome style={styles.share} name="share" size={34} color="white" />
               </Pressable>
               <Text style={styles.shareText}>0</Text>
-              <Text style={styles.usernameText}>{mockUsername}</Text>
-              <Text style={styles.descText}>{mockDesc}</Text>
+              <Text style={styles.usernameText}>{src.username}</Text>
+              <Text style={styles.descText}>{src.description}</Text>
             </Pressable>
           </View>
         ))}
@@ -278,14 +297,16 @@ export default function Home({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#ecf0f1',
   },
   video: {
     flex: 1,
     width: windowWidth,
-    height: windowHeight,
+    height: windowHeight - 70,
   },
   buttons: {
     flexDirection: 'row',
@@ -318,19 +339,19 @@ const styles = StyleSheet.create({
   },
   share: {
     position: 'absolute',
-    bottom: 230,
+    bottom: 235,
     right: 5,
   },
   shareText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 210,
+    bottom: 215,
     right: 17,
     color: 'white',
   },
   playBut: {
     margin: 50,
-    bottom: 350,
+    bottom: 250,
     right: 110,
     position: 'absolute',
     opacity: 0.4,
@@ -344,7 +365,6 @@ const styles = StyleSheet.create({
   },
   playButContainer: {
     alignItems: 'center',
-    flex: 1,
     justifyContent: 'center',
   },
   pfp: {
@@ -361,16 +381,17 @@ const styles = StyleSheet.create({
     margin: 5,
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 115,
+    bottom: 55,
     left: 5,
     color: 'white',
   },
   descText: {
     margin: 5,
     position: 'absolute',
-    bottom: 85,
+    bottom: 15,
     left: 5,
     color: 'white',
+    width: windowWidth / 1.3,
   },
   searchBut: {
     position: 'absolute',

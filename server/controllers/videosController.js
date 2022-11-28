@@ -13,9 +13,7 @@ module.exports = {
   addVideo: async (req, res) => {
     try {
       const addVideo = await videosModel.addVideo(req.body);
-      console.log('constroller');
-      console.log(addVideo);
-      if (addVideo.rowcount) {
+      if (addVideo.rowCount) {
         res.sendStatus(201);
       } else {
         res.sendStatus(400);

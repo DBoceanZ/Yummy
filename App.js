@@ -23,6 +23,7 @@ import AddVideo from './components/home/AddVideo.js';
 import { NotifierWrapper } from 'react-native-notifier';
 import { LogBox } from 'react-native';
 import ProfileVideos from './components/home/ProfileVideos.js';
+import SelectedProfile from './components/profile/SelectedProfile';
 
 LogBox.ignoreLogs([
   'Warning: Async Storage has been extracted from react-native core',
@@ -189,6 +190,7 @@ const NavigationStack = () => {
           headerTitle: '',
         }}
       ></Stack.Screen>
+      <Stack.Screen name="Selected Profile" component={SelectedProfile}></Stack.Screen>
       <Stack.Screen name="Following" component={FollowingList}></Stack.Screen>
       <Stack.Screen name="Followers" component={FollowerList}></Stack.Screen>
       <Stack.Screen name="Profile" component={Profile}></Stack.Screen>
