@@ -210,7 +210,12 @@ export default function Home({ navigation }) {
                   });
                 }}
               >
-                <Image source={{ uri: src.profile_photo_url }} style={styles.pfp} />
+                <Image
+                  source={{
+                    uri: 'https://cdn.discordapp.com/attachments/1042963648731164704/1046858787463643176/unknown.png',
+                  }}
+                  style={styles.pfp}
+                />
               </TouchableOpacity>
               <Animated.View
                 style={[
