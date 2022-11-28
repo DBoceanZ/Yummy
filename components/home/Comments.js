@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   inputComment: {
     flex: 1,
     height: 36,
-    backgroundColor: '#fffa9c',
+    backgroundColor: '#ffd696',
     borderWidth: 2,
     borderColor: '#1e232c',
     borderRadius: 4,
@@ -49,7 +49,7 @@ export default function Comments({ comments, setComments, displayComments, setDi
         }}
         style={{ alignItems: 'center' }}
       >
-        <FontAwesome5 name="angle-down" size={36} color="#fff700" />
+        <FontAwesome5 name="angle-down" size={36} color="#ffc874" />
       </Pressable>
     );
   };
@@ -101,7 +101,7 @@ export default function Comments({ comments, setComments, displayComments, setDi
                 });
             }}
           >
-            <MaterialCommunityIcons name="message-plus-outline" size={36} color="#fff700" />
+            <MaterialCommunityIcons name="message-plus-outline" size={36} color="#ffc874" />
           </Pressable>
         </View>
       </View>
