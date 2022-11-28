@@ -84,11 +84,11 @@ export default function Home({ navigation }) {
   const [videoList, setVideoList] = useState([]);
 
   useEffect(() => {
-    axios.get('http://18.212.89.94:3000/videos/allvideos').then((result) => {
-      setVideo(result.data);
+    axios.get('http://18.212.89.94:3000/videos/home').then((result) => {
+      setVideoList(result.data);
     });
   }, []);
-
+  console.log(videoList);
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       //Every time the screen is focused the Video starts playing
@@ -175,7 +175,7 @@ export default function Home({ navigation }) {
         vertical
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
-        {urls.map((src, index) => (
+        {videoList.map((src, index) => (
           <View key={index}>
             <Pressable
               onPress={() =>
@@ -202,7 +202,7 @@ export default function Home({ navigation }) {
                   // set userid here later VVVVVVVV
                   setUserData({ ...userData });
                   navigation.navigate('Selected Profile', {
-                    selected_userid: 1,
+                    selected_userid: src.creator_id,
                   });
                 }}
               >
@@ -256,7 +256,7 @@ export default function Home({ navigation }) {
                 }}
               />
 
-              <Text style={styles.heartText}>0</Text>
+              <Text style={styles.heartText}>{src.likes}</Text>
               <FontAwesome
                 style={styles.comment}
                 name="commenting"
@@ -274,7 +274,7 @@ export default function Home({ navigation }) {
                   setDisplayComments(true);
                 }}
               />
-              <Text style={styles.commentText}>0</Text>
+              <Text style={styles.commentText}>{src.comment_count}</Text>
               <Pressable
                 onPress={() => {
                   onShare(src);
@@ -283,8 +283,8 @@ export default function Home({ navigation }) {
                 <FontAwesome style={styles.share} name="share" size={34} color="white" />
               </Pressable>
               <Text style={styles.shareText}>0</Text>
-              <Text style={styles.usernameText}>{src.username}</Text>
-              <Text style={styles.descText}>{src.description}</Text>
+              <Text style={styles.usernameText}>{src.created_by}</Text>
+              <Text style={styles.descText}>{src.summary}</Text>
             </Pressable>
           </View>
         ))}
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
   video: {
     flex: 1,
     width: windowWidth,
-    height: windowHeight - 70,
+    height: windowHeight,
   },
   buttons: {
     flexDirection: 'row',
@@ -388,14 +388,14 @@ const styles = StyleSheet.create({
     margin: 5,
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 65,
+    bottom: 125,
     left: 5,
     color: 'white',
   },
   descText: {
     margin: 5,
     position: 'absolute',
-    bottom: 25,
+    bottom: 95,
     left: 5,
     color: 'white',
     width: windowWidth / 1.3,
