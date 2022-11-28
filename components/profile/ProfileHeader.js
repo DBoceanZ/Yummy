@@ -70,7 +70,7 @@ const ProfileHeader = ({ handlers, navigation }) => {
         <Text style={styles.bio}>{bio}</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <LightButton onPress={() => handleEditProfileTouch()} text='Edit Profile'/> :
+        <LightButton onPress={() => handleEditProfileTouch()} text='Edit Profile'/>
       </View>
     </View>
   )
