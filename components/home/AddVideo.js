@@ -57,6 +57,14 @@ export default function AddVideo({ navigation }) {
     data.append('file', currentUpload);
     data.append('upload_preset', 'yummy_upload');
     data.append('cloud_name', CLOUDINARY_CLOUD_NAME);
+    Notifier.showNotification({
+      title: 'Uploading...',
+      duration: 4000,
+      showAnimationDuration: 800,
+      hideOnPress: true,
+      swipeEnabled: true,
+      alertType: 'warn',
+    });
     axios
       .post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`, data)
       .catch((err) => {
