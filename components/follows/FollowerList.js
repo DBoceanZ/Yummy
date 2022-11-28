@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import ListItem from './ListItem.js';
 import { useGlobalContext } from '../../context/GlobalContext';

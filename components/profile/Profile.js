@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 import ProfileHeader from './ProfileHeader.js';
 import Thumbnails from './Thumbnails.js';
 import { useGlobalContext } from '../../context/GlobalContext.js';
@@ -37,11 +37,13 @@ const Profile = ({ navigation }) => {
     navigation.navigate('Edit Profile');
   };
 
-  // on initial render, fetch user videos from the database
+  // on page focus, fetch user videos from the database
   useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
     axios
       .get(`http://18.212.89.94:3000/users/userData?user_id=${selectedUserID}`)
       .then((res) => {
+        console.log('response received')
         let videos = [];
         if (res.data.videos) {
           res.data.videos.forEach((video) => {
@@ -53,19 +55,22 @@ const Profile = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   return (
-    <View>
+    <ScrollView>
       <ProfileHeader 
         handlers={{
           handleFollowersTouch, 
           handleFollowingTouch, 
           handleEditProfileTouch
         }}
+        navigation={navigation}
       />
-      <Thumbnails handleTouch={handleThumbnailTouch} videos={videos}/>
-    </View>
+      <Thumbnails handleTouch={handleThumbnailTouch} videos={videos} />
+    </ScrollView>
   );
 };
 

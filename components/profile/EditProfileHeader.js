@@ -12,9 +12,8 @@ const EditProfileHeader = () => {
   const { UID } = userData;
   const [profilePhoto, setProfilePhoto] = useState('http://tinyurl.com/68dvbhaw'); // TEMP
   const [username, setUsername] = useState('ExampleUser'); // TEMP
-  const [bio, setBio] = useState(
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-  ); // TEMP
+  const [bio, setBio] = useState('');
+  const [likes, setLikes] = useState(0);
   
   // pick image from phone gallery and prepare image data to upload to cloudinary
   const pickFromGallery = async () => {
@@ -70,6 +69,14 @@ const EditProfileHeader = () => {
         if (res.data.profile_photo_url) {
           setProfilePhoto(res.data.profile_photo_url);
         }
+        if (res.data.videos) {
+          let videoLikes = res.data.videos
+            .map((video) => {
+              return video.likes;
+            })
+            .reduce((a, b) => a + b, 0);
+          setLikes(videoLikes);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -98,7 +105,7 @@ const EditProfileHeader = () => {
         </View>
         <Text style={styles.counterDivider}>|</Text>
         <View style={styles.counterItem}>
-          <Text style={styles.counter}>0</Text>
+          <Text style={styles.counter}>{likes}</Text>
           <Text style={styles.counterLabel}>Likes</Text>
         </View>
       </View>
@@ -110,6 +117,7 @@ const EditProfileHeader = () => {
             blurOnSubmit={true}
             multiline={true} 
             style={styles.bio} 
+            placeHolder={'Tap to add a bio!'}
             value={bio}>
           </TextInput>
         </TouchableOpacity>
