@@ -8,11 +8,12 @@ import { useGlobalContext } from '../../context/GlobalContext';
 export default function Following({ navigation }) {
   const { userData, setUserData } = useGlobalContext();
   const { selectedUserID } = userData;
+  const test_id = 6;
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/follows/followsData?user_followed_id=3`)
+    axios.get(`http://18.212.89.94:3000/follows/followers?user_followed_id=${selectedUserID}`)
       .then(results => {
-        return console.log(results.data)
+        console.log(results.data)
       })
       .catch((err) => {
         console.log(err);
@@ -20,7 +21,7 @@ export default function Following({ navigation }) {
   }, [])
 
   const handleProfileNavigation = () => {
-    setUserData({ ...userData, selectedUserID: 6 })
+    setUserData({ ...userData, selectedUserID: test_id })
     navigation.navigate('Profile');
   }
 

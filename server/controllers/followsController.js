@@ -1,10 +1,19 @@
 const followsModel = require('../model/followsModel')
 
 module.exports = {
-  getData: async (req, res) => {
+  getFollowers: async (req, res) => {
     try {
-      const followsData = await followsModel.selectData(req.query);
-      res.status(200).json(followsData)
+      const followers = await followsModel.selectFollowers(req.query);
+      res.status(200).json(followers)
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(500);
+    }
+  },
+  getFollowing: async (req, res) => {
+    try {
+      const following = await followsModel.selectFollowing(req.query);
+      res.status(200).json(following)
     } catch (err) {
       console.log(err)
       res.sendStatus(500);
