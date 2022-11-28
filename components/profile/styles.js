@@ -5,7 +5,8 @@ const styles = StyleSheet.create({
     paddingTop: 20
   },
   imageContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   imageTouchable: {
     width: 100,
@@ -13,13 +14,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     borderRadius: 50,
     overflow: 'hidden',
-    marginBottom: 15
+    marginBottom: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  image: {
+  imageProfile: {
     width: 100,
     height: 100,
     borderRadius: 50,
+    marginBottom: 15,
+    marginTop: 30
+  },
+  imageEdit: {
+    width: 100,
+    height: 100,
+    position: 'absolute',
+    borderRadius: 50,
     marginBottom: 15
+  },
+  imageOverlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    ...StyleSheet.absoluteFill
   },
   username: {
     textAlign: 'center',
@@ -69,11 +84,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   thumbnailContainer: {
-    width: '33.3%',
-    height: 188
+    flex: 1 / 3,
+    height: 188,
+    marginVertical: 0.5
   },
   thumbnail: {
     width: 'auto',
+    backgroundColor: 'grey',
     height: 188,
     marginHorizontal: 0.5,
     marginVertical: 0.5

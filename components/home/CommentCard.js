@@ -10,10 +10,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 6,
     width: '96%',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   detailsContainer: {
-    flexDirection:  'row',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 10,
   },
@@ -28,16 +28,14 @@ const styles = StyleSheet.create({
   commentStyles: {
     color: 'black',
     fontSize: 16,
-  }
-})
+  },
+});
 
 export default function CommentCard({ comment }) {
   return (
     <View style={styles.container}>
       <View style={styles.detailsContainer}>
-        <Text style={styles.commenterStyles}>
-          {comment.username}
-        </Text>
+        <Text style={styles.commenterStyles}>{comment.username}</Text>
         <Text style={styles.dateStyles}>
           {formatDistanceToNow(parseISO(comment.created_at))}
           &nbsp;ago
@@ -45,5 +43,5 @@ export default function CommentCard({ comment }) {
       </View>
       <Text style={styles.commentStyles}>{comment.comment}</Text>
     </View>
-  )
+  );
 }

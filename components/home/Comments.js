@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View, Modal, Pressable, TextInput } from 'react-native';
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
-import axios from 'axios'
+import axios from 'axios';
 import CommentCard from './CommentCard';
 
 const styles = StyleSheet.create({
@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#1e232c',
     borderRadius: 4,
-  }
-})
+  },
+});
 
 export default function Comments({ comments, setComments, displayComments, setDisplayComments }) {
-  const [ newComment, setNewComment ] = React.useState('');
+  const [newComment, setNewComment] = React.useState('');
   // const comments = [
   //   {
   //     'commenter_name': 'someUsername',
@@ -77,12 +77,12 @@ export default function Comments({ comments, setComments, displayComments, setDi
           left: 30,
           right: 30,
         }}
-        style={{alignItems: 'center'}}
+        style={{ alignItems: 'center' }}
       >
         <FontAwesome5 name="angle-down" size={36} color="#fff700" />
       </Pressable>
-    )
-  }
+    );
+  };
   return (
     <Modal
       animationType="slide"
@@ -93,10 +93,7 @@ export default function Comments({ comments, setComments, displayComments, setDi
       <View style={styles.transparent} />
       <View style={styles.container}>
         <RenderHeader />
-        <FlatList
-          data={comments}
-          renderItem={({item}) => <CommentCard comment={item} />}
-        />
+        <FlatList data={comments} renderItem={({ item }) => <CommentCard comment={item} />} />
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.inputComment}
@@ -106,20 +103,24 @@ export default function Comments({ comments, setComments, displayComments, setDi
           />
           <Pressable
             onPress={() => {
-              axios.post('http://18.212.89.94:3000/video/comments', {
-                'video_id': 1,
-                'commenter_id': 1,
-                comment: newComment
-              },
-              {
-                headers: {
-                  'Content-Type': 'application/json',
-                }
-              })
+              axios
+                .post(
+                  'http://18.212.89.94:3000/video/comments',
+                  {
+                    video_id: 1,
+                    commenter_id: 1,
+                    comment: newComment,
+                  },
+                  {
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                  }
+                )
                 .then((response) => {
                   if (response.status === 201) {
                     setNewComment('');
-                    return axios.get("http://18.212.89.94:3000/video/comments?video_id=1");
+                    return axios.get('http://18.212.89.94:3000/video/comments?video_id=1');
                   }
                 })
                 .then((response) => {
@@ -135,5 +136,5 @@ export default function Comments({ comments, setComments, displayComments, setDi
         </View>
       </View>
     </Modal>
-  )
+  );
 }

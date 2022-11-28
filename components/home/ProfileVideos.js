@@ -27,47 +27,22 @@ import { useGlobalContext } from '../../context/GlobalContext';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const urls = [
-  'https://res.cloudinary.com/dzuekop5v/video/upload/ac_none/v1669428168/jdsgsl5812uuoa5trbdz.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-  'https://res.cloudinary.com/dzuekop5v/video/upload/v1669427172/qfwfmc9owwf6ponyspvu.mov',
-];
 const mockUsername = 'user';
 const mockDesc = 'this is the video description';
 
-const onShare = async (url) => {
-  try {
-    const result = await Share.share({
-      message: `check out this video from Yummy! ${url}`,
-    });
-    if (result.action === Share.sharedAction) {
-      if (result.activityType) {
-        // shared with activity type of result.activityType
-      } else {
-        // shared
-      }
-    } else if (result.action === Share.dismissedAction) {
-      // dismissed
-    }
-  } catch (error) {
-    alert(error.message);
-  }
-};
-
-export default function Home({ navigation }) {
+export default function ProfileVideos({ navigation }) {
   const videoref = React.useRef(null);
+  const [ref, setref] = useState(null);
   const [status, setStatus] = React.useState({});
   const [displayComments, setDisplayComments] = React.useState(false);
-  const [focusedIndex, setFocusedIndex] = React.useState(0);
+  const { userData, setUserData, homeVideos, setHomeVideos } = useGlobalContext();
+  const [focusedIndex, setFocusedIndex] = React.useState(homeVideos.index);
   const [refreshing, setRefreshing] = React.useState(false);
   const [comments, setComments] = React.useState([]);
   const [aColor, setAColor] = React.useState('white');
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const opacity = useState(new Animated.Value(0))[0];
-  const { userData, setUserData } = useGlobalContext();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -111,7 +86,6 @@ export default function Home({ navigation }) {
       useNativeDriver: true,
     }).start();
   }
-
   const handleScroll = useCallback(
     ({
       nativeEvent: {
@@ -124,19 +98,6 @@ export default function Home({ navigation }) {
     },
     [setFocusedIndex]
   );
-
-  const onRefresh = React.useCallback(async () => {
-    setRefreshing(true);
-    axios
-      .get('http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json')
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setRefreshing(false);
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -154,9 +115,9 @@ export default function Home({ navigation }) {
         snapToInterval={windowHeight}
         decelerationRate="fast"
         vertical
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        contentOffset={{ x: 0, y: windowHeight * homeVideos.index }}
       >
-        {urls.map((src, index) => (
+        {homeVideos.videos.map((src, index) => (
           <View key={index}>
             <Pressable
               onPress={() =>
