@@ -133,7 +133,7 @@ export default function ProfileVideos({ navigation }) {
                 ref={focusedIndex === index ? videoref : null}
                 style={styles.video}
                 source={{
-                  uri: src,
+                  uri: src.video_url,
                 }}
                 useNativeControls={false}
                 isLooping
