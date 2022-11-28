@@ -26,7 +26,7 @@ import ProfileVideos from './components/home/ProfileVideos.js';
 
 LogBox.ignoreLogs([
   'Warning: Async Storage has been extracted from react-native core',
-  'VirtualizedLists should never be nested'
+  'VirtualizedLists should never be nested',
 ]);
 
 const Stack = createNativeStackNavigator();
@@ -110,7 +110,17 @@ function BottomNav() {
       <Tab.Screen name="Friends" component={Home} />
       <Tab.Screen name="Add" component={AddVideo} options={{ tabBarLabel: () => null }} />
       <Tab.Screen name="Inbox" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} options={{ headerShown: true }} />
+      <Tab.Screen
+        options={{
+          headerShown: true,
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#222222',
+          },
+        }}
+        name="Profile"
+        component={Profile}
+      />
     </Tab.Navigator>
   );
 }
@@ -125,7 +135,7 @@ const NavigationStack = () => {
         },
         headerTitleStyle: {
           fontWeight: 'bold',
-          color: '#B4be00',
+          color: 'ffae1f',
         },
         headerTintColor: '#ffae1f',
       }}
@@ -143,8 +153,26 @@ const NavigationStack = () => {
         name="Welcome"
         component={Welcome}
       ></Stack.Screen>
-      <Stack.Screen name="Login" component={Login}></Stack.Screen>
-      <Stack.Screen name="Register" component={Register}></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#ffae1f',
+          },
+        }}
+        name="Login"
+        component={Login}
+      ></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#ffae1f',
+          },
+        }}
+        name="Register"
+        component={Register}
+      ></Stack.Screen>
       <Stack.Screen name="BottomNav" component={BottomNav} options={{ headerShown: false }} />
       <Stack.Screen options={{ headerShown: false }} name="Home" component={Home}></Stack.Screen>
       <Stack.Screen
@@ -164,7 +192,17 @@ const NavigationStack = () => {
       <Stack.Screen name="Following" component={FollowingList}></Stack.Screen>
       <Stack.Screen name="Followers" component={FollowerList}></Stack.Screen>
       <Stack.Screen name="Profile" component={Profile}></Stack.Screen>
-      <Stack.Screen name="Edit Profile" component={EditProfile}></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#222222',
+          },
+          headerTintColor: '#222222',
+        }}
+        name="Edit Profile"
+        component={EditProfile}
+      ></Stack.Screen>
       <Stack.Screen name="Search" component={Search}></Stack.Screen>
     </Stack.Navigator>
   );
