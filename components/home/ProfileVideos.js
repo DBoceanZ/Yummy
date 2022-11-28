@@ -188,7 +188,7 @@ export default function ProfileVideos({ navigation }) {
                       'http://18.212.89.94:3000/video/likes',
                       {
                         video_id: 1,
-                        user_id: 1,
+                        user_id: userData.UID,
                       },
                       {
                         headers: {

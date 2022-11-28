@@ -4,6 +4,8 @@ module.exports = {
   addComment: async (req, res) => {
     try {
       const pass = await videoModel.addComment(req.body);
+      console.log('controller');
+      console.log(pass);
       if (pass.rowCount) {
         res.sendStatus(201);
       } else {

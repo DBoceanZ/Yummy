@@ -19,6 +19,9 @@ module.exports = {
         'INSERT INTO videos(video_url, creator_id, summary) VALUES ($1, $2, $3)',
         [video_url, user_id, summary]
       );
+      console.log('model');
+      console.log(addVideo)
+      return addVideo;
     } catch (err) {
       return err;
     }
