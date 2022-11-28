@@ -65,11 +65,6 @@ app.post("/test", (req, res) => {
     });
 });
 
-app.post('/', (req, res) => {
-  pool.query('SELECT * FROM users')
-    .then(results => res.send(results))
-})
-
 // routers go here
 app.use("/video", videoRouter);
 app.use("/login", loginRouter);
