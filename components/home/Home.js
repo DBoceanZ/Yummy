@@ -25,7 +25,7 @@ import testpfp from './testmedia/testpfp.png';
 import { Stack, IconButton } from '@react-native-material/core';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import LottieView from 'lottie-react-native';
+import ReadMore from '@fawazahmed/react-native-read-more';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -35,7 +35,7 @@ const urls = [
       'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610582/xy2fh6mvmsmrdrtkc5bm.mov',
     UID: 1,
     username: 'kyle',
-    description: 'first desc',
+    description: 'this has got to be the best food I have ever made!! sooooo good',
     profile_photo_url: 'https://i.pinimg.com/550x/31/ce/d6/31ced66059145d6721c1b379fb38551c.jpg',
   },
   {
@@ -43,7 +43,7 @@ const urls = [
       'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610659/fa6cx9gyitugkioimheh.mov',
     UID: 1,
     username: 'not kyle',
-    description: 'second desc',
+    description: 'this is my description not that long but its decent length. great recipe!',
     profile_photo_url:
       'https://www.boredpanda.com/blog/wp-content/uploads/2015/09/post-the-happiest-dogs-who-show-the-best-smiles-163__700.jpg',
   },
@@ -54,7 +54,7 @@ const mockDesc = 'this is the video description';
 const onShare = async (url) => {
   try {
     const result = await Share.share({
-      message: `check out this video from Yummy! ${url}`,
+      message: `check out this video from Yummy! ${url.video_url}`,
     });
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
@@ -298,14 +298,16 @@ export default function Home({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#ecf0f1',
   },
   video: {
     flex: 1,
     width: windowWidth,
-    height: windowHeight,
+    height: windowHeight - 70,
   },
   buttons: {
     flexDirection: 'row',
@@ -350,7 +352,7 @@ const styles = StyleSheet.create({
   },
   playBut: {
     margin: 50,
-    bottom: 350,
+    bottom: 250,
     right: 110,
     position: 'absolute',
     opacity: 0.4,
@@ -364,7 +366,6 @@ const styles = StyleSheet.create({
   },
   playButContainer: {
     alignItems: 'center',
-    flex: 1,
     justifyContent: 'center',
   },
   pfp: {
@@ -381,27 +382,21 @@ const styles = StyleSheet.create({
     margin: 5,
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 115,
+    bottom: 55,
     left: 5,
     color: 'white',
   },
   descText: {
     margin: 5,
     position: 'absolute',
-    bottom: 85,
+    bottom: 15,
     left: 5,
     color: 'white',
+    width: windowWidth / 1.3,
   },
   searchBut: {
     position: 'absolute',
     top: 50,
     right: 10,
   },
-  // heartLottie: {
-  //   position: 'absolute',
-  //   bottom: 382,
-  //   right: -10,
-  //   width: 112,
-  //   height: 112,
-  // },
 });
