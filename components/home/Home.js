@@ -264,7 +264,15 @@ export default function Home({ navigation }) {
           </View>
         ))}
       </ScrollView>
-      <MaterialCommunityIcons style={styles.searchBut} name="magnify" size={34} color="white" />
+      <MaterialCommunityIcons
+        onPress={() => {
+          navigation.navigate('Search');
+        }}
+        style={styles.searchBut}
+        name="magnify"
+        size={34}
+        color="white"
+      />
     </View>
   );
 }
