@@ -44,7 +44,7 @@ export default function ProfileVideos({ navigation }) {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const opacity = useState(new Animated.Value(0))[0];
-
+  console.log(homeVideos);
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       //Every time the screen is focused the Video starts playing
@@ -211,7 +211,7 @@ export default function ProfileVideos({ navigation }) {
                     });
                 }}
               />
-              <Text style={styles.heartText}>0</Text>
+              <Text style={styles.heartText}>{src.likes}</Text>
               <FontAwesome
                 style={styles.comment}
                 name="commenting"
@@ -229,7 +229,7 @@ export default function ProfileVideos({ navigation }) {
                   setDisplayComments(true);
                 }}
               />
-              <Text style={styles.commentText}>0</Text>
+              <Text style={styles.commentText}>{src.comment_count}</Text>
               <Pressable
                 onPress={() => {
                   onShare(src.video_url);
@@ -238,8 +238,8 @@ export default function ProfileVideos({ navigation }) {
                 <FontAwesome style={styles.share} name="share" size={34} color="white" />
               </Pressable>
               <Text style={styles.shareText}>0</Text>
-              <Text style={styles.usernameText}>{mockUsername}</Text>
-              <Text style={styles.descText}>{mockDesc}</Text>
+              <Text style={styles.usernameText}>{src.created_by}</Text>
+              <Text style={styles.descText}>{src.summary}</Text>
             </Pressable>
           </View>
         ))}
@@ -251,8 +251,10 @@ export default function ProfileVideos({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#ecf0f1',
   },
   video: {
@@ -267,43 +269,43 @@ const styles = StyleSheet.create({
   },
   heart: {
     position: 'absolute',
-    bottom: 350,
+    bottom: 370,
     right: 5,
   },
   heartText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 330,
+    bottom: 350,
     right: 17,
     color: 'white',
   },
   comment: {
     position: 'absolute',
-    bottom: 280,
+    bottom: 305,
     right: 5,
   },
   commentText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 260,
+    bottom: 280,
     right: 17,
     color: 'white',
   },
   share: {
     position: 'absolute',
-    bottom: 210,
+    bottom: 235,
     right: 5,
   },
   shareText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 190,
+    bottom: 215,
     right: 17,
     color: 'white',
   },
   playBut: {
     margin: 50,
-    bottom: 350,
+    bottom: 250,
     right: 110,
     position: 'absolute',
     opacity: 0.4,
@@ -317,11 +319,10 @@ const styles = StyleSheet.create({
   },
   playButContainer: {
     alignItems: 'center',
-    flex: 1,
     justifyContent: 'center',
   },
   pfp: {
-    bottom: 410,
+    bottom: 430,
     right: 5,
     width: 45,
     height: 45,
@@ -334,20 +335,21 @@ const styles = StyleSheet.create({
     margin: 5,
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 95,
+    bottom: 75,
     left: 5,
     color: 'white',
   },
   descText: {
     margin: 5,
     position: 'absolute',
-    bottom: 65,
+    bottom: 45,
     left: 5,
     color: 'white',
+    width: windowWidth / 1.3,
   },
   searchBut: {
     position: 'absolute',
-    top: 52,
-    right: 8,
+    top: 50,
+    right: 10,
   },
 });
