@@ -10,15 +10,9 @@ const Profile = ({ navigation }) => {
   const { userData } = useGlobalContext();
   const { UID } = userData;
   const [videos, setVideos] = useState([
-    // {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669609054/dhx7xb8bszzxqgftlzab.mov', id: 1},
-    // {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610582/xy2fh6mvmsmrdrtkc5bm.mov', id: 2},
-    // {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610659/fa6cx9gyitugkioimheh.mov', id: 3},
-    // {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669609054/dhx7xb8bszzxqgftlzab.mov', id: 4},
-    // {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610582/xy2fh6mvmsmrdrtkc5bm.mov', id: 5},
-    // {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610659/fa6cx9gyitugkioimheh.mov', id: 6},
-    // {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669609054/dhx7xb8bszzxqgftlzab.mov', id: 7},
-    // {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610582/xy2fh6mvmsmrdrtkc5bm.mov', id: 8},
-    // {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610659/fa6cx9gyitugkioimheh.mov', id: 9}
+    {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669609054/dhx7xb8bszzxqgftlzab.mov', id: 1},
+    {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610582/xy2fh6mvmsmrdrtkc5bm.mov', id: 2},
+    {video_url: 'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610659/fa6cx9gyitugkioimheh.mov', id: 3},
   ]);
 
   // on touch navigation handlers
@@ -44,6 +38,9 @@ const Profile = ({ navigation }) => {
       axios
         .get(`http://18.212.89.94:3000/users/userData?user_id=${UID}`)
         .then((res) => {
+          if (!res.data.videos) {
+            return;
+          }
           let videos = [];
           if (res.data.videos) {
             res.data.videos.forEach((video) => {
