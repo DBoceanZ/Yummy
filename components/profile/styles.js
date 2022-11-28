@@ -22,8 +22,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    marginBottom: 15,
-    marginTop: 30
+    marginBottom: 15
   },
   imageEdit: {
     width: 100,

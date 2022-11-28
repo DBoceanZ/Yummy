@@ -43,7 +43,6 @@ const Profile = ({ navigation }) => {
     axios
       .get(`http://18.212.89.94:3000/users/userData?user_id=${selectedUserID}`)
       .then((res) => {
-        console.log('response received')
         let videos = [];
         if (res.data.videos) {
           res.data.videos.forEach((video) => {
