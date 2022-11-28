@@ -326,4 +326,9 @@ const styles = StyleSheet.create({
     left: 5,
     color: 'white',
   },
+  searchBut: {
+    position: 'absolute',
+    top: 50,
+    right: 10,
+  },
 });
