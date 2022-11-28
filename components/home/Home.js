@@ -118,7 +118,7 @@ export default function Home({ navigation }) {
       nativeEvent: {
         contentOffset: { y },
       },
-    }: NativeSyntheticEvent<NativeScrollEvent>) => {
+    }) => {
       const offset = Math.round(y / windowHeight);
 
       setFocusedIndex(offset);

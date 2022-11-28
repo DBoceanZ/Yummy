@@ -100,6 +100,25 @@ export default function ProfileVideos({ navigation }) {
     [setFocusedIndex]
   );
 
+  const onShare = async (url) => {
+    try {
+      const result = await Share.share({
+        message: `check out this video from Yummy! ${url}`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -213,7 +232,7 @@ export default function ProfileVideos({ navigation }) {
               <Text style={styles.commentText}>0</Text>
               <Pressable
                 onPress={() => {
-                  onShare(src);
+                  onShare(src.video_url);
                 }}
               >
                 <FontAwesome style={styles.share} name="share" size={34} color="white" />
@@ -225,7 +244,7 @@ export default function ProfileVideos({ navigation }) {
           </View>
         ))}
       </ScrollView>
-      <MaterialCommunityIcons style={styles.searchBut} name="magnify" size={34} color="white" />
+      <MaterialCommunityIcons style={styles.searchBut} name="magnify" size={32} color="white" />
     </View>
   );
 }
@@ -248,37 +267,37 @@ const styles = StyleSheet.create({
   },
   heart: {
     position: 'absolute',
-    bottom: 370,
+    bottom: 350,
     right: 5,
   },
   heartText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 350,
+    bottom: 330,
     right: 17,
     color: 'white',
   },
   comment: {
     position: 'absolute',
-    bottom: 305,
+    bottom: 280,
     right: 5,
   },
   commentText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 280,
+    bottom: 260,
     right: 17,
     color: 'white',
   },
   share: {
     position: 'absolute',
-    bottom: 230,
+    bottom: 210,
     right: 5,
   },
   shareText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 210,
+    bottom: 190,
     right: 17,
     color: 'white',
   },
@@ -302,7 +321,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pfp: {
-    bottom: 430,
+    bottom: 410,
     right: 5,
     width: 45,
     height: 45,
@@ -315,20 +334,20 @@ const styles = StyleSheet.create({
     margin: 5,
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 115,
+    bottom: 95,
     left: 5,
     color: 'white',
   },
   descText: {
     margin: 5,
     position: 'absolute',
-    bottom: 85,
+    bottom: 65,
     left: 5,
     color: 'white',
   },
   searchBut: {
     position: 'absolute',
-    top: 50,
-    right: 10,
+    top: 52,
+    right: 8,
   },
 });

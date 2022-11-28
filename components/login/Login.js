@@ -1,11 +1,6 @@
-import { View } from "react-native";
-import {
-  StyleSheet,
-  Image,
-  useWindowDimensions,
-  KeyboardAvoidingView,
-} from "react-native";
-import Spinner from "react-native-loading-spinner-overlay";
+import { View } from 'react-native';
+import { StyleSheet, Image, useWindowDimensions, KeyboardAvoidingView } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {
   Surface,
   HStack,
@@ -14,23 +9,24 @@ import {
   Divider,
   TextInput,
   IconButton,
-} from "@react-native-material/core";
-import React, { useState, useEffect } from "react";
-import { BasicInput, PasswordInput } from "../lib/inputs/CustomInput.js";
-import { LightButton } from "../lib/buttons/CustomButton.js";
-import Logo from "../../assets/images/yummyLogo.png";
-import { useAuth } from "../../context/authContext.js";
-import { useGlobalContext } from "../../context/GlobalContext";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import axios from "axios";
+} from '@react-native-material/core';
+import React, { useState, useEffect } from 'react';
+import { BasicInput, PasswordInput } from '../lib/inputs/CustomInput.js';
+import { LightButton } from '../lib/buttons/CustomButton.js';
+import Logo from '../../assets/images/yummyLogo.png';
+import { useAuth } from '../../context/authContext.js';
+import { useGlobalContext } from '../../context/GlobalContext';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import axios from 'axios';
+import { CommonActions } from '@react-navigation/native';
 
 const Login = ({ navigation }) => {
   const { height } = useWindowDimensions();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [showPassword, setShowPassword] = useState(true);
   const { login, currentUser, globalUsername, setGlobalUsername } = useAuth();
   const { loading, setLoading, userData, setUserData } = useGlobalContext();
@@ -54,14 +50,19 @@ const Login = ({ navigation }) => {
       alert(`Nice to see you again, ${userData.username}`);
       clearData();
       setLoading(false);
-      navigation.navigate("BottomNav");
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'BottomNav' }],
+        })
+      );
     }
   }, [userData]);
 
   const clearData = () => {
-    setUsername("");
-    setEmail("");
-    setPassword("");
+    setUsername('');
+    setEmail('');
+    setPassword('');
   };
 
   const getUserData = async (loggedInUser) => {
@@ -80,7 +81,7 @@ const Login = ({ navigation }) => {
     } catch (err) {
       console.log(err);
       alert(`Uh-oh! There is an error loging you in. Please try again...`);
-      navigation.navigate("Welcome");
+      navigation.navigate('Welcome');
     }
   };
 
@@ -100,7 +101,7 @@ const Login = ({ navigation }) => {
         <Spinner visible={loading} textContent={`Welcome Back!`} />
       ) : (
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.container}
           enabled="true"
         >
@@ -146,9 +147,7 @@ const Login = ({ navigation }) => {
                 trailing={(props) => (
                   <IconButton
                     onPress={() => {
-                      showPassword
-                        ? setShowPassword(false)
-                        : setShowPassword(true);
+                      showPassword ? setShowPassword(false) : setShowPassword(true);
                     }}
                     icon={(props) => <Icon name="eye" />}
                   />
@@ -171,23 +170,23 @@ const styles = StyleSheet.create({
   passwordContainer: {},
   inputStyle: {},
   text: {
-    alignSelf: "center",
+    alignSelf: 'center',
     padding: 10,
   },
   logo: {
-    alignSelf: "center",
-    width: "70%",
+    alignSelf: 'center',
+    width: '70%',
     maxWidth: 500,
     maxHeight: 150,
   },
   shadowProp: {
-    shadowColor: "#171717",
+    shadowColor: '#171717',
     shadowOffset: { width: -2, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
   surfaceStyle: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: '#f2f2f2',
     padding: 11,
   },
 });
