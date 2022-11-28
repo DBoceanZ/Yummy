@@ -24,6 +24,7 @@ import { LightButton } from '../lib/buttons/CustomButton.js';
 import testpfp from './testmedia/testpfp.png';
 import { Stack, IconButton } from '@react-native-material/core';
 import { useGlobalContext } from '../../context/GlobalContext';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -133,7 +134,7 @@ export default function ProfileVideos({ navigation }) {
                 ref={focusedIndex === index ? videoref : null}
                 style={styles.video}
                 source={{
-                  uri: src,
+                  uri: src.video_url,
                 }}
                 useNativeControls={false}
                 isLooping
@@ -224,6 +225,7 @@ export default function ProfileVideos({ navigation }) {
           </View>
         ))}
       </ScrollView>
+      <MaterialCommunityIcons style={styles.searchBut} name="magnify" size={34} color="white" />
     </View>
   );
 }

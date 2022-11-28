@@ -60,7 +60,6 @@ export default function AddVideo({ navigation }) {
     axios
       .post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`, data)
       .then((res) => {
-        console.log(userData);
         axios
           .post('http://18.212.89.94:3000/videos/postvideo', {
             summary: formValues.description,

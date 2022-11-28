@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
-import { AntDesign, FontAwesome, Foundation } from '@expo/vector-icons';
+import { AntDesign, FontAwesome, Foundation, Entypo } from '@expo/vector-icons';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
@@ -24,6 +24,7 @@ import { LightButton } from '../lib/buttons/CustomButton.js';
 import testpfp from './testmedia/testpfp.png';
 import { Stack, IconButton } from '@react-native-material/core';
 import { useGlobalContext } from '../../context/GlobalContext';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -263,6 +264,7 @@ export default function Home({ navigation }) {
           </View>
         ))}
       </ScrollView>
+      <MaterialCommunityIcons style={styles.searchBut} name="magnify" size={34} color="white" />
     </View>
   );
 }
@@ -362,5 +364,10 @@ const styles = StyleSheet.create({
     bottom: 85,
     left: 5,
     color: 'white',
+  },
+  searchBut: {
+    position: 'absolute',
+    top: 50,
+    right: 10,
   },
 });
