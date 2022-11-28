@@ -97,14 +97,14 @@ const EditProfileHeader = ({ handlers }) => {
       <View style={styles.countersContainer}>
       <View style={styles.counterItem}>
           <TouchableOpacity onPress={() => handleFollowingTouch()}>
-            <Text style={styles.counter}>0</Text>
+            <Text style={styles.counter}>1</Text>
             <Text style={styles.counterLabel}>Following</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.counterDivider}>|</Text>
         <View style={styles.counterItem}>
           <TouchableOpacity onPress={() => handleFollowersTouch()}>
-            <Text style={styles.counter}>0</Text>
+            <Text style={styles.counter}>2</Text>
             <Text style={styles.counterLabel}>Followers</Text>
           </TouchableOpacity>
         </View>

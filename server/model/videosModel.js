@@ -11,7 +11,15 @@ module.exports = {
       throw err;
     }
   },
-  addVideo: async ({ video_url, user_id, summary, tags }) => {
+  allVidoes: async () => {
+    try {
+      const videos = await pool.query('SELECT * FROM videos');
+      return videos.rows;
+    } catch (err) {
+      throw err;
+    }
+  },
+  addVideo: async ({ video_url, user_id, summary }) => {
     try {
       console.log(JSON.stringify(tags).replace('[', '(').replace(']', ')').replace(/"/g, "'"))
       const addVideo = await pool.query(

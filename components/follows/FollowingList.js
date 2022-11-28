@@ -7,18 +7,18 @@ import { useGlobalContext } from '../../context/GlobalContext';
 
 export default function Following({ navigation }) {
   const { userData, setUserData } = useGlobalContext();
-  const { selectedUserID } = userData;
+  const { UID } = userData;
   const [followingList, setFollowingList] = useState([]);
 
   const handleProfileNavigation = (id) => {
-    setUserData({ ...userData, selectedUserID: id })
+    setUserData({ ...userData, UID: id })
     navigation.navigate('Profile');
   }
 
   useEffect(() => {
 
     const unsubscribe = navigation.addListener('focus', () => {
-      axios.get(`http://18.212.89.94:3000/follows/following?user_following_id=6`)
+      axios.get(`http://18.212.89.94:3000/follows/following?user_following_id=${UID}`)
         .then(results => {
           setFollowingList(results.data)
         })
@@ -31,7 +31,7 @@ export default function Following({ navigation }) {
 
 
   const renderItem = ({ item }) => (
-    <ListItem user={item} buttonName="Unfollow" handleProfileNavigation={handleProfileNavigation} />
+    <ListItem user={item} btn1="Unfollow" btn2="Follow" handleProfileNavigation={handleProfileNavigation} />
   )
   return (
     <View>
