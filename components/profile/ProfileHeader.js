@@ -52,7 +52,7 @@ const ProfileHeader = ({ handlers }) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{uri: profilePhoto}}></Image>
+        <Image style={styles.imageProfile} source={{uri: profilePhoto}}></Image>
       </View>
       <Text style={styles.username}>{username}</Text>
       <View style={styles.countersContainer}>

@@ -5,10 +5,11 @@ import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import { CLOUDINARY_NAME, CLOUDINARY_UPLOAD_PRESET } from '@env';
 import { useGlobalContext } from '../../context/GlobalContext';
+import { Feather } from '@expo/vector-icons';
 
 const EditProfileHeader = () => {
   const { userData } = useGlobalContext(); 
-  const { selectedUserID } = userData;
+  const { UID } = userData;
   const [profilePhoto, setProfilePhoto] = useState('http://tinyurl.com/68dvbhaw'); // TEMP
   const [username, setUsername] = useState('ExampleUser'); // TEMP
   const [bio, setBio] = useState(
@@ -40,11 +41,10 @@ const EditProfileHeader = () => {
     data.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
     data.append('cloud_name', CLOUDINARY_NAME);
     axios.post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`, data)
-      .then(res => res.json())
-      .then(data => {
+      .then(res => {
         axios.put('http://18.212.89.94:3000/users/userData', {
-          user_id: selectedUserID,
-          profile_photo_url: data.secure_url
+          user_id: UID,
+          profile_photo_url: res.data.secure_url
         })
       })
       .catch((err) => console.log(err));
@@ -52,8 +52,8 @@ const EditProfileHeader = () => {
 
   // on bio submit, PUT bio changes to database
   const handleBioSubmit = () => {
-    axios.put(`http://18.212.89.94:3000/users/userData?user_id=${selectedUserID}`, {
-      user_id: selectedUserID,
+    axios.put(`http://18.212.89.94:3000/users/userData?user_id=${UID}`, {
+      user_id: UID,
       bio: bio
     })
       .catch((err) => console.log(err));
@@ -61,7 +61,7 @@ const EditProfileHeader = () => {
 
   // on initial render, fetch user profile data from the database
   useEffect(() => {
-    axios.get(`http://18.212.89.94:3000/users/userData?user_id=${selectedUserID}`)
+    axios.get(`http://18.212.89.94:3000/users/userData?user_id=${UID}`)
       .then((res) => {
         setUsername(res.data.username);
         if (res.data.bio) {
@@ -80,7 +80,9 @@ const EditProfileHeader = () => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <TouchableOpacity onPress={() => pickFromGallery()} style={styles.imageTouchable}>
-          <Image style={styles.image} source={{uri: profilePhoto}}></Image>
+          <Image style={styles.imageEdit} source={{uri: profilePhoto}} />
+          <View style={styles.imageOverlay} />
+          <Feather name="camera" size={26} color="white" />
         </TouchableOpacity>
       </View>
       <Text style={styles.username}>{username}</Text>
