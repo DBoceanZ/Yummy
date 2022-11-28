@@ -45,7 +45,7 @@ export default function AddVideo({ navigation }) {
     if (userData.UID === '') {
       Notifier.showNotification({
         title: 'Must have account to upload',
-        duration: 3000,
+        duration: 4000,
         showAnimationDuration: 800,
         hideOnPress: true,
         swipeEnabled: true,
@@ -59,16 +59,17 @@ export default function AddVideo({ navigation }) {
     data.append('cloud_name', CLOUDINARY_CLOUD_NAME);
     axios
       .post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`, data)
+      .catch((err) => {
+        console.log(err);
+      })
       .then((res) => {
-        console.log(userData);
         axios
           .post('http://18.212.89.94:3000/videos/postvideo', {
-            summary: formValues.description,
+            summary: description,
             user_id: userData.UID,
             video_url: res.data.secure_url,
           })
           .catch((err) => {
-            console.log(err);
             Notifier.showNotification({
               title: 'Upload Failed 🙁 Try Again ',
               duration: 4000,
@@ -77,6 +78,8 @@ export default function AddVideo({ navigation }) {
               swipeEnabled: true,
               alertType: 'error',
             });
+            setDescription('');
+            setTags('');
             setCurrentUpload(null);
           });
         Notifier.showNotification({
@@ -88,6 +91,8 @@ export default function AddVideo({ navigation }) {
           swipeEnabled: true,
           alertType: 'success',
         });
+        setDescription('');
+        setTags('');
         setCurrentUpload(null);
       });
   };
