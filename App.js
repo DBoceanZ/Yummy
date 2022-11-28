@@ -190,22 +190,71 @@ const NavigationStack = () => {
           headerTitle: '',
         }}
       ></Stack.Screen>
-      <Stack.Screen name="Selected Profile" component={SelectedProfile}></Stack.Screen>
-      <Stack.Screen name="Following" component={FollowingList}></Stack.Screen>
-      <Stack.Screen name="Followers" component={FollowerList}></Stack.Screen>
-      <Stack.Screen name="Profile" component={Profile}></Stack.Screen>
+      <Stack.Screen 
+        options={{
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#222222',
+          },
+          headerTintColor: '#ffae1f',
+        }}
+        name="Following" 
+        component={FollowingList}>
+      </Stack.Screen>
+      <Stack.Screen 
+        options={{
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#222222',
+          },
+          headerTintColor: '#ffae1f',
+        }}
+        name="Followers" 
+        component={FollowerList}></Stack.Screen>
       <Stack.Screen
         options={{
           headerTitleStyle: {
             fontWeight: 'bold',
             color: '#222222',
           },
-          headerTintColor: '#222222',
+          headerTintColor: '#ffae1f',
+        }}
+        name="Profile"
+        component={Profile}
+      ></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#222222',
+          },
+          headerTintColor: '#ffae1f',
+        }}
+        name="Selected Profile"
+        component={SelectedProfile}
+      ></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#222222',
+          },
+          headerTintColor: '#ffae1f',
         }}
         name="Edit Profile"
         component={EditProfile}
       ></Stack.Screen>
-      <Stack.Screen name="Search" component={Search}></Stack.Screen>
+      <Stack.Screen 
+        options={{
+          headerTitleStyle: {
+          fontWeight: 'bold',
+          color: '#222222',
+        },
+        headerTintColor: '#ffae1f',
+        }}
+        name="Search" 
+        component={Search}>
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };
