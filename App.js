@@ -24,7 +24,10 @@ import { NotifierWrapper } from 'react-native-notifier';
 import { LogBox } from 'react-native';
 import ProfileVideos from './components/home/ProfileVideos.js';
 
-LogBox.ignoreLogs(['Warning: Async Storage has been extracted from react-native core']);
+LogBox.ignoreLogs([
+  'Warning: Async Storage has been extracted from react-native core',
+  'VirtualizedLists should never be nested'
+]);
 
 const Stack = createNativeStackNavigator();
 

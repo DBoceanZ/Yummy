@@ -40,7 +40,7 @@ export default function Search({ navigation }) {
   }, [searchText]);
 
   const handleTouch = () => {
-    navigation.navigate('Profile Videos');
+    navigation.navigate('ProfileVideos');
   };
   const pressHandler = function (tag) {
     axios
@@ -65,8 +65,8 @@ export default function Search({ navigation }) {
       </View>
       <FlatList
         data={tagList}
-        renderItem={(item) => {
-          return <LightButton key={item.tag} onPress={() => pressHandler(key)} text={item.tag} />;
+        renderItem={({ item }) => {
+          return <LightButton key={item} onPress={() => pressHandler(item)} text={item} />;
         }}
       />
       <Thumbnails videos={videos} handleTouch={handleTouch} />

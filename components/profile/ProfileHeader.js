@@ -5,7 +5,7 @@ import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { LightButton } from '../lib/buttons/CustomButton';
 import axios from 'axios';
 
-const ProfileHeader = ({ handlers }) => {
+const ProfileHeader = ({ handlers, navigation }) => {
   const { userData } = useGlobalContext();
   const { UID, selectedUserID } = userData;
   const { 
@@ -16,6 +16,7 @@ const ProfileHeader = ({ handlers }) => {
   const [bio, setBio] = useState(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
   );
+  const [likes, setLikes] = useState(0);
 
   // follow button press handlers
   const handleFollowPress = () => {
@@ -34,20 +35,31 @@ const ProfileHeader = ({ handlers }) => {
       .catch((err) => console.log(err));
   };
 
-  // on initial render, fetch user profile data from database
+  // on page focus, fetch user profile data from database
   useEffect(() => {
-    axios.get(`http://18.212.89.94:3000/users/userData?user_id=${selectedUserID}`)
+    const unsubscribe = navigation.addListener('focus', () => {
+      axios.get(`http://18.212.89.94:3000/users/userData?user_id=${selectedUserID}`)
       .then((res) => {
         setUsername(res.data.username);
         setBio(res.data.bio);
         if (res.data.profile_photo_url) {
           setProfilePhoto(res.data.profile_photo_url);
         }
+        if (res.data.videos) {
+          let videoLikes = res.data.videos
+            .map((video) => {
+              return video.likes;
+            })
+            .reduce((a, b) => a + b, 0);
+          setLikes(videoLikes);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -71,7 +83,7 @@ const ProfileHeader = ({ handlers }) => {
         </View>
         <Text style={styles.counterDivider}>|</Text>
         <View style={styles.counterItem}>
-          <Text style={styles.counter}>0</Text>
+          <Text style={styles.counter}>{likes}</Text>
           <Text style={styles.counterLabel}>Likes</Text>
         </View>
       </View>

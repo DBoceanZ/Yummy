@@ -76,6 +76,7 @@ const Login = ({ navigation }) => {
         userEmail: user[0].email,
         profile_photo: user[0].profile_photo_url,
         UID: user[0].id,
+        selectedUserID: user[0].id
       });
     } catch (err) {
       console.log(err);
