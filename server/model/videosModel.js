@@ -4,8 +4,7 @@ module.exports = {
   homeVideos: async ({ user_id }) => {
     try {
       const videos = await pool.query(
-        'SELECT id, video_url, created_at, creator_id, (SELECT username FROM users where id = creator_id) as created_by, summary, (SELECT count(comments.id) FROM comments where video_id = videos.id) as comment_count, (SELECT count(likes.id) FROM likes WHERE video_id = videos.id) as likes FROM videos where videos.id IN (SELECT video_id FROM video_tags WHERE tag_id IN (SELECT tag_id FROM user_interests WHERE user_id = $1))',
-        [user_id]
+        'SELECT id, video_url, created_at, creator_id, (SELECT username FROM users where id = creator_id) as created_by, summary, (SELECT count(comments.id) FROM comments where video_id = videos.id) as comment_count, (SELECT count(likes.id) FROM likes WHERE video_id = videos.id) as likes FROM videos'
       );
       return videos.rows;
     } catch (err) {
@@ -22,12 +21,15 @@ module.exports = {
   },
   addVideo: async ({ video_url, user_id, summary }) => {
     try {
+      console.log(JSON.stringify(tags).replace('[', '(').replace(']', ')').replace(/"/g, "'"))
       const addVideo = await pool.query(
-        'INSERT INTO videos(video_url, creator_id, summary) VALUES ($1, $2, $3)',
-        [video_url, user_id, summary]
+        `WITH new_video as (INSERT INTO videos(video_url, creator_id, summary) VALUES ($1, $2, $3) RETURNING id) INSERT INTO video_tags (video_id, tag_id) (SELECT new_video.id as video_id, tags.id FROM new_video, tags WHERE tags.tag in ${JSON.stringify(tags).replace('[', '(').replace(']', ')').replace(/"/g, "'")});`,
+        [video_url, user_id, summary,]
       );
+      console.log(addVideo)
       return addVideo;
     } catch (err) {
+      console.log(err)
       return err;
     }
   },
