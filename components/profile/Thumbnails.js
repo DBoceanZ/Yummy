@@ -29,7 +29,7 @@ const Thumbnails = ({ handleTouch, videos }) => {
   };
 
   const thumbnailUrls = videos.map((video) => {
-    return getThumbnailUrl(video);
+    return getThumbnailUrl(video.video_url);
   });
 
   return (
