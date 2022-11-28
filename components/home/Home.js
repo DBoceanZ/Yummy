@@ -81,6 +81,13 @@ export default function Home({ navigation }) {
   const windowHeight = Dimensions.get('window').height;
   const opacity = useState(new Animated.Value(0))[0];
   const { userData, setUserData } = useGlobalContext();
+  const [videoList, setVideoList] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://18.212.89.94:3000/videos/allvideos').then((result) => {
+      setVideo(result.data);
+    });
+  }, []);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
