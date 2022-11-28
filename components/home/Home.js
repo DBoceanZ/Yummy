@@ -90,24 +90,28 @@ export default function Home({ navigation }) {
   }, []);
   console.log(videoList);
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      //Every time the screen is focused the Video starts playing
-      if (videoref) {
-        videoref.current.playAsync();
-      }
-    });
-    return unsubscribe;
+    if (videoList.length > 0) {
+      const unsubscribe = navigation.addListener('focus', () => {
+        //Every time the screen is focused the Video starts playing
+        if (videoref) {
+          videoref.current.playAsync();
+        }
+      });
+      return unsubscribe;
+    }
   }, [navigation]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', () => {
-      //Every time the screen loses focus the Video is paused
-      if (videoref) {
-        videoref.current.pauseAsync();
-      }
-    });
+    if (videoList.length > 0) {
+      const unsubscribe = navigation.addListener('blur', () => {
+        //Every time the screen loses focus the Video is paused
+        if (videoref) {
+          videoref.current.pauseAsync();
+        }
+      });
 
-    return unsubscribe;
+      return unsubscribe;
+    }
   }, [navigation]);
 
   useEffect(() => {
