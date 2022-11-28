@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { LightButton } from '../lib/buttons/CustomButton';
 
-export default function ListItem({ user, buttonName, handleProfileNavigation }) {
+export default function ListItem({ user, btn1, btn2, handleProfileNavigation }) {
+
+  const [follow, setFollow] = useState(true)
 
   const handlePress = () => {
     handleProfileNavigation(user.id);
   }
 
+  const handleButtonPress = () => {
+    setFollow(!follow)
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.imgContainer}>
-        <Image style={styles.img}></Image>
+        <Image style={styles.img} source={{ uri: user.profile_photo_url }}></Image>
       </View>
       <TouchableOpacity onPress={handlePress}>
         <View>
@@ -19,7 +25,7 @@ export default function ListItem({ user, buttonName, handleProfileNavigation }) 
         </View>
       </TouchableOpacity>
       <View style={styles.btnContainer}>
-        <LightButton text={buttonName} />
+        <LightButton text={follow ? btn1 : btn2} onPress={handleButtonPress} />
       </View>
     </View >
   );
