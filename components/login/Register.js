@@ -59,7 +59,7 @@ const Register = ({ navigation }) => {
   const getLoggedInUser = async (auth_key) => {
     try {
       const { data: userFetch } = await axios.get(
-        `http://18.212.89.94:3000/login/user/${auth_key}`
+        `https://yummy-production.up.railway.app/login/user/${auth_key}`
       );
       console.log('userFetch', userFetch[0]);
       setUserData({
