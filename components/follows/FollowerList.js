@@ -4,7 +4,6 @@ import ListItem from './ListItem.js';
 import { useGlobalContext } from '../../context/GlobalContext';
 import axios from 'axios';
 
-
 export default function Followers({ navigation }) {
   const { userData, setUserData } = useGlobalContext();
   const { UID } = userData;
@@ -13,29 +12,33 @@ export default function Followers({ navigation }) {
   const handleProfileNavigation = (id) => {
     setUserData({ ...userData, UID: id });
     navigation.navigate('Profile');
-  }
+  };
 
   useEffect(() => {
-
     const unsubscribe = navigation.addListener('focus', () => {
-      axios.get(`http://18.212.89.94:3000/follows/followers?user_followed_id=${UID}`)
-        .then(results => {
-          setFollowerList(results.data)
+      axios
+        .get(`https://yummy-production.up.railway.app/follows/followers?user_followed_id=${UID}`)
+        .then((results) => {
+          setFollowerList(results.data);
         })
         .catch((err) => {
           console.log(err);
         });
     });
     return unsubscribe;
-  }, [navigation])
-
+  }, [navigation]);
 
   const renderItem = ({ item }) => (
-    <ListItem user={item} btn1="Remove" btn2="Allow" handleProfileNavigation={handleProfileNavigation} />
-  )
+    <ListItem
+      user={item}
+      btn1="Remove"
+      btn2="Allow"
+      handleProfileNavigation={handleProfileNavigation}
+    />
+  );
   return (
     <View>
-      <FlatList data={followerList} renderItem={renderItem} keyExtractor={item => item.id} />
+      <FlatList data={followerList} renderItem={renderItem} keyExtractor={(item) => item.id} />
     </View>
   );
 }

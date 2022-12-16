@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, View, Modal, Pressable, TextInput } from 'r
 import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import CommentCard from './CommentCard';
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from '../../context/GlobalContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 });
 
 export default function Comments({ comments, setComments, displayComments, setDisplayComments }) {
-  const [ newComment, setNewComment ] = React.useState('');
+  const [newComment, setNewComment] = React.useState('');
   const { userData } = useGlobalContext();
   const RenderHeader = () => {
     return (
@@ -75,10 +75,10 @@ export default function Comments({ comments, setComments, displayComments, setDi
             onPress={() => {
               axios
                 .post(
-                  'http://18.212.89.94:3000/video/comments',
+                  'https://yummy-production.up.railway.app/video/comments',
                   {
                     video_id: 1,
-                    'commenter_id': userData.UID,
+                    commenter_id: userData.UID,
                     comment: newComment,
                   },
                   {
@@ -90,7 +90,9 @@ export default function Comments({ comments, setComments, displayComments, setDi
                 .then((response) => {
                   if (response.status === 201) {
                     setNewComment('');
-                    return axios.get('http://18.212.89.94:3000/video/comments?video_id=1');
+                    return axios.get(
+                      'https://yummy-production.up.railway.app/video/comments?video_id=1'
+                    );
                   }
                 })
                 .then((response) => {

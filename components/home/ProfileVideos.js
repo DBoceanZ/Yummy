@@ -184,7 +184,7 @@ export default function ProfileVideos({ navigation }) {
                 onPress={() => {
                   axios
                     .post(
-                      'http://18.212.89.94:3000/video/likes',
+                      'https://yummy-production.up.railway.app/video/likes',
                       {
                         video_id: 1,
                         user_id: userData.UID,
@@ -218,7 +218,7 @@ export default function ProfileVideos({ navigation }) {
                 color="white"
                 onPress={() => {
                   axios
-                    .get('http://18.212.89.94:3000/video/comments?video_id=1')
+                    .get('https://yummy-production.up.railway.app/video/comments?video_id=1')
                     .then((response) => {
                       setComments(response.data);
                     })

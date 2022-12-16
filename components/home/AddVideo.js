@@ -72,7 +72,7 @@ export default function AddVideo({ navigation }) {
       })
       .then((res) => {
         axios
-          .post('http://18.212.89.94:3000/videos/postvideo', {
+          .post('https://yummy-production.up.railway.app/videos/postvideo', {
             summary: description,
             user_id: userData.UID,
             video_url: res.data.secure_url,

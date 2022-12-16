@@ -17,10 +17,11 @@ const SelectedProfileHeader = ({ handlers, navigation, selected_userid }) => {
 
   // follow button press handlers
   const handleFollowPress = () => {
-    axios.post('http://18.212.89.94:3000/users/follow', {
-      user_id: UID,
-      followed_id: selected_userid
-    })
+    axios
+      .post('https://yummy-production.up.railway.app/users/follow', {
+        user_id: UID,
+        followed_id: selected_userid,
+      })
       .then(() => {
         setFollowing(true);
       })
@@ -28,11 +29,13 @@ const SelectedProfileHeader = ({ handlers, navigation, selected_userid }) => {
   };
 
   const handleUnfollowPress = () => {
-    axios.delete('http://18.212.89.94:3000/users/follow', {
-      data: {
-        user_id: UID,
-        followed_id: selected_userid
-      }})
+    axios
+      .delete('https://yummy-production.up.railway.app/users/follow', {
+        data: {
+          user_id: UID,
+          followed_id: selected_userid,
+        },
+      })
       .then(() => {
         setFollowing(false);
       })
@@ -42,37 +45,39 @@ const SelectedProfileHeader = ({ handlers, navigation, selected_userid }) => {
   // on page focus, fetch user profile data from database
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      axios.get(`http://18.212.89.94:3000/users/userData?user_id=${selected_userid}`)
-      .then((res) => {
-        setUsername(res.data.username);
-        setBio(res.data.bio);
-        if (res.data.profile_photo_url) {
-          setProfilePhoto(res.data.profile_photo_url);
-        }
-        if (res.data.videos) {
-          let videoLikes = res.data.videos
-            .map((video) => {
-              return video.likes;
-            })
-            .reduce((a, b) => a + b, 0);
-          setLikes(videoLikes);
-        }
-      })
-      .catch((err) => console.log(err));
+      axios
+        .get(`https://yummy-production.up.railway.app/users/userData?user_id=${selected_userid}`)
+        .then((res) => {
+          setUsername(res.data.username);
+          setBio(res.data.bio);
+          if (res.data.profile_photo_url) {
+            setProfilePhoto(res.data.profile_photo_url);
+          }
+          if (res.data.videos) {
+            let videoLikes = res.data.videos
+              .map((video) => {
+                return video.likes;
+              })
+              .reduce((a, b) => a + b, 0);
+            setLikes(videoLikes);
+          }
+        })
+        .catch((err) => console.log(err));
     });
     return unsubscribe;
   }, [navigation]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      axios.get(`http://18.212.89.94:3000/follows/following?user_following_id=${UID}`)
+      axios
+        .get(`https://yummy-production.up.railway.app/follows/following?user_following_id=${UID}`)
         .then((res) => {
           let isFollowing = false;
           res.data.forEach((user) => {
             if (user.id == selected_userid) {
               isFollowing = true;
             }
-          })
+          });
           setFollowing(isFollowing);
         })
         .catch((err) => console.log(err));
@@ -83,7 +88,7 @@ const SelectedProfileHeader = ({ handlers, navigation, selected_userid }) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image style={styles.imageProfile} source={{uri: profilePhoto}}></Image>
+        <Image style={styles.imageProfile} source={{ uri: profilePhoto }}></Image>
       </View>
       <Text style={styles.username}>{username}</Text>
       <View style={styles.countersContainer}>
@@ -110,16 +115,16 @@ const SelectedProfileHeader = ({ handlers, navigation, selected_userid }) => {
         <Text style={styles.bio}>{bio}</Text>
       </View>
       <View style={styles.buttonContainer}>
-        {
-          following === undefined ? 
-            <></> :
-            following === false ?
-              <LightButton onPress={() => handleFollowPress()} text='Follow'/> :
-              <LightButton onPress={() => handleUnfollowPress()} text='Unfollow'/>
-        }
+        {following === undefined ? (
+          <></>
+        ) : following === false ? (
+          <LightButton onPress={() => handleFollowPress()} text="Follow" />
+        ) : (
+          <LightButton onPress={() => handleUnfollowPress()} text="Unfollow" />
+        )}
       </View>
     </View>
-  )
+  );
 };
 
 export default SelectedProfileHeader;

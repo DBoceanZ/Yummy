@@ -68,7 +68,7 @@ const Login = ({ navigation }) => {
   const getUserData = async (loggedInUser) => {
     try {
       const { data: user } = await axios.get(
-        `http://18.212.89.94:3000/login/user/${loggedInUser.firebaseId}`
+        `https://yummy-production.up.railway.app/login/user/${loggedInUser.firebaseId}`
       );
       setUserData({
         ...userData,
@@ -76,7 +76,7 @@ const Login = ({ navigation }) => {
         userEmail: user[0].email,
         profile_photo: user[0].profile_photo_url,
         UID: user[0].id,
-        selectedUserID: user[0].id
+        selectedUserID: user[0].id,
       });
     } catch (err) {
       console.log(err);

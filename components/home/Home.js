@@ -28,27 +28,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-const urls = [
-  {
-    video_url:
-      'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610582/xy2fh6mvmsmrdrtkc5bm.mov',
-    UID: 1,
-    username: 'kyle',
-    description: 'this has got to be the best food I have ever made!! sooooo good',
-    profile_photo_url: 'https://i.pinimg.com/550x/31/ce/d6/31ced66059145d6721c1b379fb38551c.jpg',
-  },
-  {
-    video_url:
-      'https://res.cloudinary.com/dzuekop5v/video/upload/v1669610659/fa6cx9gyitugkioimheh.mov',
-    UID: 1,
-    username: 'not kyle',
-    description: 'this is my description not that long but its decent length. great recipe!',
-    profile_photo_url:
-      'https://www.boredpanda.com/blog/wp-content/uploads/2015/09/post-the-happiest-dogs-who-show-the-best-smiles-163__700.jpg',
-  },
-];
-const mockUsername = 'user';
-const mockDesc = 'this is the video description';
 
 const onShare = async (url) => {
   try {
@@ -84,11 +63,11 @@ export default function Home({ navigation }) {
   const [videoList, setVideoList] = useState([]);
 
   useEffect(() => {
-    axios.get('http://18.212.89.94:3000/videos/home').then((result) => {
+    axios.get('https://yummy-production.up.railway.app/videos/home').then((result) => {
       setVideoList(result.data);
     });
   }, []);
-  console.log(videoList);
+
   useEffect(() => {
     if (videoList.length > 0) {
       const unsubscribe = navigation.addListener('focus', () => {
@@ -239,7 +218,7 @@ export default function Home({ navigation }) {
                 onPress={() => {
                   axios
                     .post(
-                      'http://18.212.89.94:3000/video/likes',
+                      'https://yummy-production.up.railway.app/video/likes',
                       {
                         video_id: 1,
                         user_id: userData.UID,
@@ -273,7 +252,7 @@ export default function Home({ navigation }) {
                 color="white"
                 onPress={() => {
                   axios
-                    .get('http://18.212.89.94:3000/video/comments?video_id=1')
+                    .get('https://yummy-production.up.railway.app/video/comments?video_id=1')
                     .then((response) => {
                       setComments(response.data);
                     })

@@ -25,30 +25,30 @@ const SelectedProfile = ({ navigation, route }) => {
   // on page focus, fetch user videos from the database
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-    axios
-      .get(`http://18.212.89.94:3000/users/userData?user_id=${selected_userid}`)
-      .then((res) => {
-        let videos = [];
-        if (res.data.videos) {
-          res.data.videos.forEach((video) => {
-            videos.push(video);
-          });
-        }
-        setVideos(videos);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      axios
+        .get(`https://yummy-production.up.railway.app/users/userData?user_id=${selected_userid}`)
+        .then((res) => {
+          let videos = [];
+          if (res.data.videos) {
+            res.data.videos.forEach((video) => {
+              videos.push(video);
+            });
+          }
+          setVideos(videos);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
     return unsubscribe;
   }, [navigation]);
 
   return (
     <ScrollView>
-      <SelectedProfileHeader 
+      <SelectedProfileHeader
         handlers={{
-          handleFollowersTouch, 
-          handleFollowingTouch
+          handleFollowersTouch,
+          handleFollowingTouch,
         }}
         navigation={navigation}
         selected_userid={selected_userid}

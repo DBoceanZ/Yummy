@@ -23,7 +23,7 @@ export default function Search({ navigation }) {
   };
   React.useEffect(() => {
     axios
-      .get('http://18.212.89.94:3000/videos/tags')
+      .get('https://yummy-production.up.railway.app/videos/tags')
       .then((res) => {
         const allTags = res.data;
         for (let i = 0; i < allTags.length; i++) {
@@ -44,7 +44,7 @@ export default function Search({ navigation }) {
   };
   const pressHandler = function (tag) {
     axios
-      .get(`http://18.212.89.94:3000/videos/${tag}`)
+      .get(`https://yummy-production.up.railway.app/videos/${tag}`)
       .then((res) => {
         setTagList([]);
         setVideos(res.data);
