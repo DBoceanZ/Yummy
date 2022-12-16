@@ -24,6 +24,7 @@ import { NotifierWrapper } from 'react-native-notifier';
 import { LogBox } from 'react-native';
 import ProfileVideos from './components/home/ProfileVideos.js';
 import SelectedProfile from './components/profile/SelectedProfile';
+import Construction from './components/home/Construction.js';
 
 LogBox.ignoreLogs([
   'Warning: Async Storage has been extracted from react-native core',
@@ -108,9 +109,9 @@ function BottomNav() {
       })}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Friends" component={Home} />
+      <Tab.Screen name="Friends" component={Construction} />
       <Tab.Screen name="Add" component={AddVideo} options={{ tabBarLabel: () => null }} />
-      <Tab.Screen name="Inbox" component={Home} />
+      <Tab.Screen name="Inbox" component={Construction} />
       <Tab.Screen
         options={{
           headerShown: true,
@@ -190,7 +191,7 @@ const NavigationStack = () => {
           headerTitle: '',
         }}
       ></Stack.Screen>
-      <Stack.Screen 
+      <Stack.Screen
         options={{
           headerTitleStyle: {
             fontWeight: 'bold',
@@ -198,10 +199,10 @@ const NavigationStack = () => {
           },
           headerTintColor: '#ffae1f',
         }}
-        name="Following" 
-        component={FollowingList}>
-      </Stack.Screen>
-      <Stack.Screen 
+        name="Following"
+        component={FollowingList}
+      ></Stack.Screen>
+      <Stack.Screen
         options={{
           headerTitleStyle: {
             fontWeight: 'bold',
@@ -209,8 +210,9 @@ const NavigationStack = () => {
           },
           headerTintColor: '#ffae1f',
         }}
-        name="Followers" 
-        component={FollowerList}></Stack.Screen>
+        name="Followers"
+        component={FollowerList}
+      ></Stack.Screen>
       <Stack.Screen
         options={{
           headerTitleStyle: {
@@ -244,17 +246,17 @@ const NavigationStack = () => {
         name="Edit Profile"
         component={EditProfile}
       ></Stack.Screen>
-      <Stack.Screen 
+      <Stack.Screen
         options={{
           headerTitleStyle: {
-          fontWeight: 'bold',
-          color: '#222222',
-        },
-        headerTintColor: '#ffae1f',
+            fontWeight: 'bold',
+            color: '#222222',
+          },
+          headerTintColor: '#ffae1f',
         }}
-        name="Search" 
-        component={Search}>
-      </Stack.Screen>
+        name="Search"
+        component={Search}
+      ></Stack.Screen>
     </Stack.Navigator>
   );
 };
