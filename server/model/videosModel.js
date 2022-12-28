@@ -31,7 +31,6 @@ module.exports = {
           .replace(/"/g, "'")});`,
         [video_url, user_id, summary]
       );
-      console.log(addVideo);
       return addVideo;
     } catch (err) {
       console.log(err);
