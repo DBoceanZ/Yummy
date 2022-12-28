@@ -20,6 +20,7 @@ module.exports = {
     }
   },
   addVideo: async (req, res) => {
+    console.log('reqbody', req.body);
     try {
       const addVideo = await videosModel.addVideo(req.body);
       if (addVideo.rowCount) {

@@ -57,6 +57,7 @@ export default function AddVideo({ navigation }) {
     data.append('file', currentUpload);
     data.append('upload_preset', 'yummy_upload');
     data.append('cloud_name', CLOUDINARY_CLOUD_NAME);
+
     Notifier.showNotification({
       title: 'Uploading...',
       duration: 4000,
@@ -65,44 +66,43 @@ export default function AddVideo({ navigation }) {
       swipeEnabled: true,
       alertType: 'warn',
     });
+    const postedVideo = await axios.post(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`,
+      data
+    );
     axios
-      .post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`, data)
+      .post('https://yummy-production.up.railway.app/videos/postvideo', {
+        summary: description,
+        user_id: userData.UID,
+        video_url: postedVideo.data.secure_url,
+      })
       .catch((err) => {
         console.log(err);
-      })
-      .then((res) => {
-        axios
-          .post('https://yummy-production.up.railway.app/videos/postvideo', {
-            summary: description,
-            user_id: userData.UID,
-            video_url: res.data.secure_url,
-          })
-          .catch((err) => {
-            Notifier.showNotification({
-              title: 'Upload Failed 🙁 Try Again ',
-              duration: 4000,
-              showAnimationDuration: 800,
-              hideOnPress: true,
-              swipeEnabled: true,
-              alertType: 'error',
-            });
-            setDescription('');
-            setTags('');
-            setCurrentUpload(null);
-          });
         Notifier.showNotification({
-          title: 'Video Uploaded! 🎉',
+          title: 'Upload Failed 🙁 Try Again ',
           duration: 4000,
           showAnimationDuration: 800,
-          showEasing: Easing.bounce,
           hideOnPress: true,
           swipeEnabled: true,
-          alertType: 'success',
+          alertType: 'error',
         });
         setDescription('');
         setTags('');
         setCurrentUpload(null);
+        return;
       });
+    Notifier.showNotification({
+      title: 'Video Uploaded! 🎉',
+      duration: 4000,
+      showAnimationDuration: 800,
+      showEasing: Easing.bounce,
+      hideOnPress: true,
+      swipeEnabled: true,
+      alertType: 'success',
+    });
+    setDescription('');
+    setTags('');
+    setCurrentUpload(null);
   };
 
   useEffect(() => {

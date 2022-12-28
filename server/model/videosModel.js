@@ -19,17 +19,22 @@ module.exports = {
       throw err;
     }
   },
-  addVideo: async ({ video_url, user_id, summary }) => {
+  addVideo: async ({ video_url, user_id, summary, tags }) => {
+    console.log(tags);
     try {
-      console.log(JSON.stringify(tags).replace('[', '(').replace(']', ')').replace(/"/g, "'"))
       const addVideo = await pool.query(
-        `WITH new_video as (INSERT INTO videos(video_url, creator_id, summary) VALUES ($1, $2, $3) RETURNING id) INSERT INTO video_tags (video_id, tag_id) (SELECT new_video.id as video_id, tags.id FROM new_video, tags WHERE tags.tag in ${JSON.stringify(tags).replace('[', '(').replace(']', ')').replace(/"/g, "'")});`,
-        [video_url, user_id, summary,]
+        `WITH new_video as (INSERT INTO videos(video_url, creator_id, summary) VALUES ($1, $2, $3) RETURNING id) INSERT INTO video_tags (video_id, tag_id) (SELECT new_video.id as video_id, tags.id FROM new_video, tags WHERE tags.tag in ${JSON.stringify(
+          tags
+        )
+          .replace('[', '(')
+          .replace(']', ')')
+          .replace(/"/g, "'")});`,
+        [video_url, user_id, summary]
       );
-      console.log(addVideo)
+      console.log(addVideo);
       return addVideo;
     } catch (err) {
-      console.log(err)
+      console.log(err);
       return err;
     }
   },
