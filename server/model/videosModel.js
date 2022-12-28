@@ -22,7 +22,7 @@ module.exports = {
   addVideo: async ({ video_url, user_id, summary, tags }) => {
     try {
       const addVideo = await pool.query(
-        `INSERT INTO videos(video_url, creator_id, summary) VALUES ($1, $2, $3) RETURNING id)`,
+        `INSERT INTO videos(video_url, creator_id, summary) VALUES ($1, $2, $3)`,
         [video_url, user_id, summary]
       );
       // const addVideo = await pool.query(
