@@ -75,6 +75,7 @@ export default function AddVideo({ navigation }) {
         summary: description,
         user_id: userData.UID,
         video_url: postedVideo.data.secure_url,
+        tags: tags,
       })
       .catch((err) => {
         console.log(err);
