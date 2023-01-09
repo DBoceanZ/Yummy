@@ -62,9 +62,18 @@ export default function Home({ navigation }) {
   const { userData, setUserData } = useGlobalContext();
   const [videoList, setVideoList] = useState([]);
 
+  const shuffle = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
   useEffect(() => {
     axios.get('https://yummy-production.up.railway.app/videos/home').then((result) => {
-      setVideoList(result.data);
+      console.log(result.data);
+      setVideoList(shuffle(result.data));
     });
   }, []);
 
@@ -85,6 +94,7 @@ export default function Home({ navigation }) {
       const unsubscribe = navigation.addListener('blur', () => {
         //Every time the screen loses focus the Video is paused
         if (videoref) {
+          console.log('entered');
           videoref.current.pauseAsync();
         }
       });
@@ -131,9 +141,9 @@ export default function Home({ navigation }) {
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
     axios
-      .get('http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json')
-      .then((response) => {
-        console.log(response);
+      .get('https://yummy-production.up.railway.app/videos/home')
+      .then((result) => {
+        setVideoList(shuffle(result.data));
       })
       .catch((err) => {
         console.log(err);
@@ -153,7 +163,7 @@ export default function Home({ navigation }) {
         showsVerticalScrollIndicator={false}
         disableIntervalMomentum={false}
         onScroll={handleScroll}
-        snapToInterval={windowHeight}
+        snapToInterval={windowHeight - 80}
         decelerationRate="fast"
         vertical
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
@@ -205,11 +215,6 @@ export default function Home({ navigation }) {
               >
                 <Foundation style={styles.playBut} name="play" size={88} color="white" />
               </Animated.View>
-              {/* <LottieView
-                style={styles.heartLottie}
-                source={require('./assets/like.json')}
-                autoPlay
-              /> */}
               <AntDesign
                 style={styles.heart}
                 name="heart"
@@ -271,7 +276,16 @@ export default function Home({ navigation }) {
                 <FontAwesome style={styles.share} name="share" size={34} color="white" />
               </Pressable>
               <Text style={styles.shareText}>0</Text>
-              <Text style={styles.usernameText}>{src.created_by}</Text>
+              <Pressable
+                onPress={() => {
+                  setUserData({ ...userData });
+                  navigation.navigate('Selected Profile', {
+                    selected_userid: src.creator_id,
+                  });
+                }}
+              >
+                <Text style={styles.usernameText}>{src.created_by}</Text>
+              </Pressable>
               <Text style={styles.descText}>{src.summary}</Text>
             </Pressable>
           </View>
@@ -301,7 +315,7 @@ const styles = StyleSheet.create({
   video: {
     flex: 1,
     width: windowWidth,
-    height: windowHeight,
+    height: windowHeight - 80,
   },
   buttons: {
     flexDirection: 'row',
@@ -310,44 +324,44 @@ const styles = StyleSheet.create({
   },
   heart: {
     position: 'absolute',
-    bottom: 340,
+    bottom: windowHeight / 2.6,
     right: 5,
   },
   heartText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 320,
+    bottom: windowHeight / 2.8,
     right: 17,
     color: 'white',
   },
   comment: {
     position: 'absolute',
-    bottom: 275,
+    bottom: windowHeight / 3.25,
     right: 5,
   },
   commentText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 250,
+    bottom: windowHeight / 3.6,
     right: 17,
     color: 'white',
   },
   share: {
     position: 'absolute',
-    bottom: 205,
+    bottom: windowHeight / 4.5,
     right: 5,
   },
   shareText: {
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 185,
+    bottom: windowHeight / 5,
     right: 17,
     color: 'white',
   },
   playBut: {
     margin: 50,
-    bottom: 250,
-    right: 110,
+    bottom: windowWidth / 1.35,
+    right: windowWidth / 3,
     position: 'absolute',
     opacity: 0.4,
     shadowColor: '#000',
@@ -363,7 +377,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pfp: {
-    bottom: 400,
+    bottom: windowHeight / 2.2,
     right: 5,
     width: 45,
     height: 45,
@@ -376,14 +390,14 @@ const styles = StyleSheet.create({
     margin: 5,
     fontWeight: 'bold',
     position: 'absolute',
-    bottom: 125,
+    bottom: 45,
     left: 5,
     color: 'white',
   },
   descText: {
     margin: 5,
     position: 'absolute',
-    bottom: 95,
+    bottom: 20,
     left: 5,
     color: 'white',
     width: windowWidth / 1.3,

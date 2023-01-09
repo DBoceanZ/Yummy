@@ -291,4 +291,7 @@ const styles = StyleSheet.create({
     height: 26,
     position: 'absolute',
   },
+  safeStyle: {
+    flex: 1,
+  },
 });

@@ -1,11 +1,7 @@
 import React from 'react';
 import { Image, View, StyleSheet } from 'react-native';
 export default function Construction() {
-  return (
-    <View>
-      <Image style={styles.construction} source={require('./assets/construction.jpeg')} />
-    </View>
-  );
+  return <View></View>;
 }
 
 const styles = StyleSheet.create({

@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 import {
   FIREBASE_API_KEY,
   FIREBASE_AUTH_DOMAIN,
@@ -12,7 +12,6 @@ import {
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-console.log('firebaseapi, ', FIREBASE_API_KEY);
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,

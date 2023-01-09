@@ -3,7 +3,7 @@ import styles from './styles';
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
-import { CLOUDINARY_NAME, CLOUDINARY_UPLOAD_PRESET } from '@env';
+import { CLOUDINARY_API_KEY, CLOUDINARY_CLOUD_NAME } from '@env';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { Feather } from '@expo/vector-icons';
 
@@ -39,10 +39,10 @@ const EditProfileHeader = ({ handlers }) => {
   const handleUpload = (image) => {
     const data = new FormData();
     data.append('file', image);
-    data.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-    data.append('cloud_name', CLOUDINARY_NAME);
+    data.append('upload_preset', 'yummy_upload');
+    data.append('cloud_name', CLOUDINARY_CLOUD_NAME);
     axios
-      .post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`, data)
+      .post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, data)
       .then((res) => {
         axios.put('https://yummy-production.up.railway.app/users/userData', {
           user_id: UID,
