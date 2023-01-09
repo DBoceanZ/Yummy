@@ -201,7 +201,9 @@ export default function Home({ navigation }) {
               >
                 <Image
                   source={{
-                    uri: 'https://cdn.discordapp.com/attachments/1042963648731164704/1046858787463643176/unknown.png',
+                    uri: src.profile_photo_url
+                      ? src.profile_photo_url
+                      : 'https://cdn.discordapp.com/attachments/1042963648731164704/1046858787463643176/unknown.png',
                   }}
                   style={styles.pfp}
                 />
