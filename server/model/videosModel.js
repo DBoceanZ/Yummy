@@ -4,7 +4,7 @@ module.exports = {
   homeVideos: async ({ user_id }) => {
     try {
       const videos = await pool.query(
-        'SELECT id, video_url, created_at, creator_id, (SELECT username, profile_photo_url FROM users where id = creator_id) as created_by, summary, (SELECT count(comments.id) FROM comments where video_id = videos.id) as comment_count, (SELECT count(likes.id) FROM likes WHERE video_id = videos.id) as likes FROM videos'
+        'SELECT id, video_url, created_at, creator_id, (SELECT username FROM users where id = creator_id) as created_by, summary, (SELECT count(comments.id) FROM comments where video_id = videos.id) as comment_count, (SELECT profile_photo_url FROM users where id = creator_id) as profile_photo_url, (SELECT count(likes.id) FROM likes WHERE video_id = videos.id) as likes FROM videos'
       );
       return videos.rows;
     } catch (err) {
